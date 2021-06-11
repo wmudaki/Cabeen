@@ -7,7 +7,7 @@ import {
     View,
     TouchableOpacity,
     Text,
-    TextInput
+    ScrollView
 } from 'react-native'
 
 import {
@@ -15,62 +15,110 @@ import {
 } from "../components/Buttons";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
+import {RegularTextInput} from "../components/TextInputs";
+import { Actions } from "react-native-router-flux";
 
 class Login extends React.PureComponent{
+    handleInput(input){
+        console.log(input)
+    }
+
     render(){
         return(
             <>
-                <View style={{
-                    flex:1
+                <ScrollView style={{
+                    flex:1,
+                    backgroundColor: this.props.app.colors.background
                 }}>
                     <Text style={{
                         color: this.props.app.colors.primaryText,
-                        fontSize: 30,
-                        fontWeight: 'bold'
+                        fontSize: 70,
+                        fontWeight: 'bold',
+                        alignSelf: 'center',
+                        margin: 70
                     }}>
                         Login
                     </Text>
                     <View>
                         <View style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            alignItems: 'center'
+
                         }}>
-                            <TextInput
+                            <RegularTextInput
                                 placeholder={'Username'}
-                                style={{
-                                    height: 50,
-                                    borderRadius: 10,
-                                    borderWidth: 2,
-                                    borderColor: this.props.app.colors.background
-                                }}
+                                placeholderTextColor={this.props.app.colors.secondaryText}
+                                textColor={this.props.app.colors.primaryText}
+                                borderColor={this.props.app.colors.statusBar}
+                                backgroundColor={this.props.app.colors.background}
+                                onChangeText={this.handleInput}
+                                secureTextEntry={false}
+                                iconName={'person'}
+                                iconColor={this.props.app.colors.statusBar}
                             />
                         </View>
                         <View style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            alignItems: 'center'
+                            marginTop: 30
                         }}>
-                            <TextInput
+                            <RegularTextInput
                                 placeholder={'Password'}
-                                style={{
-                                    height: 50,
-                                    borderRadius: 10,
-                                    borderWidth: 2,
-                                    borderColor: this.props.app.colors.background
-                                }}
+                                placeholderTextColor={this.props.app.colors.secondaryText}
+                                textColor={this.props.app.colors.primaryText}
+                                borderColor={this.props.app.colors.statusBar}
+                                backgroundColor={this.props.app.colors.background}
+                                onChangeText={this.handleInput}
                                 secureTextEntry={true}
+                                iconName={'lock-closed'}
+                                iconColor={this.props.app.colors.statusBar}
                             />
                         </View>
                     </View>
                     <View>
-                        <TouchableOpacity>
+                        <TouchableOpacity style={{
+                            alignItems: 'center',
+                            margin: 50
+                        }}>
                             <HalfWidthButton
                                 name={'Login'}
                             />
                         </TouchableOpacity>
                     </View>
-                </View>
+                    <View>
+                        <TouchableOpacity>
+                            <Text style={{
+                                color: this.props.app.colors.primaryText,
+                                fontSize: 18,
+                                // fontWeight: 'bold',
+                                alignSelf: 'center'
+                            }}>
+                                Forgot password ?
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <Text style={{
+                                alignSelf: 'center',
+                                fontSize: 18,
+                                margin: 20,
+                                color: this.props.app.colors.secondaryText,
+                                textDecorationLine: 'underline'
+                            }}>
+                                Privacy policy
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => Actions.signup()}
+                        >
+                            <Text style={{
+                                fontSize: 23,
+                                fontWeight: 'bold',
+                                alignSelf: 'center',
+                                margin: 20,
+                                color: this.props.app.colors.statusBar
+                            }}>
+                                Sign up here
+                            </Text>
+                        </TouchableOpacity>
+
+                    </View>
+                </ScrollView>
             </>
         )
     }
@@ -79,13 +127,13 @@ class Login extends React.PureComponent{
 
 const mapStateToProps = state => {
     const {app} = state;
-    return app
+    return {app}
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch => (
     bindActionCreators({
 
     }, dispatch)
-}
+)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)

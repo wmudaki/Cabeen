@@ -23,14 +23,18 @@ class HalfWidthButtonStateLess extends React.PureComponent{
             <>
                 <View style={{
                     height: 50,
-                    width: '50%',
-                    backgroundColor: this.props.app.colors.buttonColor,
+                    width: '80%',
+                    backgroundColor: this.props.isSecondary ? null: this.props.app.colors.buttonColor,
                     justifyContent: 'center',
-                    alignContent: 'center'
+                    alignItems: 'center',
+                    borderRadius: 50,
+                    elevation: this.props.isSecondary ? null: 20,
+                    borderWidth: this.props.isSecondary ? 3: null,
+                    borderColor: this.props.isSecondary ? this.props.app.colors.statusBar: null
                 }}>
                     <Text style={{
-                        color: this.props.app.colors.buttonText,
-                        fontWeigh: 'bold',
+                        color: this.props.isSecondary ? this.props.app.colors.primaryText: this.props.app.colors.buttonText,
+                        fontWeight: 'bold',
                         fontSize: 20,
                     }}>
                         {this.props.name}
@@ -44,14 +48,14 @@ class HalfWidthButtonStateLess extends React.PureComponent{
 
 const mapStateToProps = state => {
     const {app} = state;
-    return app
+    return {app}
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch => (
     bindActionCreators({
 
     }, dispatch)
-}
+)
 
 let HalfWidthButton = connect(mapStateToProps, mapDispatchToProps)(HalfWidthButtonStateLess)
 export {HalfWidthButton}

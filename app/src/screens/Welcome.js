@@ -10,6 +10,7 @@ import * as React from 'react'
 import {
     View,
     Text,
+    StatusBar,
     TouchableOpacity
 } from 'react-native'
 import {bindActionCreators} from "redux";
@@ -17,8 +18,12 @@ import {connect} from "react-redux";
 import {
     HalfWidthButton
 } from "../components/Buttons";
+import { Actions } from "react-native-router-flux";
 
 class Welcome extends React.PureComponent{
+    componentDidMount() {
+        StatusBar.setBackgroundColor(this.props.app.colors.statusBar)
+    }
 
     render(){
         return(
@@ -31,28 +36,36 @@ class Welcome extends React.PureComponent{
                     <Text style={{
                         fontWeight: 'bold',
                         color: this.props.app.colors.primaryText,
-                        fontSize: 30
+                        fontSize: 70,
+                        marginTop: 70,
+                        margin: 20,
+                        alignSelf: 'center'
                     }}>
-                        Karibu Cabeen
+                        Cabeen
                     </Text>
+                    <View style={{flex: 1}}/>
                     <View style={{
                         flexDirection: 'row',
                         alignItems: 'center',
-                        justifyContent: 'space-between'
+                        justifyContent: 'space-between',
+                        bottom: 70
                     }}>
                         <TouchableOpacity
-                            onPress={''}
+                            onPress={() => Actions.signup()}
                             style={{
+                                flex: 0.5,
                             alignItems: 'center',
                             justifyContent:'center'
                         }}>
                             <HalfWidthButton
                                 name={'Signup'}
+                                isSecondary={true}
                             />
                         </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={''}
+                            onPress={() => Actions.login()}
                             style={{
+                                flex: 0.5,
                                 alignItems: 'center',
                                 justifyContent:'center'
                             }}>
@@ -70,13 +83,13 @@ class Welcome extends React.PureComponent{
 
 const mapStateToProps = state => {
     const {app} = state;
-    return app
+    return {app}
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch => (
     bindActionCreators({
 
     }, dispatch)
-}
+)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Welcome)

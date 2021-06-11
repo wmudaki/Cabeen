@@ -1,7 +1,6 @@
-import * as React from 'react'
-import {useColorScheme} from 'react-native'
 
-let isDarkMode = useColorScheme() === 'dark';
+let isDarkMode = false
+
 const INITIAL_STATE = {
     colors: {
         background: isDarkMode ? '#5D4037': '#D7CCC8',
@@ -15,11 +14,15 @@ const INITIAL_STATE = {
         statusBar: isDarkMode ? '#5D4037': '#5D4037',
         topNavBar: isDarkMode ? '#795548': '#795548',
         bottomNavBar: isDarkMode ? '#795548': '#795548',
-    }
+    },
+    termsAgree: false
 }
 
 export const appReducer = (state=INITIAL_STATE, action) => {
     switch (action.type){
+        case "AGREE_TO_TERMS":
+            state.termsAgree = !state.termsAgree;
+            return {...state}
         default:
             return state
     }
