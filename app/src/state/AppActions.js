@@ -10,3 +10,10 @@ export const agreeToTerms = () => (
         type: "AGREE_TO_TERMS",
     }
 )
+
+export const rotate = (orientation) => (
+    {
+        type: 'ROTATE',
+        payload: orientation
+    }
+)

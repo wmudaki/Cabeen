@@ -6,10 +6,12 @@
 import * as React from 'react'
 import {
 	View,
-	Text
+	ScrollView
 } from "react-native";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import {FloatingSearchBar} from "../components/SearchBars";
+import { Map, MapCabeen } from "../components/Map";
 
 
 class Home extends React.PureComponent{
@@ -20,12 +22,31 @@ class Home extends React.PureComponent{
 					flex: 1,
 					backgroundColor: this.props.app.colors.background
 				}}>
-					<Text style={{
-						fontWeight: 'bold',
-						fontSize: 60
+					<View style={{
+						height: '50%'
 					}}>
-						Home
-					</Text>
+						<Map/>
+					</View>
+					<View style={{
+						position: 'absolute',
+						top: 20,
+						left: 0,
+						right: 0,
+						alignItems: 'center',
+						justifyContent: 'center'
+					}}>
+						<FloatingSearchBar
+						/>
+					</View>
+					<View style={{
+						position: 'absolute',
+						bottom: 0,
+						height: '50%',
+						// backgroundColor: 'rgba(0,0,0,.85)'
+					}}>
+						<MapCabeen/>
+
+					</View>
 
 				</View>
 			</>

@@ -15,8 +15,12 @@ const INITIAL_STATE = {
         statusBar: isDarkMode ? '#5D4037': '#5D4037',
         topNavBar: isDarkMode ? '#795548': '#795548',
         bottomNavBar: isDarkMode ? '#795548': '#795548',
+        whiteText: '#ffffff',
+        blackText: '#000000',
+        greyText: '#666666'
     },
-    termsAgree: false
+    termsAgree: false,
+    portrait:true
 }
 
 export const appReducer = (state=INITIAL_STATE, action) => {
@@ -24,6 +28,14 @@ export const appReducer = (state=INITIAL_STATE, action) => {
         case "AGREE_TO_TERMS":
             state.termsAgree = !state.termsAgree;
             return {...state}
+        case "ROTATE":
+            if (action.payload === 'portrait'){
+                state.portrait = true;
+                return {...state}
+            }else {
+                state.portrait = false;
+                return {...state}
+            }
         default:
             return state
     }

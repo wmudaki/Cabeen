@@ -6,7 +6,11 @@
 * */
 
 import * as React from 'react'
-import {Router, Scene, Tabs} from 'react-native-router-flux'
+import {
+    Router,
+    Scene,
+    Lightbox,
+    Tabs} from 'react-native-router-flux'
 import {Provider} from 'react-redux'
 import  {createStore} from 'redux'
 import rootReducer from './state/Index'
@@ -33,46 +37,49 @@ export default class App extends React.PureComponent{
         return(
             <Provider store={store}>
                 <Router>
-                    <Scene key={'root'}>
-                        <Scene
-                            component={Welcome}
-                            key={'welcome'}
-                            hideNavBar
-                        />
-                        <Scene
-                          component={Login}
-                          key={'login'}
-                          hideNavBar
-                        />
-                        <Scene
-                            component={Signup}
-                            key={'signup'}
-                            hideNavBar
-                        />
-                        <Tabs
-                            key={'tabBar'}
-                            tabBarComponent={CustomTabBar}
-                            hideNavBar
-                            lazy
-                        >
+                    <Lightbox>
+                        <Scene key={'root'}>
                             <Scene
-                                component={Home}
-                                key={'discover'}
+                                component={Welcome}
+                                key={'welcome'}
                                 hideNavBar
                             />
                             <Scene
-                                component={Home}
-                                key={'home'}
-                                hideNavBar
+                              component={Login}
+                              key={'login'}
+                              hideNavBar
                             />
                             <Scene
-                                component={Home}
-                                key={'notifications'}
+                                component={Signup}
+                                key={'signup'}
                                 hideNavBar
                             />
+                            <Tabs
+                                key={'tabBar'}
+                                tabBarComponent={CustomTabBar}
+                                hideNavBar
+                                lazy
+                            >
+                                <Scene
+                                    component={Home}
+                                    key={'discover'}
+                                    hideNavBar
+                                />
+                                <Scene
+                                    component={Home}
+                                    key={'home'}
+                                    hideNavBar
+                                />
+                                <Scene
+                                    component={Home}
+                                    key={'notifications'}
+                                    hideNavBar
+                                />
 
-                        </Tabs>
-                    </Scene>
+                            </Tabs>
+                        </Scene>
+
+                    </Lightbox>
                 </Router>
             </Provider>
         )

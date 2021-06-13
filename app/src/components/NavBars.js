@@ -83,7 +83,11 @@ class CustomTabBarStateless extends React.PureComponent{
 		const {state} = this.props.navigation;
 		return(
 			<View style={{
-				backgroundColor: this.props.app.colors.background,
+				// backgroundColor: this.props.app.colors.background,
+				position: 'absolute',
+				bottom: 0,
+				right: 0,
+				left: 0
 			}}>
 				<View style={{
 					margin: 20,
@@ -92,7 +96,7 @@ class CustomTabBarStateless extends React.PureComponent{
 					height: 60,
 					backgroundColor: '#ffffff',
 					borderRadius: 50,
-					elevation: 50
+					elevation: 10
 				}}>
 					{
 						state.routes.map(elements => (
