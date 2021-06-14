@@ -22,6 +22,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import { rotate } from "../state/AppActions";
+import {searchPlace, getUserLocation,showOverlay} from "../state/MapActions";
 
 
 MapboxGL.setAccessToken(
@@ -38,10 +39,12 @@ class MapStateless extends React.PureComponent{
 				.then((granted) => console.log("Permission was granted"))
 				.catch((err) => console.log("Permission was denied",err))
 		}
+		// setInterval(() => this.moveCamera(),100)
 	}
 
 	userLocation(location){
-		console.log('location',location)
+		getUserLocation(location.coords)
+		// console.log('location',location)
 	}
 
 	render() {
@@ -49,7 +52,8 @@ class MapStateless extends React.PureComponent{
 			<>
 				<View >
 					<MapboxGL.MapView
-						styleURL={MapboxGL.StyleURL.Light}
+						onPress={() => this.props.showOverlay(!this.props.map.overlay)}
+						styleURL={MapboxGL.StyleURL.Street}
 						style={{
 						width: "100%",
 						height: "100%"
@@ -61,11 +65,21 @@ class MapStateless extends React.PureComponent{
 						/>
 						<MapboxGL.Camera
 							zoomLevel={16}
-							followUserMode={'normal'}
-							followUserLocation
-							followZoomLevel={16}
-							// centerCoordinate={[20.7195209,42.5711211]}
+							animationMode={'flyTo'}
+							// followUserLocation={!this.props.map.moveCamera}
+							centerCoordinate={this.props.map.moveCamera ?
+								this.props.map.searchLocation.geometry.coordinates:
+								[36.899102, -1.226383]}
 						/>
+						{/*<MapboxGL.MarkerView*/}
+						{/*	coordinate={this.props.map.moveCamera ?*/}
+						{/*		this.props.map.searchLocation.geometry.coordinates:*/}
+						{/*		[36.899102, -1.226383]}*/}
+						{/* 	id={'marker1'}>*/}
+						{/*	<Text style={{fontSize: 70}}>*/}
+						{/*		Hulala*/}
+						{/*	</Text>*/}
+						{/*</MapboxGL.MarkerView>*/}
 					</MapboxGL.MapView>
 				</View>
 			</>
@@ -229,13 +243,16 @@ class MapCabeenStateless extends React.PureComponent{
 
 
 const mapStateToProps = state => {
-	const {app} = state;
-	return {app}
+	const {app,map} = state;
+	return {app,map}
 }
 
 const mapDispatchToProps = dispatch => (
 	bindActionCreators({
 		rotate,
+		searchPlace,
+		getUserLocation,
+		showOverlay
 
 	}, dispatch)
 )

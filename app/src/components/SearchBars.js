@@ -9,21 +9,32 @@ import * as React from 'react'
 import {
 	View,
 	TextInput,
-	TouchableOpacity
+	TouchableOpacity, FlatList, Text,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Feather from "react-native-vector-icons/Feather";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import {
+	getPlace,
+	showAutocomplete,
+	getSearchLocation ,
+	moveCamera,
+	showOverlay
+} from "../state/MapActions";
 
 
 class FloatingSearchBarStateless extends React.PureComponent{
+	constructor(props) {
+		super(props);
+	}
+
 	render(){
 		return(
 			<>
 				<View style={{
-					height: 50,
+					height: 55,
 					width: '80%',
 					flexDirection: 'row',
 					alignItems: 'center',
@@ -58,8 +69,13 @@ class FloatingSearchBarStateless extends React.PureComponent{
 						}}
 						onChangeText={this.props.onChangeText}
 						selectionColor={this.props.app.colors.statusBar}
+						selectTextOnFocus
+						defaultValue={this.props.map.place}
+						onFocus={() => this.props.showOverlay(false)}
+						onBlur={() => this.props.showOverlay(true)}
 					/>
-					<TouchableOpacity style={{
+					<TouchableOpacity
+						style={{
 
 					}}>
 						<MaterialIcons
@@ -76,18 +92,80 @@ class FloatingSearchBarStateless extends React.PureComponent{
 	}
 }
 
+class AutoCompleteCardStateless extends React.PureComponent{
+
+	handlePress(location){
+		this.props.getPlace(location.place_name)
+		this.props.showAutocomplete(false)
+		this.props.getSearchLocation(location)
+		this.props.moveCamera(true)
+	}
+
+	_renderItem(item){
+		return(
+			<>
+				<TouchableOpacity
+					onPress={() => this.handlePress(item.item)}
+				>
+					<Text
+						numberOfLines={1}
+						style={{
+						fontSize: 15,
+						color: this.props.app.colors.primaryText
+					}}>
+						{item.item.place_name}
+					</Text>
+
+				</TouchableOpacity>
+			</>
+		)
+	}
+
+	render(){
+		return(
+			<>
+				<View style={{
+					backgroundColor: this.props.app.colors.whiteText,
+					elevation: 10,
+					marginLeft: 40,
+					marginRight: 40,
+					marginTop: 10,
+					padding: 10,
+					borderRadius: 10
+				}}>
+					<FlatList
+						data={this.props.map.searchResults.features}
+						renderItem={(item) => this._renderItem(item)}
+						ItemSeparatorComponent={() => <View style={{
+							borderBottomWidth: 2,
+							margin: 5,
+							borderBottomColor: this.props.app.colors.secondaryText
+						}}/>}
+					/>
+				</View>
+
+			</>
+		)
+	}
+}
 
 const mapStateToProps = state => {
-	const {app} = state;
-	return {app}
+	const {app, map} = state;
+	return {app, map}
 }
 
 const mapDispatchToProps = dispatch => (
 	bindActionCreators({
+		getPlace,
+		showAutocomplete,
+		getSearchLocation,
+		moveCamera,
+		showOverlay
 
 	}, dispatch)
 )
 
 let FloatingSearchBar = connect(mapStateToProps, mapDispatchToProps)(FloatingSearchBarStateless)
+let AutoCompleteCard = connect(mapStateToProps, mapDispatchToProps)(AutoCompleteCardStateless)
 
-export {FloatingSearchBar}
+export {FloatingSearchBar, AutoCompleteCard}

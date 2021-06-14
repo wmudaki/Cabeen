@@ -22,7 +22,7 @@ import Welcome from "./screens/Welcome";
 import Login from "./screens/Login";
 import Signup from "./screens/Signup";
 import { CustomTabBar } from "./components/NavBars";
-import Home from "./screens/Home";
+import Home from "./screens/Discover";
 
 const store = createStore(rootReducer);
 
