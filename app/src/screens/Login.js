@@ -73,7 +73,7 @@ class Login extends React.PureComponent{
                     </View>
                     <View>
                         <TouchableOpacity
-                            onPress={() => Actions.discover()}
+                            onPress={() => Actions.home()}
                             style={{
                             alignItems: 'center',
                             margin: 50

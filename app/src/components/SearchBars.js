@@ -35,27 +35,27 @@ class FloatingSearchBarStateless extends React.PureComponent{
 			<>
 				<View style={{
 					height: 55,
-					width: '80%',
+					width: '90%',
 					flexDirection: 'row',
 					alignItems: 'center',
 					backgroundColor: '#ffffff',
 					alignSelf: "center",
 					justifyContent: 'space-between',
 					margin: 10,
-					borderRadius: 20,
+					borderRadius: 10,
 					elevation: 20,
 					padding: 10,
 					paddingRight: 20
 				}}>
 					<TouchableOpacity>
 						<Ionicons
-							name={'filter'}
-							size={30}
+							name={this.props.leftIcon}
+							size={32}
 							color={this.props.app.colors.statusBar}
 						/>
 					</TouchableOpacity>
 					<TextInput
-						placeholder={'search location here'}
+						placeholder={this.props.placeholder}
 						placeholderTextColor={this.props.app.colors.secondaryText}
 						style={{
 							height: 50,
@@ -78,11 +78,20 @@ class FloatingSearchBarStateless extends React.PureComponent{
 						style={{
 
 					}}>
-						<MaterialIcons
-							name={'my-location'}
-							size={29}
-							color={this.props.app.colors.statusBar}
-						/>
+						{
+							this.props.feather ?
+								<Feather
+									name={this.props.rightIcon}
+									size={29}
+									color={this.props.app.colors.statusBar}
+								/>:
+								<MaterialIcons
+									name={this.props.rightIcon}
+									size={29}
+									color={this.props.app.colors.statusBar}
+								/>
+						}
+
 					</TouchableOpacity>
 
 

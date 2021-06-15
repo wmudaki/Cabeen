@@ -71,13 +71,16 @@ class Discover extends React.PureComponent{
 					</View>
 					<View style={{
 						position: 'absolute',
-						top: 20,
+						top: 10,
 						left: 0,
 						right: 0,
 						alignItems: 'center',
 						justifyContent: 'center'
 					}}>
 						<FloatingSearchBar
+							leftIcon={'filter'}
+							rightIcon={'my-location'}
+							placeholder={'enter location'}
 							onChangeText={(value) => this.search(value)}
 						/>
 

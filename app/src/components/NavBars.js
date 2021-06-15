@@ -144,6 +144,55 @@ class CustomTabBarStateless extends React.PureComponent{
 	}
 }
 
+class TopNavBarStateless extends React.PureComponent{
+	render(){
+		return(
+			<>
+				<View style={{
+					height: 50,
+					width: '80%',
+					backgroundColor: this.props.app.colors.whiteText,
+					borderRadius: 15,
+					flexDirection: 'row',
+					alignItems: 'center',
+					alignSelf: "center",
+					justifyContent:'space-between',
+					// padding: 5,
+					elevation: 30
+				}}>
+
+					<View style={{
+						margin: 5,
+						justifyContent: "center",
+						alignItems:"center"
+					}}>
+						<Text style={{
+							fontSize: 25,
+							fontWeight: 'bold',
+							color: this.props.app.colors.statusBar
+						}}>
+							Cabeen
+						</Text>
+					</View>
+					<TouchableOpacity style={{
+						alignItems: 'center',
+						justifyContent: 'center',
+						margin: 5
+					}}>
+						<Ionicons
+							name={'person-circle-outline'}
+							size={36}
+							color={this.props.app.colors.statusBar}
+						/>
+					</TouchableOpacity>
+
+
+				</View>
+			</>
+		)
+	}
+}
+
 const mapStateToProps = state => {
 	const {app} = state;
 	return {app}
@@ -156,5 +205,6 @@ const mapDispatchToProps = dispatch => (
 )
 
 let CustomTabBar = connect(mapStateToProps, mapDispatchToProps)(CustomTabBarStateless)
+let TopNavBar = connect(mapStateToProps, mapDispatchToProps)(TopNavBarStateless)
 
-export {CustomTabBar}
+export {CustomTabBar,TopNavBar}

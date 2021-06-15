@@ -22,7 +22,8 @@ import Welcome from "./screens/Welcome";
 import Login from "./screens/Login";
 import Signup from "./screens/Signup";
 import { CustomTabBar } from "./components/NavBars";
-import Home from "./screens/Discover";
+import Discover from "./screens/Discover";
+import Home from "./screens/Home";
 
 const store = createStore(rootReducer);
 
@@ -61,7 +62,7 @@ export default class App extends React.PureComponent{
                                 lazy
                             >
                                 <Scene
-                                    component={Home}
+                                    component={Discover}
                                     key={'discover'}
                                     hideNavBar
                                 />
