@@ -24,6 +24,7 @@ import Signup from "./screens/Signup";
 import { CustomTabBar } from "./components/NavBars";
 import Discover from "./screens/Discover";
 import Home from "./screens/Home";
+import Notification from "./screens/Notification";
 
 const store = createStore(rootReducer);
 
@@ -72,7 +73,7 @@ export default class App extends React.PureComponent{
                                     hideNavBar
                                 />
                                 <Scene
-                                    component={Home}
+                                    component={Notification}
                                     key={'notifications'}
                                     hideNavBar
                                 />

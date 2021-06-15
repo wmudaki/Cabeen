@@ -149,16 +149,16 @@ class TopNavBarStateless extends React.PureComponent{
 		return(
 			<>
 				<View style={{
-					height: 50,
-					width: '80%',
-					backgroundColor: this.props.app.colors.whiteText,
-					borderRadius: 15,
+					height: 55,
+					width: '90%',
+					backgroundColor: this.props.app.colors.background,
+					borderRadius: 10,
 					flexDirection: 'row',
 					alignItems: 'center',
 					alignSelf: "center",
 					justifyContent:'space-between',
-					// padding: 5,
-					elevation: 30
+					padding: 5,
+					elevation: 0
 				}}>
 
 					<View style={{
@@ -171,7 +171,7 @@ class TopNavBarStateless extends React.PureComponent{
 							fontWeight: 'bold',
 							color: this.props.app.colors.statusBar
 						}}>
-							Cabeen
+							Notifications
 						</Text>
 					</View>
 					<TouchableOpacity style={{

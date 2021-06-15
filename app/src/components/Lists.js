@@ -222,6 +222,72 @@ class CustomSectionListStateless extends React.PureComponent{
 	}
 }
 
+class CustomFlatListStateless extends React.PureComponent{
+	renderItem(item){
+		return(
+			<>
+				<TouchableOpacity style={{
+					margin: 0,
+					backgroundColor: 'rgba(0,0,0,.2)',
+					padding: 10,
+					borderBottomWidth: 2,
+					borderColor:this.props.app.colors.secondaryText
+				}}>
+					<View style={{
+						flexDirection: 'row',
+						alignItems: 'center'
+					}}>
+						<Image
+							style={{
+								height: 50,
+								width: 50,
+								borderRadius: 50
+							}}
+							source={{
+								uri: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.ZjgSmLyOXQjTlsNMnDTajwHaE8%26pid%3DApi&f=1'
+							}}/>
+						<Text style={{
+							margin: 10,
+							fontWeight: 'bold',
+							fontSize: 19,
+							color: this.props.app.colors.primaryText
+						}}>
+							Cabeen
+						</Text>
+					</View>
+					<View>
+						<Text style={{
+							margin: 10,
+							fontSize: 16,
+							color: this.props.app.colors.primaryText
+						}}>
+							A very long welcoming text
+						</Text>
+					</View>
+
+				</TouchableOpacity>
+			</>
+		)
+	}
+	render(){
+		return(
+			<>
+				<View>
+					<FlatList
+						data={[1,2,3,4,5,6,7,8,9,]}
+						renderItem={(item) => this.renderItem(item)}
+						ListHeaderComponent={() => <View style={{margin: 50}}/>}
+						ItemSeparatorComponent={() => <View style={{margin: 0}}/>}
+						ListFooterComponent={() => <View style={{margin: 50}}/>}
+						keyExtractor={(item,index) => item+index}
+					/>
+
+				</View>
+			</>
+		)
+	}
+}
+
 
 const mapStateToProps = state => {
 	const {app} = state;
@@ -235,6 +301,6 @@ const mapDispatchToProps = dispatch => (
 )
 
 let CustomSectionList = connect(mapStateToProps, mapDispatchToProps)(CustomSectionListStateless)
-// let TopNavBar = connect(mapStateToProps, mapDispatchToProps)(TopNavBarStateless)
+let CustomFlatList = connect(mapStateToProps, mapDispatchToProps)(CustomFlatListStateless)
 //
-export {CustomSectionList}
+export {CustomSectionList, CustomFlatList}
