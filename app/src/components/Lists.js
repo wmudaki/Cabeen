@@ -23,6 +23,7 @@ import { MapCabeen } from "./Map";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Fontisto from "react-native-vector-icons/Fontisto";
+import { Actions } from "react-native-router-flux";
 
 
 const {height,width} = Dimensions.get('window')
@@ -31,7 +32,9 @@ class CustomSectionListStateless extends React.PureComponent{
 	renderItem(item){
 		return(
 			<>
-				<TouchableOpacity style={{
+				<TouchableOpacity
+					onPress={() => Actions.cabeen()}
+					style={{
 					backgroundColor: this.props.app.colors.whiteText,
 					width: 0.85*width,
 					borderRadius: 20,

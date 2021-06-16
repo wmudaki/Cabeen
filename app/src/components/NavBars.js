@@ -15,6 +15,8 @@ import {Actions} from "react-native-router-flux";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import Fontisto from "react-native-vector-icons/Fontisto";
 
 
 class CustomTabBarStateless extends React.PureComponent{
@@ -193,6 +195,71 @@ class TopNavBarStateless extends React.PureComponent{
 	}
 }
 
+class BackButtonTopNavBarStateless extends React.PureComponent{
+	render(){
+		return(
+			<>
+				<View style={{
+					height: 55,
+					// width: '90%',
+					flexDirection: 'row',
+					backgroundColor: this.props.app.colors.bottomNavBar,
+					alignItems: 'center',
+					elevation: 10,
+					padding: 10,
+					justifyContent: "space-between",
+					margin: 0,
+					// borderRadius: 10
+				}}>
+					<View style={{
+						flexDirection:"row"
+					}}>
+						<TouchableOpacity
+							style={{
+								marginLeft: 10,
+								marginRight: 10
+							}}
+							onPress={() => Actions.pop()}>
+							<AntDesign
+								name={'arrowleft'}
+								size={28}
+								color={this.props.app.colors.whiteText}
+							/>
+						</TouchableOpacity>
+						<View>
+							<Text
+								numberOfLines={1}
+								style={{
+								fontSize: 20,
+								marginLeft: 10,
+								fontWeight: 'bold',
+								color: this.props.app.colors.whiteText
+							}}>
+								Cabeen
+							</Text>
+						</View>
+					</View>
+					<TouchableOpacity style={{
+						alignItems: 'center',
+						justifyContent: 'center',
+						marginRight: 10,
+					}}>
+						<Fontisto
+							name={'heart-alt'}
+							size={25}
+							color={this.props.app.colors.whiteText}
+
+						/>
+					</TouchableOpacity>
+
+
+
+				</View>
+			</>
+		)
+	}
+}
+
 const mapStateToProps = state => {
 	const {app} = state;
 	return {app}
@@ -206,5 +273,6 @@ const mapDispatchToProps = dispatch => (
 
 let CustomTabBar = connect(mapStateToProps, mapDispatchToProps)(CustomTabBarStateless)
 let TopNavBar = connect(mapStateToProps, mapDispatchToProps)(TopNavBarStateless)
+let BackButtonTopNavBar = connect(mapStateToProps, mapDispatchToProps)(BackButtonTopNavBarStateless)
 
-export {CustomTabBar,TopNavBar}
+export {CustomTabBar,TopNavBar, BackButtonTopNavBar}

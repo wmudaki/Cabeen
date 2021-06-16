@@ -25,6 +25,7 @@ import { CustomTabBar } from "./components/NavBars";
 import Discover from "./screens/Discover";
 import Home from "./screens/Home";
 import Notification from "./screens/Notification";
+import Cabeen from "./screens/Cabeen";
 
 const store = createStore(rootReducer);
 
@@ -77,8 +78,12 @@ export default class App extends React.PureComponent{
                                     key={'notifications'}
                                     hideNavBar
                                 />
-
                             </Tabs>
+                            <Scene
+                                component={Cabeen}
+                                key={'cabeen'}
+                                hideNavBar
+                            />
                         </Scene>
 
                     </Lightbox>
