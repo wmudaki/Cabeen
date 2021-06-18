@@ -16,6 +16,7 @@ import { agreeToTerms } from "../state/AppActions";
 import { connect } from "react-redux";
 import { TopNavBar } from "../components/NavBars";
 import { CustomFlatList } from "../components/Lists";
+import { Actions } from "react-native-router-flux";
 
 
 class Notification extends React.PureComponent{
@@ -24,7 +25,7 @@ class Notification extends React.PureComponent{
 			<>
 				<View style={{
 					flex: 1,
-					backgroundColor: this.props.app.colors.background
+					backgroundColor: this.props.app.colors.whiteText
 				}}>
 					<View>
 						<CustomFlatList/>
@@ -35,7 +36,9 @@ class Notification extends React.PureComponent{
 						left:0,
 						right: 0
 					}}>
-						<TopNavBar/>
+						<TopNavBar
+							iconPress={() => Actions.account()}
+						/>
 					</View>
 
 				</View>

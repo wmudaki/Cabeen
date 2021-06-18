@@ -8,10 +8,12 @@
 import * as React from 'react'
 import {
     View,
-    Text
-} from 'react-native'
+    Text, TouchableOpacity,
+} from "react-native";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import Entypo from "react-native-vector-icons/Entypo";
 
 class HalfWidthButtonStateLess extends React.PureComponent{
     constructor(props) {
@@ -45,6 +47,31 @@ class HalfWidthButtonStateLess extends React.PureComponent{
     }
 }
 
+class FloatingActonButtonStateless extends React.PureComponent{
+    render(){
+        return(
+            <>
+                <TouchableOpacity style={{
+                    height: 50,
+                    width: 50,
+                    borderRadius: 50,
+                    elevation: 10,
+                    backgroundColor: this.props.app.colors.buttonColor,
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}>
+                    <Entypo
+                        name={'plus'}
+                        size={30}
+                        color={this.props.app.colors.primaryText}
+                    />
+
+                </TouchableOpacity>
+            </>
+        )
+    }
+}
+
 
 const mapStateToProps = state => {
     const {app} = state;
@@ -58,4 +85,5 @@ const mapDispatchToProps = dispatch => (
 )
 
 let HalfWidthButton = connect(mapStateToProps, mapDispatchToProps)(HalfWidthButtonStateLess)
-export {HalfWidthButton}
+let FloatingActionButton = connect(mapStateToProps, mapDispatchToProps)(FloatingActonButtonStateless)
+export {HalfWidthButton, FloatingActionButton}

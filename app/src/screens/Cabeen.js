@@ -222,10 +222,13 @@ class Cabeen extends React.PureComponent{
 			<>
 				<ScrollView style={{
 					flex: 1,
-					backgroundColor: this.props.app.colors.background
+					backgroundColor: this.props.app.colors.whiteText
 				}}>
 					<View>
-						<BackButtonTopNavBar/>
+						<BackButtonTopNavBar
+							title={'Acacia apartments'}
+							icon={'heart-outline'}
+						/>
 					</View>
 					<View style={{
 						marginTop: 10

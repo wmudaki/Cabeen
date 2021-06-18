@@ -26,6 +26,7 @@ import Discover from "./screens/Discover";
 import Home from "./screens/Home";
 import Notification from "./screens/Notification";
 import Cabeen from "./screens/Cabeen";
+import Account from "./screens/Account";
 
 const store = createStore(rootReducer);
 
@@ -82,6 +83,11 @@ export default class App extends React.PureComponent{
                             <Scene
                                 component={Cabeen}
                                 key={'cabeen'}
+                                hideNavBar
+                            />
+                            <Scene
+                                component={Account}
+                                key={'account'}
                                 hideNavBar
                             />
                         </Scene>

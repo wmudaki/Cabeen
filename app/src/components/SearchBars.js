@@ -47,7 +47,7 @@ class FloatingSearchBarStateless extends React.PureComponent{
 					padding: 10,
 					paddingRight: 20
 				}}>
-					<TouchableOpacity>
+					<TouchableOpacity onPress={this.props.leftIconPress}>
 						<Ionicons
 							name={this.props.leftIcon}
 							size={32}

@@ -153,7 +153,7 @@ class TopNavBarStateless extends React.PureComponent{
 				<View style={{
 					height: 55,
 					width: '90%',
-					backgroundColor: this.props.app.colors.background,
+					backgroundColor: this.props.app.colors.whiteText,
 					borderRadius: 10,
 					flexDirection: 'row',
 					alignItems: 'center',
@@ -176,7 +176,9 @@ class TopNavBarStateless extends React.PureComponent{
 							Notifications
 						</Text>
 					</View>
-					<TouchableOpacity style={{
+					<TouchableOpacity
+						onPress={this.props.iconPress}
+						style={{
 						alignItems: 'center',
 						justifyContent: 'center',
 						margin: 5
@@ -235,7 +237,7 @@ class BackButtonTopNavBarStateless extends React.PureComponent{
 								fontWeight: 'bold',
 								color: this.props.app.colors.whiteText
 							}}>
-								Cabeen
+								{this.props.title}
 							</Text>
 						</View>
 					</View>
@@ -244,16 +246,16 @@ class BackButtonTopNavBarStateless extends React.PureComponent{
 						justifyContent: 'center',
 						marginRight: 10,
 					}}>
-						<Fontisto
-							name={'heart-alt'}
-							size={25}
+						<Ionicons
+							name={this.props.icon}
+							size={30}
 							color={this.props.app.colors.whiteText}
 
 						/>
 					</TouchableOpacity>
 
 
-
+ 
 				</View>
 			</>
 		)

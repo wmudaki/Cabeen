@@ -15,6 +15,7 @@ import { connect } from "react-redux";
 import { TopNavBar } from "../components/NavBars";
 import {FloatingSearchBar} from "../components/SearchBars";
 import { CustomSectionList } from "../components/Lists";
+import { Actions } from "react-native-router-flux";
 
 
 class Home extends React.PureComponent{
@@ -23,7 +24,7 @@ class Home extends React.PureComponent{
 			<>
 				<View style={{
 					flex: 1,
-					backgroundColor: this.props.app.colors.background
+					backgroundColor: this.props.app.colors.whiteText
 				}}>
 
 					<View>
@@ -40,6 +41,7 @@ class Home extends React.PureComponent{
 							rightIcon={'search'}
 							placeholder={'search cabeen'}
 							feather={true}
+							leftIconPress={() => Actions.account()}
 						/>
 					</View>
 
