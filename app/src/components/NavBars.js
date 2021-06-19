@@ -205,7 +205,7 @@ class BackButtonTopNavBarStateless extends React.PureComponent{
 					height: 55,
 					// width: '90%',
 					flexDirection: 'row',
-					backgroundColor: this.props.app.colors.bottomNavBar,
+					backgroundColor: this.props.app.colors.whiteText,
 					alignItems: 'center',
 					elevation: 10,
 					padding: 10,
@@ -225,7 +225,7 @@ class BackButtonTopNavBarStateless extends React.PureComponent{
 							<AntDesign
 								name={'arrowleft'}
 								size={28}
-								color={this.props.app.colors.whiteText}
+								color={this.props.app.colors.statusBar}
 							/>
 						</TouchableOpacity>
 						<View>
@@ -235,7 +235,7 @@ class BackButtonTopNavBarStateless extends React.PureComponent{
 								fontSize: 20,
 								marginLeft: 10,
 								fontWeight: 'bold',
-								color: this.props.app.colors.whiteText
+								color: this.props.app.colors.statusBar
 							}}>
 								{this.props.title}
 							</Text>
@@ -249,13 +249,13 @@ class BackButtonTopNavBarStateless extends React.PureComponent{
 						<Ionicons
 							name={this.props.icon}
 							size={30}
-							color={this.props.app.colors.whiteText}
+							color={this.props.app.colors.statusBar}
 
 						/>
 					</TouchableOpacity>
 
 
- 
+
 				</View>
 			</>
 		)

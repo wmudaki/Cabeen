@@ -55,7 +55,7 @@ class Cabeen extends React.PureComponent{
 						style={{
 							width: '100%',
 							height: 300,
-							borderRadius: 10,
+							borderRadius: 30,
 						}}
 						source={{
 						uri: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.FQSBiW8u9KfG4dGxeIkDogHaE8%26pid%3DApi&f=1'

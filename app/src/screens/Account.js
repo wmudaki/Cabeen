@@ -7,7 +7,10 @@
 import * as React from "react";
 import {
 	Dimensions,
-	Image, ScrollView, Text, TouchableOpacity,
+	Image,
+	ScrollView,
+	Text,
+	TouchableOpacity,
 	View,
 } from "react-native";
 import { bindActionCreators } from "redux";
@@ -16,6 +19,7 @@ import {BackButtonTopNavBar} from "../components/NavBars";
 import { FloatingActionButton } from "../components/Buttons";
 import Carousel from "react-native-snap-carousel";
 import CabeenCard from "../components/Cards";
+import { Actions } from "react-native-router-flux";
 
 
 const {height,width} = Dimensions.get('window')
@@ -25,7 +29,9 @@ class Account extends React.PureComponent{
 		return(
 			<>
 				<View>
-					<TouchableOpacity style={{
+					<TouchableOpacity
+						onPress={() => Actions.profileEdit()}
+						style={{
 						alignItems: 'center',
 						justifyContent: 'center',
 						margin: 20

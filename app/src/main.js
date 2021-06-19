@@ -27,6 +27,7 @@ import Home from "./screens/Home";
 import Notification from "./screens/Notification";
 import Cabeen from "./screens/Cabeen";
 import Account from "./screens/Account";
+import ProfileEdit from "./screens/ProfileEdit";
 
 const store = createStore(rootReducer);
 
@@ -88,6 +89,11 @@ export default class App extends React.PureComponent{
                             <Scene
                                 component={Account}
                                 key={'account'}
+                                hideNavBar
+                            />
+                            <Scene
+                                component={ProfileEdit}
+                                key={'profileEdit'}
                                 hideNavBar
                             />
                         </Scene>
