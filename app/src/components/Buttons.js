@@ -48,10 +48,13 @@ class HalfWidthButtonStateLess extends React.PureComponent{
 }
 
 class FloatingActonButtonStateless extends React.PureComponent{
+
     render(){
         return(
             <>
-                <TouchableOpacity style={{
+                <TouchableOpacity
+                    onPress={this.props.onPress}
+                    style={{
                     height: 50,
                     width: 50,
                     borderRadius: 50,

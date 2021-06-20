@@ -202,7 +202,7 @@ class BackButtonTopNavBarStateless extends React.PureComponent{
 		return(
 			<>
 				<View style={{
-					height: 55,
+					height: 60,
 					// width: '90%',
 					flexDirection: 'row',
 					backgroundColor: this.props.app.colors.whiteText,

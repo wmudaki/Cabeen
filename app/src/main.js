@@ -10,6 +10,7 @@ import {
     Router,
     Scene,
     Lightbox,
+    Modal,
     Tabs} from 'react-native-router-flux'
 import {Provider} from 'react-redux'
 import  {createStore} from 'redux'
@@ -28,6 +29,7 @@ import Notification from "./screens/Notification";
 import Cabeen from "./screens/Cabeen";
 import Account from "./screens/Account";
 import ProfileEdit from "./screens/ProfileEdit";
+import CabeenAdd from "./screens/CabeenAdd";
 
 const store = createStore(rootReducer);
 
@@ -96,6 +98,12 @@ export default class App extends React.PureComponent{
                                 key={'profileEdit'}
                                 hideNavBar
                             />
+                            <Scene
+                                component={CabeenAdd}
+                                key={'cabeenAdd'}
+                                hideNavBar
+                            />
+
                         </Scene>
 
                     </Lightbox>

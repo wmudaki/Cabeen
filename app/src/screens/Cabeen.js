@@ -231,7 +231,12 @@ class Cabeen extends React.PureComponent{
 						/>
 					</View>
 					<View style={{
-						marginTop: 10
+						marginTop: 0,
+						paddingTop: 30,
+						paddingBottom: 30,
+						borderBottomWidth:2,
+						borderColor:this.props.app.colors.background,
+						backgroundColor: this.props.app.colors.background
 					}}>
 						<Carousel
 							data={[1,2,3,4,5]}
@@ -239,7 +244,8 @@ class Cabeen extends React.PureComponent{
 							sliderWidth={this.props.app.portrait ?width: height}
 							itemWidth={this.props.app.portrait ? 0.85*width: 0.85*height}
 						/>
-						{/*{this.renderCabeenImages()}*/}
+					</View>
+					<View>
 						{this.renderDescription()}
 					</View>
 				</ScrollView>

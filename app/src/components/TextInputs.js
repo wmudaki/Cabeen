@@ -48,6 +48,7 @@ class RegularTextInput extends React.PureComponent{
                         secureTextEntry={this.props.secureTextEntry}
                         onChangeText={this.props.onChangeText}
                         selectionColor={this.props.borderColor}
+                        multiline={this.props.multiline}
                     />
                 </View>
             </>

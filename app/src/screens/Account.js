@@ -126,7 +126,9 @@ class Account extends React.PureComponent{
 					bottom: 30,
 					right: 20,
 				}}>
-					<FloatingActionButton/>
+					<FloatingActionButton
+						onPress={() => Actions.cabeenAdd()}
+					/>
 				</View>
 			</>
 		)
