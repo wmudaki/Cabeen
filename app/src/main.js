@@ -30,6 +30,7 @@ import Cabeen from "./screens/Cabeen";
 import Account from "./screens/Account";
 import ProfileEdit from "./screens/ProfileEdit";
 import CabeenAdd from "./screens/CabeenAdd";
+import CabeenManagement from "./screens/CabeenManagement";
 
 const store = createStore(rootReducer);
 
@@ -103,9 +104,12 @@ export default class App extends React.PureComponent{
                                 key={'cabeenAdd'}
                                 hideNavBar
                             />
-
+                            <Scene
+                                component={CabeenManagement}
+                                key={'cabeenManagement'}
+                                hideNavBar
+                            />
                         </Scene>
-
                     </Lightbox>
                 </Router>
             </Provider>

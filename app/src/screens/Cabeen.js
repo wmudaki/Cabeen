@@ -26,6 +26,7 @@ import { Actions } from "react-native-router-flux";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import Carousel from "react-native-snap-carousel";
 import { rotate } from "../state/AppActions";
+import Account from "./Account";
 
 const {height,width} = Dimensions.get('window')
 
@@ -33,6 +34,9 @@ class Cabeen extends React.PureComponent{
 	constructor(props) {
 		super(props);
 		this.orient()
+		this.state ={
+			isManager: true
+		}
 	}
 
 	orient(){
@@ -45,6 +49,7 @@ class Cabeen extends React.PureComponent{
 
 		})
 	}
+
 	renderCabeenImages(){
 		return(
 			<>
@@ -52,14 +57,15 @@ class Cabeen extends React.PureComponent{
 					elevation: 30
 				}}>
 					<Image
+						resizeMethod={"scale"}
 						style={{
 							width: '100%',
 							height: 350,
-							borderBottomLeftRadius:15,
-							borderBottomRightRadius:15
+							// borderBottomLeftRadius:15,
+							// borderBottomRightRadius:15
 						}}
 						source={{
-						uri: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.FQSBiW8u9KfG4dGxeIkDogHaE8%26pid%3DApi&f=1'
+						uri: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.hZBRkPchyD8tthZCC47YpQHaE9%26pid%3DApi&f=1'
 					}}/>
 
 				</TouchableOpacity>
@@ -189,59 +195,68 @@ class Cabeen extends React.PureComponent{
 							2000 KES
 						</Text>
 					</View>
-					<View style={{
-						flexDirection: 'row',
-						alignItems: 'center',
-						justifyContent: 'space-between',
-						marginTop: 20
-						// bottom: 70
-					}}>
-						<TouchableOpacity
-							// onPress={() => Actions.signup()}
-							style={{
-								borderWidth: 2,
-								flexDirection:"row",
-								alignItems: 'center',
-								justifyContent:'space-evenly',
-								borderRadius: 10,
-								width: '47%',
-								height: 50,
-								borderColor: this.props.app.colors.statusBar,
-							}}>
-							<SimpleLineIcons
-								name={'directions'}
-								size={25}
-								color={this.props.app.colors.statusBar}
-							/>
-							<Text style={{
-								color: this.props.app.colors.statusBar,
-								fontSize: 20
-							}}>
-								Directions
-							</Text>
-						</TouchableOpacity>
-						<TouchableOpacity
-							// onPress={() => Actions.login()}
-							style={{
-								// flex: 1,
-								alignItems: 'center',
-								backgroundColor: this.props.app.colors.buttonColor,
-								width: '47%',
-								height: 50,
-								borderRadius: 10,
-								justifyContent:'center'
-							}}>
-							<Text style={{
-								color: this.props.app.colors.whiteText,
-								fontWeight: 'bold',
-								fontSize: 20
-							}}>
-								Reserve
-							</Text>
-						</TouchableOpacity>
-					</View>
 
 
+				</View>
+			</>
+		)
+	}
+
+	renderButtons(){
+		return(
+			<>
+				<View style={{
+					flexDirection: 'row',
+					alignItems: 'center',
+					justifyContent: 'space-between',
+					marginTop: 20
+
+					// bottom: 70
+				}}>
+					<TouchableOpacity
+						// onPress={() => Actions.signup()}
+						style={{
+							borderWidth: 2,
+							flexDirection:"row",
+							alignItems: 'center',
+							justifyContent:'space-evenly',
+							borderRadius: 10,
+							width: '47%',
+							height: 50,
+							borderColor: this.props.app.colors.statusBar,
+						}}>
+						<SimpleLineIcons
+							name={!this.state.isManager ? 'directions': 'pencil'}
+							size={25}
+							color={this.props.app.colors.statusBar}
+						/>
+						<Text style={{
+							color: this.props.app.colors.statusBar,
+							fontSize: 20
+						}}>
+							{this.state.isManager ? 'Edit': 'Directions'}
+						</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						onPress={() => this.state.isManager ?
+							Actions.cabeenManagement(): Actions.cabeenManagement()}
+						style={{
+							// flex: 1,
+							alignItems: 'center',
+							backgroundColor: this.props.app.colors.buttonColor,
+							width: '47%',
+							height: 50,
+							borderRadius: 10,
+							justifyContent:'center'
+						}}>
+						<Text style={{
+							color: this.props.app.colors.whiteText,
+							fontWeight: 'bold',
+							fontSize: 20
+						}}>
+							{this.state.isManager? 'Manage': 'Reserve'}
+						</Text>
+					</TouchableOpacity>
 				</View>
 			</>
 		)
@@ -273,6 +288,12 @@ class Cabeen extends React.PureComponent{
 					</View>
 					<View>
 						{this.renderDescription()}
+
+					</View>
+					<View style={{
+						margin: 10
+					}}>
+						{this.renderButtons()}
 					</View>
 				</ScrollView>
 			</>

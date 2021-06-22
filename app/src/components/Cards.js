@@ -162,6 +162,82 @@ class CabeenCard extends React.PureComponent{
 }
 
 
+class TenantCardStateless extends React.PureComponent{
+	render() {
+		return(
+			<>
+				<TouchableOpacity style={{
+					backgroundColor: this.props.app.colors.background,
+					margin: 10,
+					borderRadius: 10,
+					elevation: 10
+				}}>
+					<View style={{
+						flexDirection: "row",
+						// justifyContent: "space-evenly",
+						alignItems: 'center'
+					}}>
+						<Text style={{
+							color: this.props.app.colors.secondaryText,
+							fontSize: 20,
+							margin: 20
+						}}>
+							House:
+						</Text>
+						<Text style={{
+							fontSize: 20,
+							fontWeight: "bold"
+						}}>
+							2003
+						</Text>
+					</View>
+					<View style={{
+						flexDirection: "row",
+						alignItems: 'center',
+
+					}}>
+						<Text style={{
+							color: this.props.app.colors.secondaryText,
+							fontSize: 20,
+							margin: 20
+						}}>
+							Tenant:
+						</Text>
+						<Text style={{
+							fontSize: 20,
+							fontWeight: "bold"
+						}}>
+							Wilson Mudaki
+						</Text>
+					</View>
+					<View style={{
+						flexDirection: "row",
+						alignItems: 'center'
+					}}>
+						<Text style={{
+							fontSize: 20,
+							margin: 20,
+							color: this.props.app.colors.secondaryText
+						}}>
+							Payment status:
+						</Text>
+						<Text style={{
+							fontWeight: 'bold',
+							fontSize: 20,
+
+						}}>
+							Paid
+						</Text>
+					</View>
+
+
+				</TouchableOpacity>
+			</>
+		)
+	}
+
+}
+
 const mapStateToProps = state => {
 	const {app} = state;
 	return {app}
@@ -173,4 +249,6 @@ const mapDispatchToProps = dispatch => (
 	}, dispatch)
 )
 
+const TenantCard = connect(mapStateToProps, mapDispatchToProps)(TenantCardStateless)
 export default connect(mapStateToProps, mapDispatchToProps)(CabeenCard)
+export {TenantCard}
