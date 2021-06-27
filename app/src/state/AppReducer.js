@@ -20,7 +20,14 @@ const INITIAL_STATE = {
         greyText: '#666666'
     },
     termsAgree: false,
-    portrait:true
+    portrait:true,
+    signIn:{
+        username: '',
+        fullName:'',
+        phone: '',
+        password: '',
+        email:''
+    }
 }
 
 export const appReducer = (state=INITIAL_STATE, action) => {
@@ -36,6 +43,25 @@ export const appReducer = (state=INITIAL_STATE, action) => {
                 state.portrait = false;
                 return {...state}
             }
+        case "UPDATE_SIGN_IN":
+            if (action.field === 'username'){
+                state.signIn.username = action.payload
+                return {...state}
+            }
+            else if (action.field === 'fullName'){
+                state.signIn.fullName = action.payload
+                return {...state}
+            }
+            else if (action.field === 'email'){
+                state.signIn.email = action.payload
+                return {...state}
+            }
+            else if (action.field === 'password'){
+                state.signIn.password = action.payload
+                return {...state}
+            }
+            else return state
+
         default:
             return state
     }

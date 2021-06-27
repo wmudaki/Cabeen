@@ -17,3 +17,12 @@ export const rotate = (orientation) => (
         payload: orientation
     }
 )
+
+export const updateSignIn = (field, payload) => (
+    {
+        type: "UPDATE_SIGN_IN",
+        field: field,
+        payload: payload
+    }
+)
+

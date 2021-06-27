@@ -31,8 +31,24 @@ import Account from "./screens/Account";
 import ProfileEdit from "./screens/ProfileEdit";
 import CabeenAdd from "./screens/CabeenAdd";
 import CabeenManagement from "./screens/CabeenManagement";
+import {
+    ApolloProvider,
+    ApolloClient,
+    createHttpLink,
+    InMemoryCache
+} from "@apollo/client";
 
 const store = createStore(rootReducer);
+
+const httpLink = createHttpLink({
+    uri: "http://192.168.0.11:4000/"
+})
+
+const client = new ApolloClient({
+    link: httpLink,
+    cache: new InMemoryCache()
+})
+
 
 LogBox.ignoreLogs(['Deprecation in \'createStackNavigator\':\n' +
 '\'transitionConfig\' is removed in favor of the new animation APIs', 'Deprecation in \'navigationOptions\':\n' +
@@ -43,76 +59,78 @@ LogBox.ignoreLogs(['Deprecation in \'createStackNavigator\':\n' +
 export default class App extends React.PureComponent{
     render(){
         return(
-            <Provider store={store}>
-                <Router>
-                    <Lightbox>
-                        <Scene key={'root'}>
-                            <Scene
-                                component={Welcome}
-                                key={'welcome'}
-                                hideNavBar
-                            />
-                            <Scene
-                              component={Login}
-                              key={'login'}
-                              hideNavBar
-                            />
-                            <Scene
-                                component={Signup}
-                                key={'signup'}
-                                hideNavBar
-                            />
-                            <Tabs
-                                key={'tabBar'}
-                                tabBarComponent={CustomTabBar}
-                                hideNavBar
-                                lazy
-                            >
+            <ApolloProvider client={client}>
+                <Provider store={store}>
+                    <Router>
+                        <Lightbox>
+                            <Scene key={'root'}>
                                 <Scene
-                                    component={Discover}
-                                    key={'discover'}
+                                    component={Welcome}
+                                    key={'welcome'}
                                     hideNavBar
                                 />
                                 <Scene
-                                    component={Home}
-                                    key={'home'}
+                                  component={Login}
+                                  key={'login'}
+                                  hideNavBar
+                                />
+                                <Scene
+                                    component={Signup}
+                                    key={'signup'}
+                                    hideNavBar
+                                />
+                                <Tabs
+                                    key={'tabBar'}
+                                    tabBarComponent={CustomTabBar}
+                                    hideNavBar
+                                    lazy
+                                >
+                                    <Scene
+                                        component={Discover}
+                                        key={'discover'}
+                                        hideNavBar
+                                    />
+                                    <Scene
+                                        component={Home}
+                                        key={'home'}
+                                        hideNavBar
+                                    />
+                                    <Scene
+                                        component={Notification}
+                                        key={'notifications'}
+                                        hideNavBar
+                                    />
+                                </Tabs>
+                                <Scene
+                                    component={Cabeen}
+                                    key={'cabeen'}
                                     hideNavBar
                                 />
                                 <Scene
-                                    component={Notification}
-                                    key={'notifications'}
+                                    component={Account}
+                                    key={'account'}
                                     hideNavBar
                                 />
-                            </Tabs>
-                            <Scene
-                                component={Cabeen}
-                                key={'cabeen'}
-                                hideNavBar
-                            />
-                            <Scene
-                                component={Account}
-                                key={'account'}
-                                hideNavBar
-                            />
-                            <Scene
-                                component={ProfileEdit}
-                                key={'profileEdit'}
-                                hideNavBar
-                            />
-                            <Scene
-                                component={CabeenAdd}
-                                key={'cabeenAdd'}
-                                hideNavBar
-                            />
-                            <Scene
-                                component={CabeenManagement}
-                                key={'cabeenManagement'}
-                                hideNavBar
-                            />
-                        </Scene>
-                    </Lightbox>
-                </Router>
-            </Provider>
+                                <Scene
+                                    component={ProfileEdit}
+                                    key={'profileEdit'}
+                                    hideNavBar
+                                />
+                                <Scene
+                                    component={CabeenAdd}
+                                    key={'cabeenAdd'}
+                                    hideNavBar
+                                />
+                                <Scene
+                                    component={CabeenManagement}
+                                    key={'cabeenManagement'}
+                                    hideNavBar
+                                />
+                            </Scene>
+                        </Lightbox>
+                    </Router>
+                </Provider>
+            </ApolloProvider>
         )
     }
 }
