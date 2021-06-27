@@ -26,3 +26,12 @@ export const updateSignIn = (field, payload) => (
     }
 )
 
+export const updateLogin = (field, payload) => (
+    {
+        type: "UPDATE_LOGIN",
+        field: field,
+        payload: payload
+    }
+)
+
+

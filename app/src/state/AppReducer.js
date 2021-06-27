@@ -27,6 +27,10 @@ const INITIAL_STATE = {
         phone: '',
         password: '',
         email:''
+    },
+    login:{
+        username: '',
+        password: ''
     }
 }
 
@@ -60,6 +64,23 @@ export const appReducer = (state=INITIAL_STATE, action) => {
                 state.signIn.password = action.payload
                 return {...state}
             }
+            else return state
+
+        case "UPDATE_LOGIN":
+            if (action.field === 'username'){
+                state.login.username = action.payload
+                return {...state}
+            }
+            else if (action.field === 'password'){
+                state.login.password = action.payload
+                return {...state}
+            }
+            else if (action.field === 'clear'){
+                state.login.password = ''
+                state.login.username = ''
+                return {...state}
+            }
+
             else return state
 
         default:

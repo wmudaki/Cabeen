@@ -17,21 +17,45 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {RegularTextInput} from "../components/TextInputs";
 import { Actions } from "react-native-router-flux";
-import {useQuery, gql} from "@apollo/client";
+import {useQuery, gql, useMutation} from "@apollo/client";
+import SignUpModal from "../modals/SignUpModal";
+import {updateLogin} from "../state/AppActions";
 
 function Login(props){
-    const GET_USER = gql `
-        query fetchUser{
-            fetchUsers{
-                username,
-                fullName,
-                _id
+    const LOGIN = gql`
+        mutation LOGIN(
+            $username: String,
+            $password: String
+        ){
+            login(
+                username: $username,
+                password: $password,
+            ){
+                token,
+                user{
+                    username
+                }
             }
-            
         }
+    
     `
-    const {loading, error, data} = useQuery(GET_USER)
-    console.log(loading, error, data)
+    const [login] = useMutation(LOGIN)
+    const [isLoginIn, setIsLoginIn] = React.useState(false)
+
+    const userLogin = () => {
+        setIsLoginIn(true)
+        login({variables: {
+            username: props.app.login.username,
+                password: props.app.login.password
+            }})
+            .then((res) => {
+                setIsLoginIn(false)
+                console.log(res)
+                updateLogin("clear", 'clear')
+                Actions.home()
+            })
+            .catch(e => console.log("Error", e))
+    }
 
     return(
         <>
@@ -59,7 +83,7 @@ function Login(props){
                             textColor={props.app.colors.primaryText}
                             borderColor={props.app.colors.statusBar}
                             backgroundColor={props.app.colors.background}
-                            // onChangeText={handleInput}
+                            onChangeText={(value) => props.updateLogin('username', value)}
                             secureTextEntry={false}
                             iconName={'person'}
                             iconColor={props.app.colors.statusBar}
@@ -74,7 +98,7 @@ function Login(props){
                             textColor={props.app.colors.primaryText}
                             borderColor={props.app.colors.statusBar}
                             backgroundColor={props.app.colors.background}
-                            // onChangeText={this.handleInput}
+                            onChangeText={(value) => props.updateLogin("password", value)}
                             secureTextEntry={true}
                             iconName={'lock-closed'}
                             iconColor={props.app.colors.statusBar}
@@ -83,7 +107,7 @@ function Login(props){
                 </View>
                 <View>
                     <TouchableOpacity
-                        onPress={() => Actions.home()}
+                        onPress={() => userLogin()}
                         style={{
                             alignItems: 'center',
                             margin: 50
@@ -131,6 +155,12 @@ function Login(props){
 
                 </View>
             </ScrollView>
+            <SignUpModal
+                modalVisible={isLoginIn}
+                onRequestClose={() => {
+                    setIsLoginIn(false)
+                }}
+            />
         </>
     )
 }
@@ -252,6 +282,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => (
     bindActionCreators({
+        updateLogin
 
     }, dispatch)
 )
