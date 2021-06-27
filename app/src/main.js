@@ -31,6 +31,8 @@ import Account from "./screens/Account";
 import ProfileEdit from "./screens/ProfileEdit";
 import CabeenAdd from "./screens/CabeenAdd";
 import CabeenManagement from "./screens/CabeenManagement";
+import SignUpModal from "./modals/SignUpModal";
+
 import {
     ApolloProvider,
     ApolloClient,
@@ -127,6 +129,11 @@ export default class App extends React.PureComponent{
                                     hideNavBar
                                 />
                             </Scene>
+                            <Scene
+                                component={SignUpModal}
+                                key={'signUpModal'}
+                                hideNavBar
+                            />
                         </Lightbox>
                     </Router>
                 </Provider>

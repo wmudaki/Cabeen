@@ -18,6 +18,7 @@ import { Actions } from "react-native-router-flux";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { agreeToTerms, updateSignIn } from "../state/AppActions";
 import {useQuery, useMutation, gql} from "@apollo/client";
+import SignUpModal from "../modals/SignUpModal";
 
 
 function Signup(props) {
@@ -49,14 +50,20 @@ function Signup(props) {
     `
 
     const [createUser] = useMutation(CREATE_USER)
+    const [isSigningIn, setIsSigningIn] = React.useState(false)
     const signIn = () => {
+        setIsSigningIn(true)
+        // Actions.signUpModal()
         createUser({variables:{
             username: props.app.signIn.username,
                 fullName: props.app.signIn.fullName,
                 phone: props.app.signIn.phone,
                 password: props.app.signIn.password
             }})
-            .then((res) => console.log(res))
+            .then((res) => {
+                console.log(res)
+                setIsSigningIn(false)
+            })
             .catch(e => console.log('Error', e))
     }
 
@@ -219,6 +226,12 @@ function Signup(props) {
 
                 </View>
             </ScrollView>
+            <SignUpModal
+                modalVisible={isSigningIn}
+                onRequestClose={() => {
+                    setIsSigningIn(false)
+                }}
+            />
         </>
     )
 
