@@ -12,7 +12,13 @@ const INITIAL_STATE = {
         currency: '',
         price: '',
         images: []
+    },
+
+    tenantInfo: {
+        userId: '',
+        houseLabel: ''
     }
+
 }
 
 export const cabeenReducer = (state = INITIAL_STATE, action) => {
@@ -56,6 +62,16 @@ export const cabeenReducer = (state = INITIAL_STATE, action) => {
             }
             else return state
             //
+        case "ADD_TENANT":
+            if (action.field === 'userId'){
+                state.tenantInfo.userId = action.payload
+                return {...state}
+            }
+            else if (action.field === 'houseLabel'){
+                state.tenantInfo.houseLabel = action.payload
+                return {...state}
+            }
+            else return state
         default:
             return state
 

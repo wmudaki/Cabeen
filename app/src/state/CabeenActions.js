@@ -6,3 +6,12 @@ export const addCabeen = (field, payload) => (
 
     }
 )
+
+export const addTenant = (field, payload) => (
+    {
+        type: "ADD_TENANT",
+        field: field,
+        payload: payload
+    }
+)
+
