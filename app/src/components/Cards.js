@@ -82,7 +82,7 @@ class CabeenCard extends React.PureComponent{
 									margin: 5,
 									color: this.props.app.colors.greyText
 								}}>
-								Kasarani
+								Kiambu
 							</Text>
 						</View>
 						<View style={{
@@ -101,7 +101,7 @@ class CabeenCard extends React.PureComponent{
 									fontSize: 16,
 									margin: 5
 								}}>
-								2 bedroom
+								2 acres
 							</Text>
 
 						</View>

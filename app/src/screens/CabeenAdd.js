@@ -15,10 +15,124 @@ import {
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import {BackButtonTopNavBar} from "../components/NavBars";
-import { RegularTextInput } from "../components/TextInputs";
-import TextInjection from "react-native/Libraries/Text/TextInjection";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import {addCabeen} from "../state/CabeenActions";
+import {useMutation, gql} from "@apollo/client";
+import PleaseWaitModal from "../modals/PleaseWaitModal";
+import SignUpModal from "../modals/PleaseWaitModal";
+
+function CabeenAddButtons(props){
+
+	const ADD_CABEEN = gql`
+		mutation ADD_CABEEN(
+			$name: String,
+			$type: String,
+			$description: String,
+			$price: String,
+			$currency: String,
+			$country: String,
+			$county: String,
+			$locality: String,
+			$coordinates: String,
+		){
+			createCabeen(
+				input: {
+					name: $name,
+					type: $type,
+					description: $description,
+					price: $price,
+					currency: $currency,
+					country: $country,
+					county: $county,
+					locality: $locality,
+					coordinates: $coordinates
+					
+				}
+			){
+				_id,
+				name,
+			}
+		}
+	`
+	const [createCabeen] = useMutation(ADD_CABEEN)
+	const [isCreatingCabeen, setIsCreatingCabeen] = React.useState(false)
+	const [modalContentType, setModalContentType] = React.useState('loading')
+
+	const addCabeen = () => {
+		setIsCreatingCabeen(true)
+		console.log(props.cabeen.cabeenInfo)
+		createCabeen({variables: {
+			name: props.cabeen.cabeenInfo.name,
+				type: props.cabeen.cabeenInfo.type,
+				description: props.cabeen.cabeenInfo.description,
+				price: props.cabeen.cabeenInfo.price,
+				currency: props.cabeen.cabeenInfo.currency,
+				country: props.cabeen.cabeenInfo.location.country,
+				county: props.cabeen.cabeenInfo.location.county,
+				locality: props.cabeen.cabeenInfo.location.locality,
+				coordinates: props.cabeen.cabeenInfo.location.coordinates
+			}})
+			.then((res) => {
+				console.log(res)
+				setIsCreatingCabeen(false)
+			})
+			.catch(e => {
+				console.log("Error",e)
+			})
+	}
+
+	return(
+		<>
+			<View style={{
+				flexDirection: "row",
+				justifyContent: "space-between",
+				alignItems:"center",
+				margin: 20
+			}}>
+				<TouchableOpacity style={{
+					borderRadius: 10,
+					borderColor: '#555',
+					borderWidth: 1,
+					padding: 10
+				}}>
+					<Text>
+						Add images
+					</Text>
+
+				</TouchableOpacity>
+				<TouchableOpacity
+					onPress={() => addCabeen()}
+					style={{
+					backgroundColor: props.app.colors.buttonColor,
+					borderRadius: 10,
+					padding: 10,
+					width:'50%',
+					alignItems: "center",
+					justifyContent: "center",
+					elevation: 10,
+				}}>
+					<Text style={{
+						fontWeight: "bold",
+						fontSize: 18,
+						color: '#fff'
+					}}>
+						Submit
+					</Text>
+
+				</TouchableOpacity>
+
+			</View>
+			<SignUpModal
+				modalVisible={isCreatingCabeen}
+				type={modalContentType}
+				onRequestClose={() => {
+					setIsCreatingCabeen(false)
+				}}
+			/>
+		</>
+	)
+}
 
 class CabeenAdd extends React.PureComponent{
 
@@ -42,7 +156,7 @@ class CabeenAdd extends React.PureComponent{
 					<TextInput
 						placeholder={'cabeen name'}
 						placeholderTextColor={this.props.app.colors.secondaryText}
-						onChangeText={this.handleInput}
+						onChangeText={(value) => this.props.addCabeen('name', value)}
 						style={{
 							borderRadius: 10,
 							backgroundColor: this.props.app.colors.background,
@@ -75,7 +189,9 @@ class CabeenAdd extends React.PureComponent{
 					margin: 30,
 					marginTop: 10
 				}}>
-					<TouchableOpacity style={{
+					<TouchableOpacity
+						onPress={() => this.props.addCabeen('type', 'Nightout')}
+						style={{
 						flexDirection:"row",
 						alignItems: "center"
 					}}>
@@ -94,7 +210,9 @@ class CabeenAdd extends React.PureComponent{
 							Nightout
 						</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={{
+					<TouchableOpacity
+						onPress={() => this.props.addCabeen('type', 'Rental')}
+						style={{
 						flexDirection:"row",
 						alignItems: "center"
 					}}>
@@ -113,7 +231,9 @@ class CabeenAdd extends React.PureComponent{
 							Rental
 						</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={{
+					<TouchableOpacity
+						onPress={() => this.props.addCabeen('type', 'Sale')}
+						style={{
 						flexDirection:"row",
 						alignItems: "center"
 					}}>
@@ -156,7 +276,7 @@ class CabeenAdd extends React.PureComponent{
 					<TextInput
 						placeholder={'country'}
 						placeholderTextColor={this.props.app.colors.secondaryText}
-						onChangeText={this.handleInput}
+						onChangeText={(value) => this.props.addCabeen('country', value)}
 						style={{
 							borderRadius: 10,
 							backgroundColor: this.props.app.colors.background,
@@ -169,7 +289,7 @@ class CabeenAdd extends React.PureComponent{
 					<TextInput
 						placeholder={'county'}
 						placeholderTextColor={this.props.app.colors.secondaryText}
-						onChangeText={this.handleInput}
+						onChangeText={(value) => this.props.addCabeen('county', value)}
 						style={{
 							borderRadius: 10,
 							backgroundColor: this.props.app.colors.background,
@@ -180,9 +300,9 @@ class CabeenAdd extends React.PureComponent{
 						}}
 					/>
 					<TextInput
-						placeholder={'street'}
+						placeholder={'locality'}
 						placeholderTextColor={this.props.app.colors.secondaryText}
-						onChangeText={this.handleInput}
+						onChangeText={(value) => this.props.addCabeen('locality', value)}
 						style={{
 							borderRadius: 10,
 							backgroundColor: this.props.app.colors.background,
@@ -215,7 +335,7 @@ class CabeenAdd extends React.PureComponent{
 					<TextInput
 						placeholder={'cabeen price'}
 						placeholderTextColor={this.props.app.colors.secondaryText}
-						onChangeText={this.handleInput}
+						onChangeText={(value) => this.props.addCabeen('price', value) }
 						keyboardType={"numeric"}
 						style={{
 							borderRadius: 10,
@@ -250,7 +370,9 @@ class CabeenAdd extends React.PureComponent{
 					margin: 30,
 					marginTop: 10
 				}}>
-					<TouchableOpacity style={{
+					<TouchableOpacity
+						onPress={() => this.props.addCabeen('currency', "KES")}
+						style={{
 						flexDirection:"row",
 						alignItems: "center"
 					}}>
@@ -269,7 +391,9 @@ class CabeenAdd extends React.PureComponent{
 							KES
 						</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={{
+					<TouchableOpacity
+						onPress={() => this.props.addCabeen('currency', 'USD')}
+						style={{
 						flexDirection:"row",
 						alignItems: "center"
 					}}>
@@ -288,7 +412,9 @@ class CabeenAdd extends React.PureComponent{
 							USD
 						</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={{
+					<TouchableOpacity
+						onPress={() => this.props.addCabeen('currency', 'EUR')}
+						style={{
 						flexDirection:"row",
 						alignItems: "center"
 					}}>
@@ -410,7 +536,7 @@ class CabeenAdd extends React.PureComponent{
 					<TextInput
 						placeholder={'cabeen description'}
 						placeholderTextColor={this.props.app.colors.secondaryText}
-						onChangeText={this.handleInput}
+						onChangeText={(value) => this.props.addCabeen('description', value)}
 						multiline
 						style={{
 							borderRadius: 10,
@@ -488,50 +614,6 @@ class CabeenAdd extends React.PureComponent{
 
 	}
 
-	renderButtons(){
-		return(
-			<>
-				<View style={{
-					flexDirection: "row",
-					justifyContent: "space-between",
-					alignItems:"center",
-					margin: 20
-				}}>
-					<TouchableOpacity style={{
-						borderRadius: 10,
-						borderColor: '#555',
-						borderWidth: 1,
-						padding: 10
-					}}>
-						<Text>
-							Add images
-						</Text>
-
-					</TouchableOpacity>
-					<TouchableOpacity style={{
-						backgroundColor: this.props.app.colors.buttonColor,
-						borderRadius: 10,
-						padding: 10,
-						width:'50%',
-						alignItems: "center",
-						justifyContent: "center",
-						elevation: 10,
-					}}>
-						<Text style={{
-							fontWeight: "bold",
-							fontSize: 18,
-							color: '#fff'
-						}}>
-							Submit
-						</Text>
-
-					</TouchableOpacity>
-
-				</View>
-			</>
-		)
-	}
-
 	render(){
 		return(
 			<>
@@ -543,17 +625,18 @@ class CabeenAdd extends React.PureComponent{
 						title={'Add Cabeen'}
 					/>
 					<ScrollView>
-
 						{this.renderName()}
 						{this.renderType()}
-						{this.renderUnits()}
 						{this.renderDescription()}
 						{this.renderLocation()}
 						{this.renderCurrency()}
 						{this.renderPrice()}
 						{this.renderImages()}
-						{this.renderButtons()}
+						<CabeenAddButtons
+							{...this.props}
+						/>
 					</ScrollView>
+
 				</View>
 			</>
 		)
@@ -562,12 +645,13 @@ class CabeenAdd extends React.PureComponent{
 
 
 const mapStateToProps = state => {
-	const {app} = state;
-	return {app}
+	const {app, cabeen} = state;
+	return {app, cabeen}
 }
 
 const mapDispatchToProps = dispatch => (
 	bindActionCreators({
+		addCabeen
 
 	}, dispatch)
 )

@@ -18,7 +18,7 @@ import { Actions } from "react-native-router-flux";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { agreeToTerms, updateSignIn } from "../state/AppActions";
 import {useQuery, useMutation, gql} from "@apollo/client";
-import SignUpModal from "../modals/SignUpModal";
+import SignUpModal from "../modals/PleaseWaitModal";
 
 
 function Signup(props) {

@@ -18,7 +18,7 @@ import {connect} from "react-redux";
 import {RegularTextInput} from "../components/TextInputs";
 import { Actions } from "react-native-router-flux";
 import {useQuery, gql, useMutation} from "@apollo/client";
-import SignUpModal from "../modals/SignUpModal";
+import SignUpModal from "../modals/PleaseWaitModal";
 import {updateLogin} from "../state/AppActions";
 
 function Login(props){
@@ -41,20 +41,26 @@ function Login(props){
     `
     const [login] = useMutation(LOGIN)
     const [isLoginIn, setIsLoginIn] = React.useState(false)
+    const [modalContentType, setModalContentType] = React.useState('loading')
 
     const userLogin = () => {
         setIsLoginIn(true)
+        setModalContentType('loading')
         login({variables: {
             username: props.app.login.username,
                 password: props.app.login.password
             }})
             .then((res) => {
+                Actions.home()
                 setIsLoginIn(false)
                 console.log(res)
                 updateLogin("clear", 'clear')
-                Actions.home()
+
             })
-            .catch(e => console.log("Error", e))
+            .catch(e => {
+                console.log("Error", e)
+                setModalContentType('loginError')
+            })
     }
 
     return(
@@ -72,7 +78,6 @@ function Login(props){
                 }}>
                     Login
                 </Text>
-                {/*<LoginHooks/>*/}
                 <View>
                     <View style={{
 
@@ -157,6 +162,7 @@ function Login(props){
             </ScrollView>
             <SignUpModal
                 modalVisible={isLoginIn}
+                type={modalContentType}
                 onRequestClose={() => {
                     setIsLoginIn(false)
                 }}

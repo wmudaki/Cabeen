@@ -59,22 +59,22 @@ class CustomSectionListStateless extends React.PureComponent{
 	render(){
 		const DATA = [
 			{
-				title: "Main dishes",
+				title: "Today's special",
 				data: [1],
-				carouselData: ["Pizza", "Burger", "Risotto"]
+				carouselData: ["Strawberry", "Strawberry", "Risotto"]
 			},
 			{
-				title: "Sides",
+				title: "Farm's near you",
 				data: [1],
 				carouselData: ["French Fries", "Onion Rings", "Fried Shrimps"]
 			},
 			{
-				title: "Drinks",
+				title: "Because you love avocados",
 				data:[1],
 				carouselData: ["Water", "Coke", "Beer"]
 			},
 			{
-				title: "Desserts",
+				title: "Today's special",
 				data:[1],
 				carouselData: ["Cheese Cake", "Ice Cream"]
 			}

@@ -39,7 +39,7 @@ class Home extends React.PureComponent{
 						<FloatingSearchBar
 							leftIcon={'person-circle-outline'}
 							rightIcon={'search'}
-							placeholder={'search cabeen'}
+							placeholder={'search produce'}
 							feather={true}
 							leftIconPress={() => Actions.account()}
 						/>

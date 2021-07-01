@@ -66,7 +66,7 @@ class MapStateless extends React.PureComponent{
 						<MapboxGL.Camera
 							zoomLevel={16}
 							animationMode={'flyTo'}
-							// followUserLocation={!this.props.map.moveCamera}
+							followUserLocation={true}
 							centerCoordinate={this.props.map.moveCamera ?
 								this.props.map.searchLocation.geometry.coordinates:
 								[36.899102, -1.226383]}
@@ -122,7 +122,7 @@ class MapCabeenStateless extends React.PureComponent{
 							borderTopRightRadius: 20
 						}}
 						source={{
-						uri: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.BEyMW2mX7ojl1e1TQo4vPwHaE8%26pid%3DApi&f=1'
+						uri: 'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fnoisebreak.com%2Fwp-content%2Fuploads%2F2017%2F09%2Ffood-market-01-800x509.jpg&f=1&nofb=1'
 					}}/>
 					<View style={{
 						margin: 5
@@ -132,7 +132,7 @@ class MapCabeenStateless extends React.PureComponent{
 							fontSize: 19,
 							color: this.props.app.colors.primaryText
 						}}>
-							Acacia Apartments
+							Gikomba market
 						</Text>
 						<View style={{
 							flexDirection: 'row',
@@ -149,7 +149,7 @@ class MapCabeenStateless extends React.PureComponent{
 								margin: 5,
 								color: this.props.app.colors.greyText
 							}}>
-								Kasarani
+								Kamkunji road, Nairobi
 							</Text>
 						</View>
 						<View style={{
@@ -157,7 +157,7 @@ class MapCabeenStateless extends React.PureComponent{
 							alignItems: 'center'
 						}}>
 							<MaterialCommunityIcons
-								name={'home-roof'}
+								name={'clock'}
 								size={18}
 								color={this.props.app.colors.statusBar}
 							/>
@@ -166,7 +166,7 @@ class MapCabeenStateless extends React.PureComponent{
 								fontSize: 16,
 								margin: 5
 							}}>
-								2 bedroom
+								8hr 30 Minutes
 							</Text>
 
 						</View>
@@ -192,7 +192,7 @@ class MapCabeenStateless extends React.PureComponent{
 									fontWeight: 'bold',
 									color: this.props.app.colors.greyText
 								}}>
-									1200 KES
+									13800 KES
 								</Text>
 							</View>
 							<TouchableOpacity style={{
