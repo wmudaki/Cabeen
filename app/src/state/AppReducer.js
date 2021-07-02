@@ -31,6 +31,13 @@ const INITIAL_STATE = {
     login:{
         username: '',
         password: ''
+    },
+    editProfile: {
+        _id: '',
+        name: '',
+        phone: '',
+        email: '',
+        avatar: ''
     }
 }
 
@@ -81,6 +88,29 @@ export const appReducer = (state=INITIAL_STATE, action) => {
                 return {...state}
             }
 
+            else return state
+
+        case "EDIT_PROFILE":
+            if (action.field === 'name'){
+                state.editProfile.name = action.payload
+                return {...state}
+            }
+            else if (action.field === 'email'){
+                state.editProfile.email = action.payload
+                return {...state}
+            }
+            else if (action.field === 'phone'){
+                state.editProfile.phone = action.payload
+                return {...state}
+            }
+            else if (action.field === 'avatar'){
+                state.editProfile.avatar = action.payload
+                return {...state}
+            }
+            else if (action.field === '_id'){
+                state.editProfile._id = action.payload
+                return {...state}
+            }
             else return state
 
         default:

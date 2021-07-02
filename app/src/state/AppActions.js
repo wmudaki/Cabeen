@@ -34,4 +34,13 @@ export const updateLogin = (field, payload) => (
     }
 )
 
+export const editProfile = (field, payload) => (
+    {
+        type: "EDIT_PROFILE",
+        field: field,
+        payload: payload
+    }
+)
+
+
 
