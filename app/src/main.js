@@ -87,13 +87,13 @@ export default class App extends React.PureComponent{
                                     lazy
                                 >
                                     <Scene
-                                        component={Discover}
-                                        key={'discover'}
+                                        component={Home}
+                                        key={'home'}
                                         hideNavBar
                                     />
                                     <Scene
                                         component={Home}
-                                        key={'home'}
+                                        key={'discover'}
                                         hideNavBar
                                     />
                                     <Scene

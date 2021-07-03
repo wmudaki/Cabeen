@@ -60,9 +60,9 @@ class Cabeen extends React.PureComponent{
 						resizeMethod={"scale"}
 						style={{
 							width: '100%',
-							height: 350,
-							// borderBottomLeftRadius:15,
-							// borderBottomRightRadius:15
+							height: 320,
+							borderRadius: 20,
+							marginTop: 10
 						}}
 						source={{
 						uri: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.hZBRkPchyD8tthZCC47YpQHaE9%26pid%3DApi&f=1'
@@ -89,114 +89,93 @@ class Cabeen extends React.PureComponent{
 						Acacia apartments
 					</Text>
 					<View style={{
-						// flexDirection: 'row',
-						// alignItems: 'center'
+						marginTop: 30
 					}}>
 						<Text style={{
 							fontWeight: "bold",
-							fontSize: 20,
-							marginTop: 20
-						}}>
-							Type
-						</Text>
-						<Text
-							numberOfLines={1}
-							style={{
-								fontSize: 20,
-								margin: 20,
-								marginTop:10,
-								color: this.props.app.colors.greyText
-							}}>
-							Nightout
-						</Text>
-					</View>
-					<View style={{
-						// flexDirection: 'row',
-						// alignItems: 'center'
-					}}>
-						<Text style={{
-							fontWeight: "bold",
-							fontSize: 20
+							fontSize: 25,
+							color: this.props.app.colors.statusBar
 						}}>
 							Location
 						</Text>
-						<Text
-							numberOfLines={1}
-							style={{
-								fontSize: 20,
-								margin: 20,
-								marginTop: 10,
-								color: this.props.app.colors.greyText
-							}}>
-							Kasarani
-						</Text>
-					</View>
-					<View style={{
-						// flexDirection: 'row',
-						// alignItems: 'center'
-					}}>
-						<Text style={{
-							fontWeight: "bold",
-							fontSize: 20
+						<View style={{
+							flexDirection: "row",
+							alignItems: "center",
+							margin: 10
 						}}>
-							Size
-						</Text>
-						<Text
-							numberOfLines={1}
-							style={{
-								fontSize: 20,
-								margin: 20,
-								marginTop:10,
-								color: this.props.app.colors.greyText
-							}}>
-							2 bedroom
-						</Text>
+							<Ionicons
+								name={"location-outline"}
+								size={25}
+							/>
+							<Text
+								numberOfLines={1}
+								style={{
+									fontSize: 22,
+									margin: 10,
+									marginTop: 10,
+									color: this.props.app.colors.primaryText
+								}}>
+								Kasarani
+							</Text>
+						</View>
+
 					</View>
 					<View style={{
+
+					}}>
+						<Text style={{
+							fontWeight: "bold",
+							fontSize: 25,
+							color: this.props.app.colors.statusBar
+						}}>
+							Price
+						</Text>
+
+						<View style={{
+							flexDirection: "row",
+							alignItems: "center",
+							margin: 10
+						}}>
+							<Ionicons
+								name={"cash-outline"}
+								size={25}
+							/>
+							<Text
+								numberOfLines={1}
+								style={{
+									fontSize: 22,
+									margin: 10,
+									marginTop: 10,
+									color: this.props.app.colors.primaryText
+								}}>
+								200 KES / Night
+							</Text>
+						</View>
+					</View>
+					<View style={{
+						marginTop: 10,
 						// flexDirection: 'row',
 						// alignItems: 'center'
 					}}>
 						<Text style={{
 							fontWeight: "bold",
-							fontSize: 20
+							fontSize: 25,
+							color: this.props.app.colors.statusBar
 						}}>
 							Description
 						</Text>
 						<Text
-							// numberOfLines={1}
+							// numberOfLines={7}
 							style={{
-								fontSize: 20,
-								margin: 20,
+								fontSize: 22,
+								margin: 10,
 								marginTop:10,
-								color: this.props.app.colors.greyText
+								color: this.props.app.colors.primaryText
 							}}>
 
 							"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 						</Text>
 					</View>
-					<View style={{
-						// flexDirection: 'row',
-						// alignItems: 'center'
-					}}>
-						<Text style={{
-							fontWeight: "bold",
-							fontSize: 20
-						}}>
-							Price
-						</Text>
-						<Text
-							numberOfLines={1}
-							style={{
-								fontSize: 20,
-								margin: 20,
-								marginTop:10,
-								color: this.props.app.colors.greyText
-							}}>
-							2000 KES
-						</Text>
-					</View>
-
-
 				</View>
 			</>
 		)
@@ -216,7 +195,7 @@ class Cabeen extends React.PureComponent{
 					<TouchableOpacity
 						// onPress={() => Actions.signup()}
 						style={{
-							borderWidth: 2,
+							borderWidth: 1,
 							flexDirection:"row",
 							alignItems: 'center',
 							justifyContent:'space-evenly',
@@ -271,7 +250,8 @@ class Cabeen extends React.PureComponent{
 					/>
 				</View>
 
-				<ScrollView style={{
+				<ScrollView
+					style={{
 					flex: 1,
 					backgroundColor: this.props.app.colors.whiteText
 				}}>
@@ -283,19 +263,27 @@ class Cabeen extends React.PureComponent{
 							data={[1,2,3,4,5]}
 							renderItem={() => this.renderCabeenImages()}
 							sliderWidth={this.props.app.portrait ?width: height}
-							itemWidth={this.props.app.portrait ? width: height}
+							itemWidth={this.props.app.portrait ?0.98* width: 0.98*height}
 						/>
 					</View>
-					<View>
+					<View style={{
+						marginBottom: 100
+					}}>
 						{this.renderDescription()}
 
 					</View>
-					<View style={{
-						margin: 10
-					}}>
-						{this.renderButtons()}
-					</View>
 				</ScrollView>
+				<View style={{
+					// margin: 10,
+					position: "absolute",
+					bottom: 0,
+					left: 0,
+					right: 0,
+					padding:10,
+					backgroundColor: this.props.app.colors.whiteText
+				}}>
+					{this.renderButtons()}
+				</View>
 			</>
 		)
 	}

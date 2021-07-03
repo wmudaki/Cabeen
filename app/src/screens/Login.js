@@ -51,7 +51,7 @@ function Login(props){
                 password: props.app.login.password
             }})
             .then((res) => {
-                Actions.home()
+                Actions.discover()
                 setIsLoginIn(false)
                 console.log(res)
                 updateLogin("clear", 'clear')
