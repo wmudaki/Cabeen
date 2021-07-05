@@ -14,10 +14,13 @@ import {
     Tabs} from 'react-native-router-flux'
 import {Provider} from 'react-redux'
 import  {createStore} from 'redux'
+import {persistStore, persistReducer} from "redux-persist";
 import rootReducer from './state/Index'
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
     LogBox
 } from "react-native";
+import {PersistGate} from "redux-persist/integration/react";
 
 import Welcome from "./screens/Welcome";
 import Login from "./screens/Login";
@@ -32,24 +35,14 @@ import ProfileEdit from "./screens/ProfileEdit";
 import CabeenAdd from "./screens/CabeenAdd";
 import CabeenManagement from "./screens/CabeenManagement";
 import Search from "./screens/Search";
-
+import Splash from "./screens/Splash";
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2'
 import {
     ApolloProvider,
     ApolloClient,
     createHttpLink,
     InMemoryCache
 } from "@apollo/client";
-
-const store = createStore(rootReducer);
-
-const httpLink = createHttpLink({
-    uri: "http://192.168.0.11:4000/"
-})
-
-const client = new ApolloClient({
-    link: httpLink,
-    cache: new InMemoryCache()
-})
 
 
 LogBox.ignoreLogs(['Deprecation in \'createStackNavigator\':\n' +
@@ -58,11 +51,35 @@ LogBox.ignoreLogs(['Deprecation in \'createStackNavigator\':\n' +
 'If you want to use Reanimated 2 then go through our installation steps ' +
 'https://docs.swmansion.com/react-native-reanimated/docs/installation'])
 
-export default class App extends React.PureComponent{
-    render(){
-        return(
-            <ApolloProvider client={client}>
-                <Provider store={store}>
+export default function App (){
+
+    const persistConfig = {
+        key: 'root',
+        storage: AsyncStorage,
+        // stateReconciler: autoMergeLevel2,
+    }
+
+    const persistedReducer = persistReducer(persistConfig, rootReducer)
+
+    const store = createStore(persistedReducer)
+
+    const persistor = persistStore(store)
+
+// const store = createStore(rootReducer);
+
+    const httpLink = createHttpLink({
+        uri: "http://192.168.0.11:4000/"
+    })
+
+    const client = new ApolloClient({
+        link: httpLink,
+        cache: new InMemoryCache()
+    })
+
+    return(
+        <ApolloProvider client={client}>
+            <Provider store={store}>
+                <PersistGate loading={<Splash/>} persistor={persistor}>
                     <Router>
                         <Lightbox>
                             <Scene key={'root'}>
@@ -72,9 +89,9 @@ export default class App extends React.PureComponent{
                                     hideNavBar
                                 />
                                 <Scene
-                                  component={Login}
-                                  key={'login'}
-                                  hideNavBar
+                                    component={Login}
+                                    key={'login'}
+                                    hideNavBar
                                 />
                                 <Scene
                                     component={Signup}
@@ -136,8 +153,8 @@ export default class App extends React.PureComponent{
                             </Scene>
                         </Lightbox>
                     </Router>
-                </Provider>
-            </ApolloProvider>
-        )
-    }
+                </PersistGate>
+            </Provider>
+        </ApolloProvider>
+    )
 }

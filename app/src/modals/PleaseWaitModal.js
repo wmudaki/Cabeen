@@ -11,7 +11,7 @@ import {
     ActivityIndicator,
     Text,
     Modal,
-    Dimensions
+    Dimensions, TouchableOpacity
 } from "react-native";
 import {bindActionCreators} from "redux";
 import {agreeToTerms, updateSignIn} from "../state/AppActions";
@@ -52,25 +52,162 @@ function ModalContent(props) {
         return (
             <>
                 <View style={{
-                    height: '40%',
+                    height: '35%',
                     width: "90%",
                     borderRadius: 10,
                     elevation: 20,
                     margin: 20,
-                    alignSelf: "center",
+                    // alignSelf: "center",
                     backgroundColor: props.app.colors.whiteText,
-                    alignItems: 'center',
+                    // alignItems: 'center',
                     justifyContent: "center"
                 }}>
                     <Text style={{
                         fontWeight: "bold",
                         fontSize: 25,
+                        alignSelf: 'center',
                         margin: 10,
                         color: props.app.colors.errorText
                     }}>
-                        Oops! Invalid Password or Username Please try again ...
+                        Oops! an error occurred Please try again ...
 
                     </Text>
+                    <View style={{
+                        flexDirection: "row",
+                        justifyContent: 'center',
+                        // alignItems: "center",
+                        marginTop: 30
+                    }}>
+                        <TouchableOpacity
+                            onPress={props.onError}
+                            style={{
+                                backgroundColor: props.app.colors.buttonColor,
+                                borderRadius: 5,
+                                height: 40,
+                                width: '45%',
+                                justifyContent: "center",
+                                alignItems:"center",
+                                elevation: 10,
+                            }}>
+                            <Text style={{
+                                fontSize: 18,
+                                fontWeight: "bold"
+                            }}>
+                                OK
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+
+                </View>
+
+            </>
+        )
+    }
+    else if (props.type === 'signupError'){
+        return (
+            <>
+                <View style={{
+                    height: '35%',
+                    width: "90%",
+                    borderRadius: 10,
+                    elevation: 20,
+                    margin: 20,
+                    // alignSelf: "center",
+                    backgroundColor: props.app.colors.whiteText,
+                    // alignItems: 'center',
+                    justifyContent: "center"
+                }}>
+                    <Text style={{
+                        fontWeight: "bold",
+                        fontSize: 25,
+                        alignSelf: 'center',
+                        margin: 10,
+                        color: props.app.colors.errorText
+                    }}>
+                        Oops! an error occurred Please try again ...
+
+                    </Text>
+                    <View style={{
+                        flexDirection: "row",
+                        justifyContent: 'center',
+                        // alignItems: "center",
+                        marginTop: 30
+                    }}>
+                        <TouchableOpacity
+                            onPress={props.onError}
+                            style={{
+                                backgroundColor: props.app.colors.buttonColor,
+                                borderRadius: 5,
+                                height: 40,
+                                width: '45%',
+                                justifyContent: "center",
+                                alignItems:"center",
+                                elevation: 10,
+                            }}>
+                            <Text style={{
+                                fontSize: 18,
+                                fontWeight: "bold"
+                            }}>
+                                OK
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+
+                </View>
+
+            </>
+        )
+    }
+
+    else if (props.type === 'signupSuccess'){
+        return (
+            <>
+                <View style={{
+                    height: '35%',
+                    width: "90%",
+                    borderRadius: 10,
+                    elevation: 20,
+                    margin: 20,
+                    // alignSelf: "center",
+                    backgroundColor: props.app.colors.whiteText,
+                    // alignItems: 'center',
+                    justifyContent: "center"
+                }}>
+                    <Text style={{
+                        fontWeight: "bold",
+                        fontSize: 25,
+                        alignSelf: 'center',
+                        margin: 10,
+                        color: props.app.colors.primaryText
+                    }}>
+                        Signup successfully
+
+                    </Text>
+                    <View style={{
+                        flexDirection: "row",
+                        justifyContent: 'center',
+                        // alignItems: "center",
+                        marginTop: 30
+                    }}>
+                        <TouchableOpacity
+                            onPress={props.onSuccessfully}
+                            style={{
+                                backgroundColor: props.app.colors.successText,
+                                borderRadius: 5,
+                                height: 40,
+                                width: '45%',
+                                justifyContent: "center",
+                                alignItems:"center",
+                                elevation: 10,
+                            }}>
+                            <Text style={{
+                                fontSize: 18,
+                                fontWeight: "bold"
+                            }}>
+                                OK
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
 
                 </View>
 

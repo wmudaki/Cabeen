@@ -18,6 +18,7 @@ import { Map, MapCabeen } from "../components/Map";
 import {searchPlace,showAutocomplete, showOverlay} from "../state/MapActions";
 import {FloatingActionButton} from "../components/Buttons";
 import CabeenAddModal from "../modals/CabeenAddModal";
+import {gql, useMutation} from "@apollo/client";
 
 
 
@@ -26,8 +27,60 @@ let token = "pk.eyJ1IjoidG90b2RpbmdpIiwiYSI6ImNqeDd5N3Q4YzBib3QzbnBwYW0wbXA5dm4i
 
 function Discover(props){
 
+	const ADD_CABEEN = gql`
+		mutation ADD_CABEEN(
+			$name: String,
+			$type: String,
+			$description: String,
+			$price: String,
+			$currency: String,
+			$location: String
+		){
+			createCabeen(
+				input: {
+					name: $name,
+					type: $type,
+					description: $description,
+					price: $price,
+					currency: $currency,
+					location: $location
+
+				}
+			){
+				_id,
+				name,
+				price,
+				location,
+				description
+			}
+		}
+	`
+
 	const [isAddingCabeen, setIsAddingCabeen] = React.useState(false)
 	const [isType, setIsType] = React.useState('normal')
+	const [createCabeen] = useMutation(ADD_CABEEN)
+
+	const addCabeen = () => {
+		setIsType('loading')
+		console.log(props.cabeen.cabeenInfo)
+		createCabeen({variables: {
+				name: props.cabeen.cabeenInfo.name,
+				type: props.cabeen.cabeenInfo.type,
+				description: props.cabeen.cabeenInfo.description,
+				price: props.cabeen.cabeenInfo.price,
+				currency: props.cabeen.cabeenInfo.currency,
+				location: props.cabeen.cabeenInfo.location,
+			}})
+			.then((res) => {
+				console.log(res)
+				setIsType('success')
+				// setIsCreatingCabeen(false)
+			})
+			.catch(e => {
+				console.log("Error",e)
+				setIsType('error')
+			})
+	}
 
 	return(
 		<>
@@ -56,7 +109,7 @@ function Discover(props){
 					setIsAddingCabeen(false)
 				}}
 				onSubmit={() => {
-					// addTenant()
+					addCabeen()
 					console.log('submitted')
 				}}
 				onCancel={() => {
@@ -71,6 +124,15 @@ function Discover(props){
 					setIsType('normal')
 					// setIsSuccessfully(false)
 					setIsAddingCabeen(false)
+				}}
+				onLocation={() => {
+					if (isType === 'location'){
+						setIsType('normal')
+					}
+					else {
+						setIsType('location')
+					}
+
 				}}
 			/>
 		</>
@@ -174,9 +236,9 @@ class Discovery extends React.PureComponent{
 
 
 const mapStateToProps = state => {
-	const {app,map} = state;
+	const {app,map, cabeen} = state;
 	// console.log('state',map)
-	return {app, map}
+	return {app, map, cabeen}
 }
 
 const mapDispatchToProps = dispatch => (

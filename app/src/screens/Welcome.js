@@ -11,7 +11,8 @@ import {
     View,
     Text,
     StatusBar,
-    TouchableOpacity
+    TouchableOpacity,
+    ActivityIndicator
 } from 'react-native'
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
@@ -19,66 +20,44 @@ import {
     HalfWidthButton
 } from "../components/Buttons";
 import { Actions } from "react-native-router-flux";
+import CabeenAddModal from "../modals/CabeenAddModal";
 
-class Welcome extends React.PureComponent{
-    componentDidMount() {
-        StatusBar.setBackgroundColor(this.props.app.colors.statusBar)
-    }
+function Welcome(props){
+    StatusBar.setBackgroundColor(props.app.colors.statusBar)
 
-    render(){
-        return(
-            <>
-                <View style={{
-                    flex: 1,
-                    backgroundColor: this.props.app.colors.background
+    console.log(props.app.currentUser)
+    React.useEffect(() => {
+        if (props.app.currentUser.isActive){
+            Actions.discover()
+        } else {
+            Actions.login()
+        }
+    })
 
+
+    return(
+        <>
+            <View style={{
+                flex: 1,
+                backgroundColor: props.app.colors.background,
+                alignItems: "center",
+                justifyContent: "center"
+
+            }}>
+                <Text style={{
+                    fontWeight: 'bold',
+                    color: props.app.colors.primaryText,
+                    fontSize: 70,
+                    // marginTop: 70,
+                    // margin: 20,
+                    alignSelf: 'center'
                 }}>
-                    <Text style={{
-                        fontWeight: 'bold',
-                        color: this.props.app.colors.primaryText,
-                        fontSize: 70,
-                        marginTop: 70,
-                        margin: 20,
-                        alignSelf: 'center'
-                    }}>
-                        Cabeen
-                    </Text>
-                    <View style={{flex: 1}}/>
-                    <View style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        bottom: 70
-                    }}>
-                        <TouchableOpacity
-                            onPress={() => Actions.signup()}
-                            style={{
-                                flex: 0.5,
-                            alignItems: 'center',
-                            justifyContent:'center'
-                        }}>
-                            <HalfWidthButton
-                                name={'Signup'}
-                                isSecondary={true}
-                            />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() => Actions.login()}
-                            style={{
-                                flex: 0.5,
-                                alignItems: 'center',
-                                justifyContent:'center'
-                            }}>
-                            <HalfWidthButton
-                                name={'Login'}
-                            />
-                        </TouchableOpacity>
-                    </View>
-
-                </View>
-            </>
-        )
-    }
+                    Cabeen
+                </Text>
+                <ActivityIndicator size={"large"} color={props.app.colors.statusBar}/>
+            </View>
+        </>
+    )
 }
 
 const mapStateToProps = state => {

@@ -18,12 +18,14 @@ function AutoCompleteComponent(props){
     const _renderItem = (item) => {
         return(
             <>
-                <TouchableOpacity style={{
+                <TouchableOpacity
+                    onPress={() => props.onPress(item)}
+                    style={{
                     flexDirection: "row",
                     alignItems: 'center'
                 }}>
                     <Ionicons
-                        name={'search'}
+                        name={props.locationIcon ? "location":'search'}
                         size={20}
                         color={props.app.colors.primaryText}
                     />
@@ -172,3 +174,5 @@ const mapDispatchToProps = dispatch => (
 )
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search)
+
+export {AutoCompleteComponent}

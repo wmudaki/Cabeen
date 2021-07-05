@@ -42,5 +42,10 @@ export const editProfile = (field, payload) => (
     }
 )
 
-
-
+export const authenticate = (field, payload) => (
+    {
+        type: "AUTHENTICATE",
+        field: field,
+        payload: payload
+    }
+)

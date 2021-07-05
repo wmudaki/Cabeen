@@ -1,12 +1,136 @@
 import * as React from 'react'
 import {
     View,
-    Modal, Text, TextInput, TouchableOpacity, ScrollView
+    Modal,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    ScrollView,
+    ActivityIndicator,
+    VirtualizedList, FlatList
 } from "react-native";
 import {bindActionCreators} from "redux";
-import {addTenant} from "../state/CabeenActions";
+import {addTenant, addCabeen} from "../state/CabeenActions";
 import {connect} from "react-redux";
+import {Actions} from "react-native-router-flux";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import {AutoCompleteComponent} from "../screens/Search";
 
+
+function CabeenAddModalLocation(props){
+    const [isSearching, setIsSearching] = React.useState(false)
+    const [autocompleting, setAutocompleting] = React.useState(false)
+    const [locationData, setLocationData] = React.useState([])
+
+    const autocomplete  = async (input) => {
+        setAutocompleting(false)
+        setIsSearching(false)
+        let uri = `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${props.app.googleMapKey}&input=${input}`
+        if (input.length > 0){
+            await fetch(uri)
+                .then((resp) => resp.json())
+                .then(results => {
+                    setIsSearching(false)
+                    setAutocompleting(true)
+                    setLocationData(results.predictions)
+                    console.log('results', results)
+                })
+                .catch(err => {
+                    setIsSearching(false)
+                    setAutocompleting(false)
+                    console.log('err', err)
+                })
+        }
+        else if (input.length > 0){
+            setIsSearching(true)
+        }
+    }
+
+    return(
+        <>
+            <View style={{
+                backgroundColor: props.app.colors.whiteText,
+                height: '50%',
+                width: '90%',
+                borderRadius: 10,
+            }}>
+                <View style={{
+                    margin: 10,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    borderRadius: 30,
+                    paddingLeft:10,
+                    paddingRight: 10,
+                    elevation: 10,
+                    padding: 0,
+                    backgroundColor: props.app.colors.whiteText
+                }}>
+                    <View style={{
+                        flexDirection: "row",
+                        alignItems: "center"
+                    }}>
+
+                        <TouchableOpacity onPressIn={props.onLocation}>
+                            <AntDesign
+                                name={'close'}
+                                size={25}
+                                color={props.app.colors.statusBar}
+                            />
+                        </TouchableOpacity>
+                        <TextInput
+                            placeholder={'enter location'}
+                            placeholderTextColor={props.app.colors.secondaryText}
+                            autoFocus={true}
+                            onChangeText={(value) => autocomplete(value)}
+                            selectionColor={props.app.colors.StatusBar}
+                            style={{
+                                fontSize: 20,
+                                marginLeft: 10,
+                                color: props.app.colors.primaryText,
+                                maxWidth: '80%'
+                            }}
+                        />
+                    </View>
+                    {
+                        isSearching ?
+                            <ActivityIndicator
+                                color={props.app.colors.statusBar}
+                            />
+                            : null
+                    }
+
+
+                </View>
+                {
+                    autocompleting ?
+                        <FlatList
+                            data={[1]}
+                            keyExtractor={(item, key) => item+key}
+                            renderItem={() => {
+                                return (
+                                    <AutoCompleteComponent
+                                        {...props}
+                                        locationData={locationData}
+                                        locationIcon={true}
+                                        onPress={(val) => {
+                                            props.addCabeen('location', val.item.description)
+                                            props.onLocation()
+                                        }}
+                                    />
+                                )
+                            }}
+                        />:
+                        null
+                }
+
+
+
+            </View>
+
+        </>
+    )
+}
 
 function CabeenAddModalSuccess(props){
     return(
@@ -143,7 +267,7 @@ function CabeenAddModalContent(props){
                     <TextInput
                         placeholder={'Cabeen name'}
                         placeholderTextColor={props.app.colors.secondaryText}
-                        // onChangeText={(value) => props.addTenant('userId', value)}
+                        onChangeText={(value) => props.addCabeen('name', value)}
                         style={{
                             // borderRadius: 10,
                             borderBottomColor: props.app.colors.background,
@@ -158,7 +282,7 @@ function CabeenAddModalContent(props){
                     <TextInput
                         placeholder={'Price'}
                         placeholderTextColor={props.app.colors.secondaryText}
-                        // onChangeText={(value) => props.addTenant('houseLabel', value)}
+                        onChangeText={(value) => props.addCabeen('price', value)}
                         style={{
                             // borderRadius: 10,
                             borderBottomColor: props.app.colors.background,
@@ -173,6 +297,9 @@ function CabeenAddModalContent(props){
                     <TextInput
                         placeholder={'Location'}
                         placeholderTextColor={props.app.colors.secondaryText}
+                        onKeyPress={props.onLocation}
+                        defaultValue={props.cabeen.cabeenInfo.location}
+                        selectTextOnFocus
                         // onChangeText={(value) => props.addTenant('houseLabel', value)}
                         style={{
                             // borderRadius: 10,
@@ -189,7 +316,7 @@ function CabeenAddModalContent(props){
                         placeholder={'Description'}
                         placeholderTextColor={props.app.colors.secondaryText}
                         multiline
-                        // onChangeText={(value) => props.addTenant('houseLabel', value)}
+                        onChangeText={(value) => props.addCabeen('description', value)}
                         style={{
                             // borderRadius: 10,
                             borderBottomColor: props.app.colors.background,
@@ -286,6 +413,14 @@ function Content(props){
         )
     }
 
+    else if (props.isType === 'location'){
+        return (
+            <CabeenAddModalLocation
+                {...props}
+            />
+        )
+    }
+
     else return(
             <CabeenAddModalContent {...props}/>)
 }
@@ -332,6 +467,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => (
     bindActionCreators({
         addTenant,
+        addCabeen
 
     }, dispatch)
 )

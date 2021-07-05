@@ -19,6 +19,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { agreeToTerms, updateSignIn } from "../state/AppActions";
 import {useQuery, useMutation, gql} from "@apollo/client";
 import SignUpModal from "../modals/PleaseWaitModal";
+import {authenticate} from "../state/AppActions";
 
 
 function Signup(props) {
@@ -28,19 +29,21 @@ function Signup(props) {
             $fullName: String,
             $phone: String,
             $password: String,
+            $email: String
         ){
             createUser(
                 input:{
                     username: $username,
                     fullName: $fullName,
                     phone: $phone,
-                    password: $password
+                    password: $password,
+                    email: $email
                 }
             ){
                 token,
                 user{
                     _id,
-                    username,
+                    email,
                     fullName,
                     phone,
                 }
@@ -51,20 +54,28 @@ function Signup(props) {
 
     const [createUser] = useMutation(CREATE_USER)
     const [isSigningIn, setIsSigningIn] = React.useState(false)
+    const [type, setType] = React.useState('loading')
     const signIn = () => {
         setIsSigningIn(true)
-        // Actions.signUpModal()
+        setType('loading')
         createUser({variables:{
             username: props.app.signIn.username,
                 fullName: props.app.signIn.fullName,
                 phone: props.app.signIn.phone,
-                password: props.app.signIn.password
+                password: props.app.signIn.password,
+                email: props.app.signIn.email
             }})
             .then((res) => {
-                console.log(res)
-                setIsSigningIn(false)
+                console.log(res.data.createUser)
+                props.authenticate('activate', true)
+                props.authenticate('token', res.data.createUser.token)
+                props.authenticate('user', res.data.createUser.user)
+                setType('signupSuccess')
             })
-            .catch(e => console.log('Error', e))
+            .catch(e => {
+                console.log('Error', e)
+                setType('signupError')
+            })
     }
 
     return(
@@ -88,12 +99,12 @@ function Signup(props) {
 
                     }}>
                         <RegularTextInput
-                            placeholder={'Username'}
+                            placeholder={'Name'}
                             placeholderTextColor={props.app.colors.secondaryText}
                             textColor={props.app.colors.primaryText}
                             borderColor={props.app.colors.statusBar}
                             backgroundColor={props.app.colors.background}
-                            onChangeText={(value) => props.updateSignIn('username', value)}
+                            onChangeText={(value) => props.updateSignIn('fullName', value)}
                             secureTextEntry={false}
                             iconName={'person'}
                             iconColor={props.app.colors.statusBar}
@@ -104,14 +115,14 @@ function Signup(props) {
 
                     }}>
                         <RegularTextInput
-                            placeholder={'Full Name'}
+                            placeholder={'Email'}
                             placeholderTextColor={props.app.colors.secondaryText}
                             textColor={props.app.colors.primaryText}
                             borderColor={props.app.colors.statusBar}
                             backgroundColor={props.app.colors.background}
-                            onChangeText={(value) => props.updateSignIn('fullName', value)}
+                            onChangeText={(value) => props.updateSignIn('email', value)}
                             secureTextEntry={false}
-                            iconName={'person-circle'}
+                            iconName={'mail'}
                             iconColor={props.app.colors.statusBar}
                         />
                     </View>
@@ -230,6 +241,17 @@ function Signup(props) {
                 modalVisible={isSigningIn}
                 onRequestClose={() => {
                     setIsSigningIn(false)
+                }}
+                type={type}
+                onCancel={() => {
+                    setIsSigningIn(false)
+                }}
+                onError={() => {
+                    setIsSigningIn(false)
+                }}
+                onSuccessfully={() => {
+                    // Actions.discover()
+                    console.log(props.app.currentUser)
                 }}
             />
         </>
@@ -410,7 +432,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => (
     bindActionCreators({
         agreeToTerms,
-        updateSignIn
+        updateSignIn,
+        authenticate
 
     }, dispatch)
 )

@@ -2,6 +2,11 @@
 let isDarkMode = false
 
 const INITIAL_STATE = {
+    currentUser: {
+        isActive: false,
+        token: '',
+        user: {}
+    },
     colors: {
         background: isDarkMode ? '#5D4037': '#D7CCC8',
         buttonColor: isDarkMode ? '#FF5722': '#FF5722',
@@ -39,7 +44,7 @@ const INITIAL_STATE = {
         phone: '',
         email: '',
         avatar: ''
-    }
+    },
 }
 
 export const appReducer = (state=INITIAL_STATE, action) => {
@@ -56,8 +61,8 @@ export const appReducer = (state=INITIAL_STATE, action) => {
                 return {...state}
             }
         case "UPDATE_SIGN_IN":
-            if (action.field === 'username'){
-                state.signIn.username = action.payload
+            if (action.field === 'phone'){
+                state.signIn.phone = action.payload
                 return {...state}
             }
             else if (action.field === 'fullName'){
@@ -110,6 +115,22 @@ export const appReducer = (state=INITIAL_STATE, action) => {
             }
             else if (action.field === '_id'){
                 state.editProfile._id = action.payload
+                return {...state}
+            }
+            else return state
+
+        case "AUTHENTICATE":
+            if (action.field === 'activate'){
+                state.currentUser.isActive = action.payload
+                console.log('my job')
+                return {...state}
+            }
+            else if (action.field === 'token'){
+                state.currentUser.token = action.payload
+                return {...state}
+            }
+            else if (action.field === 'user'){
+                state.currentUser.user = action.payload
                 return {...state}
             }
             else return state

@@ -3,12 +3,7 @@ const INITIAL_STATE = {
         name: "",
         type: '',
         description: '',
-        location: {
-            country: '',
-            county: '',
-            locality: '',
-            coordinates: ''
-        },
+        location: '',
         currency: '',
         price: '',
         images: []
@@ -36,20 +31,12 @@ export const cabeenReducer = (state = INITIAL_STATE, action) => {
                 state.cabeenInfo.description = action.payload
                 return {...state}
             }
-            else if (action.field === 'country'){
-                state.cabeenInfo.location.country = action.payload
-                return {...state}
-            }
-            else if (action.field === 'county'){
-                state.cabeenInfo.location.county = action.payload
-                return {...state}
-            }
-            else if (action.field === 'locality'){
-                state.cabeenInfo.location.locality = action.payload
+            else if (action.field === 'location'){
+                state.cabeenInfo.location = action.payload
                 return {...state}
             }
             else if (action.field === 'price'){
-                state.cabeenInfo.location.locality = action.payload
+                state.cabeenInfo.price = action.payload
                 return {...state}
             }
             else if (action.field === 'currency'){
