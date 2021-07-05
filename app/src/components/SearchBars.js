@@ -71,10 +71,12 @@ class FloatingSearchBarStateless extends React.PureComponent{
 						selectionColor={this.props.app.colors.statusBar}
 						selectTextOnFocus
 						defaultValue={this.props.map.place}
-						onFocus={() => this.props.showOverlay(false)}
+						// onFocus={this.props.onFocus}
+						onPressIn={this.props.onFocus}
 						onBlur={() => this.props.showOverlay(true)}
 					/>
 					<TouchableOpacity
+						onPressIn={this.props.onRightIconPress}
 						style={{
 
 					}}>

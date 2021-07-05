@@ -39,13 +39,13 @@ class CabeenCard extends React.PureComponent{
 						borderRadius: 20,
 						elevation: 20,
 						margin:40,
-						height: 0.45*height,
+						height: 0.5*height,
 						alignSelf: 'center'
 
 					}}>
 					<Image
 						style={{
-							height: '55%',
+							height: '60%',
 							width: '100%',
 							borderTopLeftRadius: 20,
 							borderTopRightRadius: 20
@@ -60,7 +60,7 @@ class CabeenCard extends React.PureComponent{
 							numberOfLines={1}
 							style={{
 								fontWeight: 'bold',
-								fontSize: 19,
+								fontSize: 22,
 								color: this.props.app.colors.primaryText
 							}}>
 							{this.props.item}
@@ -68,68 +68,69 @@ class CabeenCard extends React.PureComponent{
 						<View style={{
 							flexDirection: 'row',
 							// justifyContent: 'center',
-							alignItems: 'center'
+							alignItems: 'center',
+							margin: 5,
 						}}>
 							<Ionicons
-								name={'location-outline'}
-								size={17}
+								name={'location'}
+								size={20}
 								color={this.props.app.colors.statusBar}
 							/>
 							<Text
 								numberOfLines={1}
 								style={{
-									fontSize: 16,
-									margin: 5,
-									color: this.props.app.colors.greyText
+									fontSize: 18,
+									marginLeft: 10,
+									color: this.props.app.colors.primaryText
 								}}>
 								Kiambu
 							</Text>
 						</View>
 						<View style={{
 							flexDirection: "row",
-							alignItems: 'center'
+							alignItems: 'center',
+							margin: 5
 						}}>
 							<MaterialCommunityIcons
-								name={'home-roof'}
-								size={18}
+								name={'bed'}
+								size={20}
 								color={this.props.app.colors.statusBar}
 							/>
 							<Text
 								numberOfLines={1}
 								style={{
-									color: this.props.app.colors.greyText,
-									fontSize: 16,
-									margin: 5
+									color: this.props.app.colors.primaryText,
+									fontSize: 18,
+									marginLeft: 10
 								}}>
-								2 acres
+								2 Bedroom
 							</Text>
 
 						</View>
 
-
 						<View style={{
 							alignItems: 'center',
 							flexDirection: 'row',
-							justifyContent: "space-between"
+							justifyContent: "space-between",
+							margin: 5
 						}}>
 							<View style={{
 								flexDirection: "row",
 								alignItems: "center"
 							}}>
 								<Ionicons
-									name={'pricetag'}
-									size={16}
+									name={'cash-outline'}
+									size={20}
 									color={this.props.app.colors.statusBar}
 								/>
 								<Text
 									numberOfLines={1}
 									style={{
-										fontSize: 15,
-										margin: 5,
-										fontWeight: 'bold',
-										color: this.props.app.colors.greyText
+										fontSize: 18,
+										marginLeft: 10,
+										color: this.props.app.colors.primaryText
 									}}>
-									1200 KES
+									1200 KES / Night
 								</Text>
 							</View>
 							<TouchableOpacity
@@ -144,7 +145,7 @@ class CabeenCard extends React.PureComponent{
 								<Fontisto
 									name={this.state.liked ?
 										'heart': 'heart-alt'}
-									size={25}
+									size={20}
 									color={!this.state.liked ?
 										this.props.app.colors.statusBar:
 										this.props.app.colors.errorText

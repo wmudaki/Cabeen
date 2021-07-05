@@ -21,6 +21,7 @@ const INITIAL_STATE = {
     },
     termsAgree: false,
     portrait:true,
+    googleMapKey: 'AIzaSyB1U4VymWm4OrMmIOMmE8XZjEZQ1Gsrp28',
     signIn:{
         username: '',
         fullName:'',

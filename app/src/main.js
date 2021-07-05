@@ -31,6 +31,7 @@ import Account from "./screens/Account";
 import ProfileEdit from "./screens/ProfileEdit";
 import CabeenAdd from "./screens/CabeenAdd";
 import CabeenManagement from "./screens/CabeenManagement";
+import Search from "./screens/Search";
 
 import {
     ApolloProvider,
@@ -87,7 +88,7 @@ export default class App extends React.PureComponent{
                                     lazy
                                 >
                                     <Scene
-                                        component={Home}
+                                        component={Discover}
                                         key={'home'}
                                         hideNavBar
                                     />
@@ -125,6 +126,11 @@ export default class App extends React.PureComponent{
                                 <Scene
                                     component={CabeenManagement}
                                     key={'cabeenManagement'}
+                                    hideNavBar
+                                />
+                                <Scene
+                                    component={Search}
+                                    key={'search'}
                                     hideNavBar
                                 />
                             </Scene>

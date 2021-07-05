@@ -39,8 +39,10 @@ class Home extends React.PureComponent{
 						<FloatingSearchBar
 							leftIcon={'person-circle-outline'}
 							rightIcon={'search'}
-							placeholder={'search produce'}
+							placeholder={'search cabeen'}
 							feather={true}
+							onFocus={() =>Actions.search()}
+							onRightIconPress={() => Actions.search()}
 							leftIconPress={() => Actions.account()}
 						/>
 					</View>

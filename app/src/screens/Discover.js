@@ -16,12 +16,67 @@ import {
 } from "../components/SearchBars";
 import { Map, MapCabeen } from "../components/Map";
 import {searchPlace,showAutocomplete, showOverlay} from "../state/MapActions";
+import {FloatingActionButton} from "../components/Buttons";
+import CabeenAddModal from "../modals/CabeenAddModal";
+
 
 
 
 let token = "pk.eyJ1IjoidG90b2RpbmdpIiwiYSI6ImNqeDd5N3Q4YzBib3QzbnBwYW0wbXA5dm4ifQ.5au8D_SQ61D8dXzsgzS-oQ"
 
-class Discover extends React.PureComponent{
+function Discover(props){
+
+	const [isAddingCabeen, setIsAddingCabeen] = React.useState(false)
+	const [isType, setIsType] = React.useState('normal')
+
+	return(
+		<>
+			<View style={{
+				flex: 1,
+				backgroundColor: props.app.colors.whiteText
+			}}>
+				<View style={{
+					position: "absolute",
+					bottom: 120,
+					right: 25
+
+				}}>
+					<FloatingActionButton
+						onPress={() => {
+							setIsAddingCabeen(true)
+						}}
+					/>
+				</View>
+			</View>
+			<CabeenAddModal
+				modalVisible={isAddingCabeen}
+				isType={isType}
+				// isError={isError}
+				onRequestClose={() => {
+					setIsAddingCabeen(false)
+				}}
+				onSubmit={() => {
+					// addTenant()
+					console.log('submitted')
+				}}
+				onCancel={() => {
+					setIsAddingCabeen(false)
+				}}
+
+				onError={() => {
+					setIsType('normal')
+					setIsAddingCabeen(true)
+				}}
+				onSuccessfully={() => {
+					setIsType('normal')
+					// setIsSuccessfully(false)
+					setIsAddingCabeen(false)
+				}}
+			/>
+		</>
+	)
+}
+class Discovery extends React.PureComponent{
 	constructor(props) {
 		super(props);
 		this.state = {
