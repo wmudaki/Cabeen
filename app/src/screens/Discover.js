@@ -6,7 +6,9 @@
 import * as React from 'react'
 import {
 	View,
-	ScrollView
+	ScrollView,
+	Alert,
+	BackHandler
 } from "react-native";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -19,7 +21,8 @@ import {searchPlace,showAutocomplete, showOverlay} from "../state/MapActions";
 import {FloatingActionButton} from "../components/Buttons";
 import CabeenAddModal from "../modals/CabeenAddModal";
 import {gql, useMutation} from "@apollo/client";
-
+import {useBackHandler} from "@react-native-community/hooks";
+import {Actions} from "react-native-router-flux";
 
 
 

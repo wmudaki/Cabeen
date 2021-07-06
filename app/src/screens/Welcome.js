@@ -12,7 +12,7 @@ import {
     Text,
     StatusBar,
     TouchableOpacity,
-    ActivityIndicator
+    ActivityIndicator, Alert, BackHandler
 } from 'react-native'
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
@@ -22,18 +22,17 @@ import {
 import { Actions } from "react-native-router-flux";
 import CabeenAddModal from "../modals/CabeenAddModal";
 
+
 function Welcome(props){
     StatusBar.setBackgroundColor(props.app.colors.statusBar)
 
-    console.log(props.app.currentUser)
     React.useEffect(() => {
-        if (props.app.currentUser.isActive){
-            Actions.discover()
+        if (!props.app.currentUser.isActive){
+            Actions.replace('login')
         } else {
-            Actions.login()
+            Actions.discover()
         }
     })
-
 
     return(
         <>
@@ -54,7 +53,7 @@ function Welcome(props){
                 }}>
                     Cabeen
                 </Text>
-                <ActivityIndicator size={"large"} color={props.app.colors.statusBar}/>
+                {/*<ActivityIndicator size={"large"} color={props.app.colors.statusBar}/>*/}
             </View>
         </>
     )

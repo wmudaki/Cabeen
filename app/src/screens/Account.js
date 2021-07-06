@@ -24,6 +24,7 @@ import ProfileEditModal from "../modals/ProfileEditModal";
 import {useMutation, gql} from "@apollo/client";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 // import {editProfile} from "../state/AppActions";
+import {authenticate} from "../state/AppActions";
 
 
 
@@ -264,9 +265,18 @@ function CabeenInfo (props){
 }
 
 function Logout(props){
+	const logout = () => {
+		props.authenticate('logout', 'logout')
+		// console.log('states', Actions.state.routes[0].routes[0].routeName)
+		Actions.popTo(Actions.state.routes[0].routes[0].routeName)
+		// Actions.reset()
+	}
+
 	return(
 		<>
-			<TouchableOpacity style={{
+			<TouchableOpacity
+				onPress={() => logout()}
+				style={{
 				backgroundColor: props.app.colors.buttonColor,
 				margin: 10,
 				borderRadius: 10,
@@ -425,6 +435,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => (
 	bindActionCreators({
 		// editProfile
+		authenticate
 
 	}, dispatch)
 )

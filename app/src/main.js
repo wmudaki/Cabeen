@@ -80,7 +80,7 @@ export default function App (){
         <ApolloProvider client={client}>
             <Provider store={store}>
                 <PersistGate loading={<Splash/>} persistor={persistor}>
-                    <Router>
+                    <Router backAndroidHandler={() => {return false}}>
                         <Lightbox>
                             <Scene key={'root'}>
                                 <Scene
@@ -105,13 +105,13 @@ export default function App (){
                                     lazy
                                 >
                                     <Scene
-                                        component={Discover}
-                                        key={'home'}
+                                        component={Home}
+                                        key={'discover'}
                                         hideNavBar
                                     />
                                     <Scene
-                                        component={Home}
-                                        key={'discover'}
+                                        component={Discover}
+                                        key={'home'}
                                         hideNavBar
                                     />
                                     <Scene

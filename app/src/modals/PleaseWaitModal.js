@@ -64,12 +64,12 @@ function ModalContent(props) {
                 }}>
                     <Text style={{
                         fontWeight: "bold",
-                        fontSize: 25,
+                        fontSize: 20,
                         alignSelf: 'center',
                         margin: 10,
                         color: props.app.colors.errorText
                     }}>
-                        Oops! an error occurred Please try again ...
+                        Oops! Invalid email or password Please try again ...
 
                     </Text>
                     <View style={{

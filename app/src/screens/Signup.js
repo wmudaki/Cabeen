@@ -66,14 +66,13 @@ function Signup(props) {
                 email: props.app.signIn.email
             }})
             .then((res) => {
-                console.log(res.data.createUser)
                 props.authenticate('activate', true)
                 props.authenticate('token', res.data.createUser.token)
                 props.authenticate('user', res.data.createUser.user)
+                props.updateSignIn('clear', 'clear')
                 setType('signupSuccess')
             })
             .catch(e => {
-                console.log('Error', e)
                 setType('signupError')
             })
     }
@@ -250,8 +249,7 @@ function Signup(props) {
                     setIsSigningIn(false)
                 }}
                 onSuccessfully={() => {
-                    // Actions.discover()
-                    console.log(props.app.currentUser)
+                    Actions.discover({initial: true})
                 }}
             />
         </>

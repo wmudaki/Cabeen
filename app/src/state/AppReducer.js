@@ -32,10 +32,10 @@ const INITIAL_STATE = {
         fullName:'',
         phone: '',
         password: '',
-        email:''
+        email:'',
     },
     login:{
-        username: '',
+        email: '',
         password: ''
     },
     editProfile: {
@@ -77,11 +77,20 @@ export const appReducer = (state=INITIAL_STATE, action) => {
                 state.signIn.password = action.payload
                 return {...state}
             }
+            else if (action.field === 'clear'){
+                state.signIn.phone = ''
+                state.signIn.email = ''
+                state.signIn.fullName = ''
+                state.signIn.password = ''
+                state.signIn.username = ''
+                state.termsAgree = false
+                return {...state}
+            }
             else return state
 
         case "UPDATE_LOGIN":
-            if (action.field === 'username'){
-                state.login.username = action.payload
+            if (action.field === 'email'){
+                state.login.email = action.payload
                 return {...state}
             }
             else if (action.field === 'password'){
@@ -90,7 +99,7 @@ export const appReducer = (state=INITIAL_STATE, action) => {
             }
             else if (action.field === 'clear'){
                 state.login.password = ''
-                state.login.username = ''
+                state.login.email = ''
                 return {...state}
             }
 
@@ -122,7 +131,6 @@ export const appReducer = (state=INITIAL_STATE, action) => {
         case "AUTHENTICATE":
             if (action.field === 'activate'){
                 state.currentUser.isActive = action.payload
-                console.log('my job')
                 return {...state}
             }
             else if (action.field === 'token'){
@@ -131,6 +139,12 @@ export const appReducer = (state=INITIAL_STATE, action) => {
             }
             else if (action.field === 'user'){
                 state.currentUser.user = action.payload
+                return {...state}
+            }
+            else if (action.field === 'logout'){
+                state.currentUser.token = ''
+                state.currentUser.isActive = false
+                state.currentUser.user = {}
                 return {...state}
             }
             else return state

@@ -25,7 +25,7 @@ function Splash(props){
         <>
             <View style={{
                 flex: 1,
-                backgroundColor: props.app.colors.background,
+                backgroundColor: props.app.colors.statusBar,
                 justifyContent: "center",
                 alignItems: "center"
 
