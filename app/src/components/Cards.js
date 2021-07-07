@@ -35,13 +35,12 @@ class CabeenCard extends React.PureComponent{
 					onPress={() => Actions.cabeen()}
 					style={{
 						backgroundColor: this.props.app.colors.whiteText,
-						width: 0.85*width,
+						width: this.props.vertical ? 0.95*width: 0.85*width,
 						borderRadius: 20,
-						elevation: 20,
+						elevation: this.props.vertical ? 0: 0,
 						margin:40,
-						height: 0.5*height,
+						height: this.props.vertical ? 0.6*height:0.5*height,
 						alignSelf: 'center'
-
 					}}>
 					<Image
 						style={{

@@ -24,7 +24,7 @@ class Home extends React.PureComponent{
 			<>
 				<View style={{
 					flex: 1,
-					backgroundColor: this.props.app.colors.whiteText
+					backgroundColor: this.props.app.colors.background
 				}}>
 
 					<View>

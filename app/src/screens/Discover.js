@@ -8,7 +8,11 @@ import {
 	View,
 	ScrollView,
 	Alert,
-	BackHandler
+	BackHandler,
+	Text,
+	Image,
+	Dimensions,
+	TouchableOpacity
 } from "react-native";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -23,10 +27,106 @@ import CabeenAddModal from "../modals/CabeenAddModal";
 import {gql, useMutation} from "@apollo/client";
 import {useBackHandler} from "@react-native-community/hooks";
 import {Actions} from "react-native-router-flux";
+import Carousel from "react-native-snap-carousel";
+import CabeenCard from "../components/Cards";
 
 
 
 let token = "pk.eyJ1IjoidG90b2RpbmdpIiwiYSI6ImNqeDd5N3Q4YzBib3QzbnBwYW0wbXA5dm4ifQ.5au8D_SQ61D8dXzsgzS-oQ"
+
+const {height, width} = Dimensions.get("window")
+
+function NavigationBar(props){
+	return(
+		<>
+			<View style={{
+				flexDirection: "row",
+				height: 55,
+				alignItems: "center",
+				justifyContent: "space-between",
+				margin: 10,
+				marginTop: 10,
+				elevation: 10,
+				padding: 10,
+				borderRadius: 5,
+				backgroundColor: props.app.colors.whiteText
+			}}>
+				<Text style={{
+					color: props.app.colors.statusBar,
+					fontWeight: "bold",
+					fontSize: 25
+				}}>
+					Your Cabeens
+				</Text>
+				<TouchableOpacity>
+					<Image
+						source={{
+							uri: 'uri'
+						}}
+						style={{
+							height: 40,
+							width: 40,
+							borderRadius: 20,
+							backgroundColor: 'black'
+						}}
+						/>
+				</TouchableOpacity>
+			</View>
+		</>
+	)
+}
+
+function CarouselList(props){
+
+	const _renderItem = (item) => {
+		return(
+			<>
+				<CabeenCard
+					item={item.item.name}
+					vertical={true}
+				/>
+			</>
+		)
+	}
+	return(
+		<>
+			<View style={{
+				width:'100%'
+			}}>
+				<Carousel
+					data={props.fetchResults}
+					renderItem={_renderItem}
+					sliderHeight={height}
+					itemHeight={0.57*height}
+					inactiveSlideOpacity={0.6}
+					inactiveSlideScale={0.7}
+					vertical
+					// layout={"stack"}
+
+				/>
+			</View>
+		</>
+
+	)
+}
+
+function Content(props){
+	return(
+		<>
+			<View>
+				{
+					props.hasFetchResults ?
+						<CarouselList
+							{...props}
+						/>:
+						null
+				}
+
+			</View>
+
+		</>
+	)
+}
 
 function Discover(props){
 
@@ -58,6 +158,22 @@ function Discover(props){
 			}
 		}
 	`
+	
+	const FETCH_CABEENS = 	gql`
+		mutation FETCH_CABEENS{
+			fetchCabeens{
+				_id,
+				name,
+				price,
+				location,
+				description
+			}
+		}
+	`
+	const [isFetchingCabeens, setIsFetchingCabeens] = React.useState(false)
+	const [hasFetchResults, setHasFetchResults] = React.useState(false)
+	const [fetchResults, setFetchResults] = React.useState([])
+	const [fetchCabeens] = useMutation(FETCH_CABEENS)
 
 	const [isAddingCabeen, setIsAddingCabeen] = React.useState(false)
 	const [isType, setIsType] = React.useState('normal')
@@ -85,12 +201,49 @@ function Discover(props){
 			})
 	}
 
+	const getCabeens = () => {
+		setIsFetchingCabeens(true)
+		fetchCabeens()
+			.then((res) => {
+				console.log(res)
+				setIsFetchingCabeens(false)
+				setHasFetchResults(true)
+				setFetchResults(res.data.fetchCabeens)
+			})
+			.catch((err) => {
+				console.log("Error occurred",err)
+				setIsFetchingCabeens(false)
+			})
+	}
+
+	React.useEffect(() => {
+		getCabeens()
+	}, [isType])
+
 	return(
 		<>
 			<View style={{
 				flex: 1,
-				backgroundColor: props.app.colors.whiteText
+				backgroundColor: props.app.colors.background
 			}}>
+
+				<View>
+					<Content
+						hasFetchResults={hasFetchResults}
+						fetchResults={fetchResults}
+						{...props}
+					/>
+				</View>
+				<View style={{
+					position: "absolute",
+					top: 0,
+					left: 0,
+					right: 0
+				}}>
+					<NavigationBar
+						{...props}
+					/>
+				</View>
 				<View style={{
 					position: "absolute",
 					bottom: 120,
@@ -141,6 +294,7 @@ function Discover(props){
 		</>
 	)
 }
+
 class Discovery extends React.PureComponent{
 	constructor(props) {
 		super(props);
