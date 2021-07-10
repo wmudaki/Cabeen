@@ -1,16 +1,13 @@
-import * as React from 'react'
+import * as React from "react";
 import {
     View,
-    Modal,
-    TextInput,
-    TouchableOpacity,
-    Text, ActivityIndicator
+    Modal, Text, TouchableOpacity, ActivityIndicator
 } from "react-native";
-import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {addTenant} from "../state/CabeenActions";
+import {addCabeen, addTenant} from "../state/CabeenActions";
+import {connect} from "react-redux";
 
-function TenantAddLoading(props) {
+function TenantDeleteLoading(props) {
     return(
         <>
             <View style={{
@@ -52,7 +49,7 @@ function TenantAddLoading(props) {
     )
 }
 
-function TenantAddModalSuccess(props){
+function TenantDeleteModalSuccess(props){
     return(
         <>
             <View style={{
@@ -68,12 +65,11 @@ function TenantAddModalSuccess(props){
             }}>
                 <Text style={{
                     fontWeight: "bold",
-                    fontSize: 25,
-                    alignSelf: 'center',
+                    fontSize: 23,
                     margin: 10,
                     color: props.app.colors.primaryText
                 }}>
-                    Tenant added successfully
+                    Tenant removed successfully
 
                 </Text>
                 <View style={{
@@ -108,11 +104,11 @@ function TenantAddModalSuccess(props){
     )
 }
 
-function TenantAddModalError(props){
+function TenantDeleteModalError(props){
     return(
         <>
             <View style={{
-                height: '35%',
+                height: '36%',
                 width: "90%",
                 borderRadius: 10,
                 elevation: 20,
@@ -129,7 +125,7 @@ function TenantAddModalError(props){
                     margin: 10,
                     color: props.app.colors.errorText
                 }}>
-                    Oops! an error occurred Please try again ...
+                    An error occurred Please try again ...
 
                 </Text>
                 <View style={{
@@ -161,58 +157,30 @@ function TenantAddModalError(props){
             </View>
 
         </>
-
     )
 }
 
-function TenantAddModalContent(props){
+function TenantDeleteModalContent(props) {
     return(
         <>
             <View style={{
-                height: '45%',
+                height: '40%',
                 width: '90%',
                 justifyContent: "center",
                 borderRadius: 10,
                 padding: 10,
                 backgroundColor: props.app.colors.whiteText
             }}>
-                <Text style={{
-                    fontWeight: "bold",
-                    fontSize: 20,
-                    margin: 10
-                }}>
-                    Add Tenant
+                <Text
+                    style={{
+                        fontWeight: "bold",
+                        fontSize: 20,
+                        margin: 10,
+                        alignSelf: 'center',
+                        color: props.app.colors.errorText,
+                    }}>
+                    Are you sure you want to remove the tenant from the cabeen ?
                 </Text>
-                <TextInput
-                    placeholder={'Tenants name'}
-                    placeholderTextColor={props.app.colors.secondaryText}
-                    onChangeText={(value) => props.addTenant('userId', value)}
-                    style={{
-                        // borderRadius: 10,
-                        borderBottomColor: props.app.colors.background,
-                        borderBottomWidth: 3,
-                        // backgroundColor: props.app.colors.background,
-                        fontSize: 20,
-                        padding:10,
-                        margin: 10,
-                        color: props.app.colors.primaryText
-                    }}
-                />
-                <TextInput
-                    placeholder={'House label'}
-                    placeholderTextColor={props.app.colors.secondaryText}
-                    onChangeText={(value) => props.addTenant('houseLabel', value)}
-                    style={{
-                        // borderRadius: 10,
-                        borderBottomColor: props.app.colors.background,
-                        borderBottomWidth: 3,
-                        // backgroundColor: props.app.colors.background,
-                        fontSize: 20,
-                        padding:10,
-                        margin: 10,
-                        color: props.app.colors.primaryText
-                    }}
-                />
                 <View style={{
                     flexDirection: 'row',
                     justifyContent: "space-between",
@@ -223,14 +191,14 @@ function TenantAddModalContent(props){
                     <TouchableOpacity
                         onPress={props.onCancel}
                         style={{
-                        borderRadius: 5,
-                        height: 40,
-                        width: '45%',
-                        justifyContent: "center",
-                        alignItems:"center",
-                        borderWidth: 1,
-                        borderColor: props.app.colors.secondaryText,
-                    }}>
+                            borderRadius: 5,
+                            height: 40,
+                            width: '45%',
+                            justifyContent: "center",
+                            alignItems:"center",
+                            borderWidth: 1,
+                            borderColor: props.app.colors.secondaryText,
+                        }}>
                         <Text style={{
                             fontSize: 18,
 
@@ -242,18 +210,18 @@ function TenantAddModalContent(props){
                     <TouchableOpacity
                         onPress={props.onSubmit}
                         style={{
-                        backgroundColor: props.app.colors.buttonColor,
-                        borderRadius: 5,
-                        height: 40,
-                        width: '45%',
-                        justifyContent: "center",
-                        alignItems:"center"
-                    }}>
+                            backgroundColor: props.app.colors.buttonColor,
+                            borderRadius: 5,
+                            height: 40,
+                            width: '45%',
+                            justifyContent: "center",
+                            alignItems:"center"
+                        }}>
                         <Text style={{
                             fontSize: 18,
                             fontWeight: "bold"
                         }}>
-                            Submit
+                            Remove
                         </Text>
                     </TouchableOpacity>
                 </View>
@@ -262,33 +230,38 @@ function TenantAddModalContent(props){
     )
 }
 
-function Content(props){
+function Content(props) {
     if (props.isType === 'error'){
         return (
-            <TenantAddModalError {...props}/>
-        )
-
-    }
-
-    else if (props.isType === 'success'){
-        return(
-            <TenantAddModalSuccess {...props}/>
-        )
-    }
-    else if (props.isType === 'loading'){
-        return (
-            <TenantAddLoading
+            <TenantDeleteModalError
                 {...props}
             />
         )
     }
-
-    else return(
-        <TenantAddModalContent {...props}/>)
+    else if (props.isType === 'success'){
+        return (
+            <TenantDeleteModalSuccess
+                {...props}
+            />
+        )
+    }
+    else if (props.isType === 'loading'){
+        return (
+            <TenantDeleteLoading
+                {...props}
+            />
+        )
+    }
+    else {
+        return(
+            <TenantDeleteModalContent
+                {...props}
+            />
+        )
+    }
 }
 
-
-function TenantAddModal(props) {
+function TenantDeleteModal(props) {
     return(
         <>
             <View style={{
@@ -330,8 +303,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => (
     bindActionCreators({
         addTenant,
+        addCabeen
 
     }, dispatch)
 )
 
-export default connect(mapStateToProps, mapDispatchToProps)(TenantAddModal)
+export default connect(mapStateToProps, mapDispatchToProps)(TenantDeleteModal)
+

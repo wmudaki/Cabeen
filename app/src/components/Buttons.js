@@ -56,18 +56,30 @@ class FloatingActonButtonStateless extends React.PureComponent{
                     onPress={this.props.onPress}
                     style={{
                     height: 50,
-                    width: 50,
+                    width: this.props.management ?140 :50,
                     borderRadius: 50,
                     elevation: 10,
+                    padding: this.props.management ? 15: 0,
                     backgroundColor: this.props.app.colors.buttonColor,
                     alignItems: 'center',
-                    justifyContent: 'center'
+                    justifyContent: this.props.management ? 'space-between':'center',
+                    flexDirection:this.props.management ? "row": "column",
                 }}>
                     <Entypo
                         name={'plus'}
-                        size={30}
+                        size={this.props.management ? 25 :30}
                         color={this.props.app.colors.primaryText}
                     />
+                    {
+                        this.props.management ?
+                            <Text style={{
+                                fontSize: 17,
+                                fontWeight: "bold",
+                            }}>
+                                Add Tenant
+                            </Text>
+                            : null
+                    }
 
                 </TouchableOpacity>
             </>

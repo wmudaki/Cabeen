@@ -9,10 +9,11 @@ import {
 	ScrollView,
 	Alert,
 	BackHandler,
+	ActivityIndicator,
 	Text,
 	Image,
 	Dimensions,
-	TouchableOpacity
+	TouchableOpacity, FlatList
 } from "react-native";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -29,6 +30,7 @@ import {useBackHandler} from "@react-native-community/hooks";
 import {Actions} from "react-native-router-flux";
 import Carousel from "react-native-snap-carousel";
 import CabeenCard from "../components/Cards";
+import {getCabeenDetails} from "../state/CabeenActions";
 
 
 
@@ -44,19 +46,19 @@ function NavigationBar(props){
 				height: 55,
 				alignItems: "center",
 				justifyContent: "space-between",
-				margin: 10,
-				marginTop: 10,
+				margin: 0,
+				marginTop: 0,
 				elevation: 10,
-				padding: 10,
-				borderRadius: 5,
-				backgroundColor: props.app.colors.whiteText
+				padding: 5,
+				borderRadius: 0,
+				backgroundColor: props.app.colors.statusBar
 			}}>
 				<Text style={{
-					color: props.app.colors.statusBar,
+					color: props.app.colors.whiteText,
 					fontWeight: "bold",
 					fontSize: 25
 				}}>
-					Your Cabeens
+					My cabeens
 				</Text>
 				<TouchableOpacity>
 					<Image
@@ -67,7 +69,7 @@ function NavigationBar(props){
 							height: 40,
 							width: 40,
 							borderRadius: 20,
-							backgroundColor: 'black'
+							backgroundColor: props.app.colors.background
 						}}
 						/>
 				</TouchableOpacity>
@@ -82,25 +84,35 @@ function CarouselList(props){
 		return(
 			<>
 				<CabeenCard
-					item={item.item.name}
+					name={item.item.name}
+					price={item.item.price}
+					location={item.item.location}
 					vertical={true}
+					onPress={() => {
+						Actions.cabeen()
+						props.getCabeenDetails(item.item)
+					}}
 				/>
 			</>
 		)
 	}
+
 	return(
 		<>
 			<View style={{
 				width:'100%'
 			}}>
-				<Carousel
+				<FlatList
 					data={props.fetchResults}
 					renderItem={_renderItem}
-					sliderHeight={height}
-					itemHeight={0.57*height}
-					inactiveSlideOpacity={0.6}
-					inactiveSlideScale={0.7}
-					vertical
+					ListHeaderComponent={() => <View style={{margin: 50}}/>}
+					ListFooterComponent={() => <View style={{margin: 50}}/>}
+					keyExtractor={(item, key) => item+key}
+					// sliderHeight={height}
+					// itemHeight={0.6*height}
+					// inactiveSlideOpacity={0.7}
+					// inactiveSlideScale={0.85}
+					// vertical
 					// layout={"stack"}
 
 				/>
@@ -191,7 +203,6 @@ function Discover(props){
 				location: props.cabeen.cabeenInfo.location,
 			}})
 			.then((res) => {
-				console.log(res)
 				setIsType('success')
 				// setIsCreatingCabeen(false)
 			})
@@ -205,7 +216,6 @@ function Discover(props){
 		setIsFetchingCabeens(true)
 		fetchCabeens()
 			.then((res) => {
-				console.log(res)
 				setIsFetchingCabeens(false)
 				setHasFetchResults(true)
 				setFetchResults(res.data.fetchCabeens)
@@ -218,7 +228,7 @@ function Discover(props){
 
 	React.useEffect(() => {
 		getCabeens()
-	}, [isType])
+	}, [isType, props.cabeen.updateCabeens])
 
 	return(
 		<>
@@ -244,6 +254,25 @@ function Discover(props){
 						{...props}
 					/>
 				</View>
+
+				{
+					isFetchingCabeens?
+						<View style={{
+							position: 'absolute',
+							top: 80,
+							alignSelf: "center",
+							borderRadius: 50,
+							padding: 10,
+							elevation: 30,
+							backgroundColor: props.app.colors.whiteText
+						}}>
+							<ActivityIndicator
+								color={props.app.colors.buttonColor}
+								size={"small"}
+							/>
+
+						</View>: null
+				}
 				<View style={{
 					position: "absolute",
 					bottom: 120,
@@ -402,7 +431,8 @@ const mapDispatchToProps = dispatch => (
 	bindActionCreators({
 		searchPlace,
 		showAutocomplete,
-		showOverlay
+		showOverlay,
+		getCabeenDetails
 
 	}, dispatch)
 )

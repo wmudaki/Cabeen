@@ -1,16 +1,14 @@
 import * as React from 'react'
 import {
     View,
-    Modal,
-    TextInput,
-    TouchableOpacity,
-    Text, ActivityIndicator
+    ActivityIndicator,
+    Modal, Text, ScrollView, TextInput, TouchableOpacity
 } from "react-native";
-import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {addTenant} from "../state/CabeenActions";
+import {addCabeen, addTenant, cabeenEdit} from "../state/CabeenActions";
+import {connect} from "react-redux";
 
-function TenantAddLoading(props) {
+function CabeenEditLoading(props) {
     return(
         <>
             <View style={{
@@ -51,8 +49,7 @@ function TenantAddLoading(props) {
         </>
     )
 }
-
-function TenantAddModalSuccess(props){
+function CabeenEditModalSuccess(props){
     return(
         <>
             <View style={{
@@ -73,7 +70,7 @@ function TenantAddModalSuccess(props){
                     margin: 10,
                     color: props.app.colors.primaryText
                 }}>
-                    Tenant added successfully
+                    Cabeen edited successfully
 
                 </Text>
                 <View style={{
@@ -108,11 +105,11 @@ function TenantAddModalSuccess(props){
     )
 }
 
-function TenantAddModalError(props){
+function CabeenEditModalError(props){
     return(
         <>
             <View style={{
-                height: '35%',
+                height: '36%',
                 width: "90%",
                 borderRadius: 10,
                 elevation: 20,
@@ -129,7 +126,7 @@ function TenantAddModalError(props){
                     margin: 10,
                     color: props.app.colors.errorText
                 }}>
-                    Oops! an error occurred Please try again ...
+                    Oops!! an error occurred Please try again ...
 
                 </Text>
                 <View style={{
@@ -161,16 +158,15 @@ function TenantAddModalError(props){
             </View>
 
         </>
-
     )
 }
 
-function TenantAddModalContent(props){
+function CabeenEditModalContent(props){
     return(
         <>
             <View style={{
-                height: '45%',
-                width: '90%',
+                height: '70%',
+                width: '95%',
                 justifyContent: "center",
                 borderRadius: 10,
                 padding: 10,
@@ -178,59 +174,120 @@ function TenantAddModalContent(props){
             }}>
                 <Text style={{
                     fontWeight: "bold",
-                    fontSize: 20,
+                    fontSize: 25,
                     margin: 10
                 }}>
-                    Add Tenant
+                    Edit Cabeen
                 </Text>
-                <TextInput
-                    placeholder={'Tenants name'}
-                    placeholderTextColor={props.app.colors.secondaryText}
-                    onChangeText={(value) => props.addTenant('userId', value)}
-                    style={{
-                        // borderRadius: 10,
-                        borderBottomColor: props.app.colors.background,
-                        borderBottomWidth: 3,
-                        // backgroundColor: props.app.colors.background,
-                        fontSize: 20,
-                        padding:10,
-                        margin: 10,
-                        color: props.app.colors.primaryText
-                    }}
-                />
-                <TextInput
-                    placeholder={'House label'}
-                    placeholderTextColor={props.app.colors.secondaryText}
-                    onChangeText={(value) => props.addTenant('houseLabel', value)}
-                    style={{
-                        // borderRadius: 10,
-                        borderBottomColor: props.app.colors.background,
-                        borderBottomWidth: 3,
-                        // backgroundColor: props.app.colors.background,
-                        fontSize: 20,
-                        padding:10,
-                        margin: 10,
-                        color: props.app.colors.primaryText
-                    }}
-                />
+                <ScrollView>
+
+                    <TextInput
+                        placeholder={'Cabeen name'}
+                        placeholderTextColor={props.app.colors.secondaryText}
+                        onChangeText={(value) => props.cabeenEdit('name', value)}
+                        defaultValue={props.cabeen.cabeenDetails.name}
+                        style={{
+                            // borderRadius: 10,
+                            borderBottomColor: props.app.colors.background,
+                            borderBottomWidth: 2,
+                            // backgroundColor: props.app.colors.background,
+                            fontSize: 20,
+                            padding:10,
+                            margin: 20,
+                            color: props.app.colors.primaryText
+                        }}
+                    />
+                    <TextInput
+                        placeholder={'Price'}
+                        placeholderTextColor={props.app.colors.secondaryText}
+                        onChangeText={(value) => props.cabeenEdit('price', value)}
+                        defaultValue={props.cabeen.cabeenDetails.price}
+                        style={{
+                            // borderRadius: 10,
+                            borderBottomColor: props.app.colors.background,
+                            borderBottomWidth: 2,
+                            // backgroundColor: props.app.colors.background,
+                            fontSize: 20,
+                            padding:10,
+                            margin: 20,
+                            color: props.app.colors.primaryText
+                        }}
+                    />
+                    <TextInput
+                        placeholder={'Location'}
+                        placeholderTextColor={props.app.colors.secondaryText}
+                        onKeyPress={props.onLocation}
+                        defaultValue={props.cabeen.cabeenDetails.location}
+                        selectTextOnFocus
+                        // onChangeText={(value) => props.addTenant('houseLabel', value)}
+                        style={{
+                            // borderRadius: 10,
+                            borderBottomColor: props.app.colors.background,
+                            borderBottomWidth: 2,
+                            // backgroundColor: props.app.colors.background,
+                            fontSize: 20,
+                            padding:10,
+                            margin: 20,
+                            color: props.app.colors.primaryText
+                        }}
+                    />
+                    <TextInput
+                        placeholder={'Description'}
+                        placeholderTextColor={props.app.colors.secondaryText}
+                        multiline
+                        defaultValue={props.cabeen.cabeenDetails.description}
+                        onChangeText={(value) => props.cabeenEdit('description', value)}
+                        style={{
+                            // borderRadius: 10,
+                            borderBottomColor: props.app.colors.background,
+                            borderBottomWidth: 2,
+                            // backgroundColor: props.app.colors.background,
+                            fontSize: 20,
+                            maxHeight: 150,
+                            padding:10,
+                            margin: 20,
+                            color: props.app.colors.primaryText
+                        }}
+                    />
+                    <TouchableOpacity
+                        // onPress={props.onCancel}
+                        style={{
+                            borderRadius: 20,
+                            height: 40,
+                            margin: 20,
+                            width: '45%',
+                            justifyContent: "center",
+                            alignItems:"center",
+                            alignSelf: "center",
+                            borderWidth: 1,
+                            borderColor: props.app.colors.buttonColor,
+                        }}>
+                        <Text style={{
+                            fontSize: 18,
+                            color: props.app.colors.buttonColor
+
+                        }}>
+                            Add Images
+                        </Text>
+                    </TouchableOpacity>
+                </ScrollView>
                 <View style={{
                     flexDirection: 'row',
                     justifyContent: "space-between",
                     alignItems: "center",
                     margin: 20,
-                    marginTop: 30,
                 }}>
                     <TouchableOpacity
                         onPress={props.onCancel}
                         style={{
-                        borderRadius: 5,
-                        height: 40,
-                        width: '45%',
-                        justifyContent: "center",
-                        alignItems:"center",
-                        borderWidth: 1,
-                        borderColor: props.app.colors.secondaryText,
-                    }}>
+                            borderRadius: 5,
+                            height: 40,
+                            width: '45%',
+                            justifyContent: "center",
+                            alignItems:"center",
+                            borderWidth: 1,
+                            borderColor: props.app.colors.secondaryText,
+                        }}>
                         <Text style={{
                             fontSize: 18,
 
@@ -242,13 +299,13 @@ function TenantAddModalContent(props){
                     <TouchableOpacity
                         onPress={props.onSubmit}
                         style={{
-                        backgroundColor: props.app.colors.buttonColor,
-                        borderRadius: 5,
-                        height: 40,
-                        width: '45%',
-                        justifyContent: "center",
-                        alignItems:"center"
-                    }}>
+                            backgroundColor: props.app.colors.buttonColor,
+                            borderRadius: 5,
+                            height: 40,
+                            width: '45%',
+                            justifyContent: "center",
+                            alignItems:"center"
+                        }}>
                         <Text style={{
                             fontSize: 18,
                             fontWeight: "bold"
@@ -264,31 +321,36 @@ function TenantAddModalContent(props){
 
 function Content(props){
     if (props.isType === 'error'){
-        return (
-            <TenantAddModalError {...props}/>
-        )
-
-    }
-
-    else if (props.isType === 'success'){
         return(
-            <TenantAddModalSuccess {...props}/>
-        )
-    }
-    else if (props.isType === 'loading'){
-        return (
-            <TenantAddLoading
+            <CabeenEditModalError
                 {...props}
             />
         )
     }
-
-    else return(
-        <TenantAddModalContent {...props}/>)
+    else if (props.isType === 'success'){
+        return (
+            <CabeenEditModalSuccess
+                {...props}
+            />
+        )
+    }
+    else if (props.isType === 'loading'){
+        return (
+            <CabeenEditLoading
+                {...props}
+            />
+        )
+    }
+    else {
+        return (
+            <CabeenEditModalContent
+                {...props}
+            />
+        )
+    }
 }
 
-
-function TenantAddModal(props) {
+function CabeenEditModal(props){
     return(
         <>
             <View style={{
@@ -330,8 +392,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => (
     bindActionCreators({
         addTenant,
+        addCabeen,
+        cabeenEdit
 
     }, dispatch)
 )
 
-export default connect(mapStateToProps, mapDispatchToProps)(TenantAddModal)
+export default connect(mapStateToProps, mapDispatchToProps)(CabeenEditModal)

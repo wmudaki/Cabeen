@@ -12,7 +12,18 @@ const INITIAL_STATE = {
     tenantInfo: {
         userId: '',
         houseLabel: ''
-    }
+    },
+    cabeenDetails: {},
+    cabeenEditInfo: {
+        name: "",
+        type: '',
+        description: '',
+        location: '',
+        currency: '',
+        price: '',
+        images: []
+    },
+    updateCabeens: true
 
 }
 
@@ -59,6 +70,46 @@ export const cabeenReducer = (state = INITIAL_STATE, action) => {
                 return {...state}
             }
             else return state
+
+        case "CABEEN_DETAILS":
+            state.cabeenDetails = action.payload
+            return {...state}
+
+        case "CABEEN_EDIT":
+            if (action.field === 'name'){
+                state.cabeenEditInfo.name = action.payload
+                return {...state}
+            }
+            else if (action.field === 'type'){
+                state.cabeenEditInfo.type = action.payload
+                return {...state}
+            }
+            else if (action.field === 'description'){
+                state.cabeenEditInfo.description = action.payload
+                return {...state}
+            }
+            else if (action.field === 'location'){
+                state.cabeenEditInfo.location = action.payload
+                return {...state}
+            }
+            else if (action.field === 'price'){
+                state.cabeenEditInfo.price = action.payload
+                return {...state}
+            }
+            else if (action.field === 'currency'){
+                state.cabeenEditInfo.currency = action.payload
+                return {...state}
+            }
+            else if (action.field === "images"){
+                state.cabeenEditInfo.images = action.payload
+                return {...state}
+            }
+            else return state
+
+        case "UPDATE_CABEENS":
+            state.updateCabeens = !state.updateCabeens
+            return {...state}
+
         default:
             return state
 

@@ -15,3 +15,23 @@ export const addTenant = (field, payload) => (
     }
 )
 
+export const getCabeenDetails = (payload) => (
+    {
+        type: "CABEEN_DETAILS",
+        payload: payload
+    }
+)
+
+export const cabeenEdit = (field, payload) => (
+    {
+        type: "CABEEN_EDIT",
+        field: field,
+        payload: payload
+    }
+)
+
+export const updateCabeens = () => (
+    {
+        type: "UPDATE_CABEENS"
+    }
+)

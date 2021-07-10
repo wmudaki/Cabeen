@@ -32,14 +32,14 @@ class CabeenCard extends React.PureComponent{
 		return(
 			<>
 				<TouchableOpacity
-					onPress={() => Actions.cabeen()}
+					onPress={this.props.onPress}
 					style={{
 						backgroundColor: this.props.app.colors.whiteText,
 						width: this.props.vertical ? 0.95*width: 0.85*width,
 						borderRadius: 20,
 						elevation: this.props.vertical ? 0: 0,
-						margin:40,
-						height: this.props.vertical ? 0.6*height:0.5*height,
+						margin:10,
+						height: this.props.vertical ? 0.55*height:0.5*height,
 						alignSelf: 'center'
 					}}>
 					<Image
@@ -62,7 +62,7 @@ class CabeenCard extends React.PureComponent{
 								fontSize: 22,
 								color: this.props.app.colors.primaryText
 							}}>
-							{this.props.item}
+							{this.props.name}
 						</Text>
 						<View style={{
 							flexDirection: 'row',
@@ -80,9 +80,10 @@ class CabeenCard extends React.PureComponent{
 								style={{
 									fontSize: 18,
 									marginLeft: 10,
+									maxWidth: '93%',
 									color: this.props.app.colors.primaryText
 								}}>
-								Kiambu
+								{this.props.location}
 							</Text>
 						</View>
 						<View style={{
@@ -129,7 +130,7 @@ class CabeenCard extends React.PureComponent{
 										marginLeft: 10,
 										color: this.props.app.colors.primaryText
 									}}>
-									1200 KES / Night
+									{this.props.price} KES / Night
 								</Text>
 							</View>
 							<TouchableOpacity
@@ -167,30 +168,11 @@ class TenantCardStateless extends React.PureComponent{
 		return(
 			<>
 				<TouchableOpacity style={{
-					backgroundColor: this.props.app.colors.background,
+					backgroundColor: this.props.app.colors.whiteText,
 					margin: 10,
 					borderRadius: 10,
 					elevation: 10
 				}}>
-					<View style={{
-						flexDirection: "row",
-						// justifyContent: "space-evenly",
-						alignItems: 'center'
-					}}>
-						<Text style={{
-							color: this.props.app.colors.secondaryText,
-							fontSize: 20,
-							margin: 20
-						}}>
-							House:
-						</Text>
-						<Text style={{
-							fontSize: 20,
-							fontWeight: "bold"
-						}}>
-							2003
-						</Text>
-					</View>
 					<View style={{
 						flexDirection: "row",
 						alignItems: 'center',
@@ -207,29 +189,79 @@ class TenantCardStateless extends React.PureComponent{
 							fontSize: 20,
 							fontWeight: "bold"
 						}}>
-							Wilson Mudaki
+							{this.props.tenantName}
 						</Text>
 					</View>
 					<View style={{
 						flexDirection: "row",
+						// justifyContent: "space-evenly",
 						alignItems: 'center'
 					}}>
 						<Text style={{
+							color: this.props.app.colors.secondaryText,
 							fontSize: 20,
-							margin: 20,
-							color: this.props.app.colors.secondaryText
+							margin: 20
 						}}>
-							Payment status:
+							House:
 						</Text>
 						<Text style={{
-							fontWeight: 'bold',
 							fontSize: 20,
-
+							fontWeight: "bold"
 						}}>
-							Paid
+							{this.props.houseLabel}
 						</Text>
 					</View>
+					<View style={{
+						flexDirection: "row",
+						alignItems: "center",
+						justifyContent: 'space-between',
+						margin: 10,
+						padding: 10,
 
+					}}>
+						<TouchableOpacity style={{
+							flexDirection: "row",
+							alignItems: "center",
+							borderWidth: 1,
+							borderRadius: 10,
+							padding: 5,
+							width: '40%',
+							justifyContent: "center"
+						}}>
+							<Ionicons
+								name={'mail'}
+								size={20}
+							/>
+							<Text style={{
+								marginLeft: 10
+							}}>
+								Message
+							</Text>
+						</TouchableOpacity>
+						<TouchableOpacity
+							onPress={() => this.props.onRemovePress(this.props._id)}
+							style={{
+							flexDirection: "row",
+							alignItems: "center",
+							justifyContent: "center",
+							// borderWidth: 1,
+							borderRadius: 10,
+							padding: 7,
+							width: '40%',
+							elevation: 5,
+							backgroundColor: this.props.app.colors.errorText
+						}}>
+							<Ionicons
+								name={'trash'}
+								size={20}
+							/>
+							<Text style={{
+								marginLeft: 10
+							}}>
+								Remove
+							</Text>
+						</TouchableOpacity>
+					</View>
 
 				</TouchableOpacity>
 			</>
@@ -245,7 +277,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => (
 	bindActionCreators({
-
+		
 	}, dispatch)
 )
 

@@ -203,7 +203,7 @@ class BackButtonTopNavBarStateless extends React.PureComponent{
 			<>
 				<View style={{
 					height: 60,
-					// width: '90%',
+					width: '100%',
 					flexDirection: 'row',
 					backgroundColor: this.props.app.colors.whiteText,
 					alignItems: 'center',
@@ -228,7 +228,9 @@ class BackButtonTopNavBarStateless extends React.PureComponent{
 								color={this.props.app.colors.statusBar}
 							/>
 						</TouchableOpacity>
-						<View>
+						<View style={{
+							width: '78%'
+						}}>
 							<Text
 								numberOfLines={1}
 								style={{
@@ -241,10 +243,11 @@ class BackButtonTopNavBarStateless extends React.PureComponent{
 							</Text>
 						</View>
 					</View>
-					<TouchableOpacity style={{
+					<TouchableOpacity
+						onPress={this.props.onIconPress}
+						style={{
 						alignItems: 'center',
 						justifyContent: 'center',
-						marginRight: 10,
 					}}>
 						<Ionicons
 							name={this.props.icon}

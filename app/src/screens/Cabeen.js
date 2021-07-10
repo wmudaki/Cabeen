@@ -27,8 +27,230 @@ import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import Carousel from "react-native-snap-carousel";
 import { rotate } from "../state/AppActions";
 import Account from "./Account";
+import CabeenEditModal from "../modals/CabeenEditModal";
+import {gql, useMutation} from "@apollo/client";
+import CabeenDeleteModal from "../modals/CabeenDeleteModal";
+import {updateCabeens} from "../state/CabeenActions";
 
 const {height,width} = Dimensions.get('window')
+
+function CabeenButtons(props) {
+
+	const EDIT_CABEEN = gql`
+		mutation EDIT_CABEEN(
+			$_id: ID,
+			$name: String,
+			$type: String,
+			$description: String,
+			$price: String,
+			$currency: String,
+			$location: String
+		){
+			updateCabeen(
+				_id: $_id,
+				input: {
+					name: $name,
+					type: $type,
+					description: $description,
+					price: $price,
+					currency: $currency,
+					location: $location
+
+				}
+			){
+				_id,
+				name,
+				price,
+				location,
+				description
+			}
+		}
+	`
+
+	const [editCabeen] = useMutation(EDIT_CABEEN)
+	const [isEditingCabeen, setIsEditingCabeen] = React.useState(false)
+	const [isType, setIsType] = React.useState('normal')
+	const [accessLevel, setAccessLevel] = React.useState('manager')
+
+	const edit = () => {
+		// console.log(props.cabeen)
+		setIsType('loading')
+		editCabeen({variables: {
+				_id: props.cabeen.cabeenDetails._id,
+				name: props.cabeen.cabeenEditInfo.name,
+				type: props.cabeen.cabeenEditInfo.type,
+				description: props.cabeen.cabeenEditInfo.description,
+				price: props.cabeen.cabeenEditInfo.price,
+				currency: props.cabeen.cabeenEditInfo.currency,
+				location: props.cabeen.cabeenEditInfo.location,
+			}})
+			.then((res) => {
+				console.log(res)
+				setIsType('successful')
+			})
+			.catch((err) => {
+				console.log(err)
+				setIsType('error')
+			})
+
+	}
+
+	return(
+		<>
+			<View style={{
+				flexDirection: 'row',
+				alignItems: 'center',
+				justifyContent: 'space-between',
+				marginTop: 20
+			}}>
+				<TouchableOpacity
+					onPress={() => {
+						accessLevel === 'manager' ? setIsEditingCabeen(true) : null
+					}}
+					style={{
+						borderWidth: 1,
+						flexDirection:"row",
+						alignItems: 'center',
+						justifyContent:'space-evenly',
+						borderRadius: 10,
+						width: '47%',
+						height: 50,
+						borderColor: props.app.colors.statusBar,
+					}}>
+					<SimpleLineIcons
+						name={accessLevel === 'manager' ? 'pencil':'directions'}
+						size={25}
+						color={props.app.colors.statusBar}
+					/>
+					<Text style={{
+						color: props.app.colors.statusBar,
+						fontSize: 20
+					}}>
+						{accessLevel === 'manager' ? 'Edit': 'Directions'}
+					</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
+					onPress={() => accessLevel === 'manager' ?
+						Actions.cabeenManagement(): Actions.cabeenManagement()}
+					style={{
+						// flex: 1,
+						alignItems: 'center',
+						backgroundColor: props.app.colors.buttonColor,
+						width: '47%',
+						height: 50,
+						borderRadius: 10,
+						justifyContent:'center'
+					}}>
+					<Text style={{
+						color: props.app.colors.whiteText,
+						fontWeight: 'bold',
+						fontSize: 20
+					}}>
+						{accessLevel === 'manager'? 'Manage': 'Reserve'}
+					</Text>
+				</TouchableOpacity>
+			</View>
+			<CabeenEditModal
+				modalVisible={isEditingCabeen}
+				isType={isType}
+				// isError={isError}
+				onRequestClose={() => {
+					setIsEditingCabeen(false)
+				}}
+				onSubmit={() => {
+					edit()
+					console.log('submitted')
+				}}
+				onCancel={() => {
+					setIsEditingCabeen(false)
+				}}
+
+				onError={() => {
+					setIsType('normal')
+					setIsEditingCabeen(true)
+				}}
+				onSuccessfully={() => {
+					setIsType('normal')
+					// setIsSuccessfully(false)
+					setIsEditingCabeen(false)
+				}}
+			/>
+		</>
+	)
+}
+
+function Navigation(props) {
+
+	const DELETE_CABEEN = gql`
+		mutation DELETE_CABEEN(
+			$_id: ID,
+		){
+			deleteCabeen(
+				_id: $_id
+			){
+				name 
+			}
+		}
+	`
+	const [deleteCabeen] = useMutation(DELETE_CABEEN)
+	const [isDeletingCabeen, setIsDeletingCabeen] = React.useState(false)
+	const [isType, setIsType] = React.useState('normal')
+
+	const removeCabeen = () => {
+		console.log(props.cabeen.cabeenDetails)
+		setIsType('loading')
+		deleteCabeen({variables: {
+			_id: props.cabeen.cabeenDetails._id
+			}})
+			.then((res) => {
+				console.log(res)
+				setIsType('success')
+			})
+			.catch((err) => {
+				setIsType('error')
+				console.log(err)
+			})
+	}
+
+	return(
+		<>
+			<BackButtonTopNavBar
+				title={props.cabeen.cabeenDetails.name}
+				icon={'trash-outline'}
+				onIconPress={() => {
+					setIsDeletingCabeen(true)
+				}}
+			/>
+			<CabeenDeleteModal
+				modalVisible={isDeletingCabeen}
+				isType={isType}
+				// isError={isError}
+				onRequestClose={() => {
+					setIsDeletingCabeen(false)
+				}}
+				onSubmit={() => {
+					removeCabeen()
+					console.log('submitted')
+				}}
+				onCancel={() => {
+					setIsDeletingCabeen(false)
+				}}
+
+				onError={() => {
+					setIsType('normal')
+					setIsDeletingCabeen(true)
+				}}
+				onSuccessfully={() => {
+					setIsType('normal')
+					setIsDeletingCabeen(false)
+					props.updateCabeens()
+					Actions.pop()
+				}}
+			/>
+
+		</>
+	)
+}
 
 class Cabeen extends React.PureComponent{
 	constructor(props) {
@@ -86,7 +308,7 @@ class Cabeen extends React.PureComponent{
 							fontSize: 30,
 							color: this.props.app.colors.primaryText
 						}}>
-						Acacia apartments
+						{this.props.cabeen.cabeenDetails.name}
 					</Text>
 					<View style={{
 						marginTop: 30
@@ -108,14 +330,14 @@ class Cabeen extends React.PureComponent{
 								size={25}
 							/>
 							<Text
-								numberOfLines={1}
+								// numberOfLines={1}
 								style={{
 									fontSize: 22,
 									margin: 10,
 									marginTop: 10,
 									color: this.props.app.colors.primaryText
 								}}>
-								Kasarani
+								{this.props.cabeen.cabeenDetails.location}
 							</Text>
 						</View>
 
@@ -141,14 +363,14 @@ class Cabeen extends React.PureComponent{
 								size={25}
 							/>
 							<Text
-								numberOfLines={1}
+								// numberOfLines={1}
 								style={{
 									fontSize: 22,
 									margin: 10,
 									marginTop: 10,
 									color: this.props.app.colors.primaryText
 								}}>
-								200 KES / Night
+								{this.props.cabeen.cabeenDetails.price} KES / Night
 							</Text>
 						</View>
 					</View>
@@ -172,8 +394,7 @@ class Cabeen extends React.PureComponent{
 								marginTop:10,
 								color: this.props.app.colors.primaryText
 							}}>
-
-							"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+							{this.props.cabeen.cabeenDetails.description}
 						</Text>
 					</View>
 				</View>
@@ -245,8 +466,8 @@ class Cabeen extends React.PureComponent{
 		return(
 			<>
 				<View>
-					<BackButtonTopNavBar
-						title={'Acacia apartments'}
+					<Navigation
+						{...this.props}
 					/>
 				</View>
 
@@ -282,7 +503,9 @@ class Cabeen extends React.PureComponent{
 					padding:10,
 					backgroundColor: this.props.app.colors.whiteText
 				}}>
-					{this.renderButtons()}
+					<CabeenButtons
+						{...this.props}
+					/>
 				</View>
 			</>
 		)
@@ -291,14 +514,15 @@ class Cabeen extends React.PureComponent{
 
 
 const mapStateToProps = state => {
-	const {app} = state;
-	return {app}
+	const {app, cabeen} = state;
+	return {app,cabeen}
 }
 
 const mapDispatchToProps = dispatch => (
 	bindActionCreators({
 		agreeToTerms,
-		rotate
+		rotate,
+		updateCabeens
 
 	}, dispatch)
 )

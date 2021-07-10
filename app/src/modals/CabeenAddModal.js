@@ -16,6 +16,47 @@ import {Actions} from "react-native-router-flux";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import {AutoCompleteComponent} from "../screens/Search";
 
+function CabeenAddModalLoading(props) {
+    return(
+        <>
+            <View style={{
+                height: '35%',
+                width: "90%",
+                borderRadius: 10,
+                elevation: 20,
+                margin: 20,
+                // alignSelf: "center",
+                backgroundColor: props.app.colors.whiteText,
+                // alignItems: 'center',
+                justifyContent: "center"
+            }}>
+                <Text style={{
+                    fontWeight: "bold",
+                    fontSize: 25,
+                    alignSelf: 'center',
+                    margin: 10,
+                    color: props.app.colors.primaryText
+                }}>
+                    Please wait...
+
+                </Text>
+                <View style={{
+                    flexDirection: "row",
+                    justifyContent: 'center',
+                    // alignItems: "center",
+                    marginTop: 30
+                }}>
+                    <ActivityIndicator
+                        color={props.app.colors.buttonColor}
+                        size={'large'}
+                    />
+                </View>
+
+            </View>
+
+        </>
+    )
+}
 
 function CabeenAddModalLocation(props){
     const [isSearching, setIsSearching] = React.useState(false)
@@ -416,6 +457,14 @@ function Content(props){
     else if (props.isType === 'location'){
         return (
             <CabeenAddModalLocation
+                {...props}
+            />
+        )
+    }
+
+    else if (props.isType === "loading"){
+        return (
+            <CabeenAddModalLoading
                 {...props}
             />
         )
