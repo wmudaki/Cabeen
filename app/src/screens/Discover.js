@@ -89,8 +89,9 @@ function CarouselList(props){
 					location={item.item.location}
 					vertical={true}
 					onPress={() => {
-						Actions.cabeen()
 						props.getCabeenDetails(item.item)
+						Actions.cabeen()
+
 					}}
 				/>
 			</>
@@ -108,6 +109,21 @@ function CarouselList(props){
 					ListHeaderComponent={() => <View style={{margin: 50}}/>}
 					ListFooterComponent={() => <View style={{margin: 50}}/>}
 					keyExtractor={(item, key) => item+key}
+					ListEmptyComponent={() => (
+						<View style={{
+							marginTop: 100,
+							margin: 30
+						}}>
+							<Text style={{
+								fontSize: 25,
+								color: props.app.colors.secondaryText,
+								fontWeight: "bold",
+								alignSelf: 'center'
+							}}>
+								The cabeens you add will appear here ...
+							</Text>
+						</View>
+					)}
 					// sliderHeight={height}
 					// itemHeight={0.6*height}
 					// inactiveSlideOpacity={0.7}

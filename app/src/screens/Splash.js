@@ -19,13 +19,13 @@ import {connect} from "react-redux";
 
 
 function Splash(props){
-    StatusBar.setBackgroundColor(props.app.colors.statusBar)
+    StatusBar.setBackgroundColor(props.app.colors.whiteText)
 
     return(
         <>
             <View style={{
                 flex: 1,
-                backgroundColor: props.app.colors.statusBar,
+                backgroundColor: props.app.colors.whiteText,
                 justifyContent: "center",
                 alignItems: "center"
 

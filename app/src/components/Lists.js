@@ -34,7 +34,10 @@ class CustomSectionListStateless extends React.PureComponent{
 		return(
 			<>
 				<CabeenCard
-					item={item.item}
+					name={item.item.name}
+					location={item.item.location}
+					price={item.item.price}
+					onPress={() => this.props.onPress(item.item)}
 				/>
 			</>
 		)
@@ -57,28 +60,6 @@ class CustomSectionListStateless extends React.PureComponent{
 	}
 
 	render(){
-		const DATA = [
-			{
-				title: "Today's special",
-				data: [1],
-				carouselData: ["Strawberry", "Strawberry", "Risotto"]
-			},
-			{
-				title: "Farm's near you",
-				data: [1],
-				carouselData: ["French Fries", "Onion Rings", "Fried Shrimps"]
-			},
-			{
-				title: "Because you love avocados",
-				data:[1],
-				carouselData: ["Water", "Coke", "Beer"]
-			},
-			{
-				title: "Today's special",
-				data:[1],
-				carouselData: ["Cheese Cake", "Ice Cream"]
-			}
-		];
 		return(
 			<>
 				<View style={{
@@ -86,9 +67,9 @@ class CustomSectionListStateless extends React.PureComponent{
 					width: '100%'
 				}}>
 					<SectionList
-						sections={DATA}
-						renderItem={({section:{carouselData}}) =>
-							this.renderCarousel(carouselData)}
+						sections={this.props.homeData}
+						renderItem={({section:{recommendation}}) =>
+							this.renderCarousel(recommendation)}
 						keyExtractor={(item,index) => item+index}
 						SectionSeparatorComponent={() => <View style={{margin:15}}/>}
 						ListHeaderComponent={() => <View style={{margin:50}}/>}

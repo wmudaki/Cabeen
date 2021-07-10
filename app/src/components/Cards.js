@@ -82,7 +82,7 @@ class CabeenCard extends React.PureComponent{
 								style={{
 									fontSize: 18,
 									marginLeft: 10,
-									maxWidth: '93%',
+									flex: 0.96,
 									color: this.props.app.colors.primaryText
 								}}>
 								{this.props.location}
