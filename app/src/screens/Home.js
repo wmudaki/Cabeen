@@ -24,7 +24,7 @@ class Home extends React.PureComponent{
 			<>
 				<View style={{
 					flex: 1,
-					backgroundColor: this.props.app.colors.background
+					backgroundColor: this.props.app.colors.whiteText
 				}}>
 
 					<View>
@@ -32,7 +32,7 @@ class Home extends React.PureComponent{
 					</View>
 					<View style={{
 						position: 'absolute',
-						top: 10,
+						top: 0,
 						left: 0,
 						right: 0
 					}}>

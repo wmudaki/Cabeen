@@ -35,10 +35,12 @@ class CabeenCard extends React.PureComponent{
 					onPress={this.props.onPress}
 					style={{
 						backgroundColor: this.props.app.colors.whiteText,
-						width: this.props.vertical ? 0.95*width: 0.85*width,
-						borderRadius: 20,
-						elevation: this.props.vertical ? 0: 0,
+						width: this.props.vertical ? 0.9*width: 0.85*width,
+						borderRadius: 10,
+						elevation: this.props.vertical ? 10: 10,
 						margin:10,
+						borderBottomRightRadius: 10,
+						borderBottomLeftRadius: 10,
 						height: this.props.vertical ? 0.55*height:0.5*height,
 						alignSelf: 'center'
 					}}>
@@ -46,8 +48,8 @@ class CabeenCard extends React.PureComponent{
 						style={{
 							height: '60%',
 							width: '100%',
-							borderTopLeftRadius: 20,
-							borderTopRightRadius: 20
+							borderTopLeftRadius: 10,
+							borderTopRightRadius: 10,
 						}}
 						source={{
 							uri: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.BEyMW2mX7ojl1e1TQo4vPwHaE8%26pid%3DApi&f=1'

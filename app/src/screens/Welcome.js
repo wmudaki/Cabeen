@@ -38,7 +38,7 @@ function Welcome(props){
         <>
             <View style={{
                 flex: 1,
-                backgroundColor: props.app.colors.background,
+                backgroundColor: props.app.colors.whiteText,
                 alignItems: "center",
                 justifyContent: "center"
 

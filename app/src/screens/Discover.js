@@ -43,24 +43,24 @@ function NavigationBar(props){
 		<>
 			<View style={{
 				flexDirection: "row",
-				height: 55,
+				height: 50,
 				alignItems: "center",
 				justifyContent: "space-between",
-				margin: 0,
-				marginTop: 0,
+				margin: 20,
+				marginTop: 10,
 				elevation: 10,
 				padding: 5,
-				borderRadius: 0,
-				backgroundColor: props.app.colors.statusBar
+				borderRadius: 5,
+				backgroundColor: props.app.colors.whiteText
 			}}>
 				<Text style={{
-					color: props.app.colors.whiteText,
+					color: props.app.colors.statusBar,
 					fontWeight: "bold",
-					fontSize: 25
+					fontSize: 23
 				}}>
-					My cabeens
+					Cabeens
 				</Text>
-				<TouchableOpacity>
+				<TouchableOpacity onPress={() => Actions.account()}>
 					<Image
 						source={{
 							uri: 'uri'
@@ -234,7 +234,7 @@ function Discover(props){
 		<>
 			<View style={{
 				flex: 1,
-				backgroundColor: props.app.colors.background
+				backgroundColor: props.app.colors.whiteText
 			}}>
 
 				<View>

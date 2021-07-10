@@ -81,7 +81,7 @@ function Signup(props) {
         <>
             <ScrollView style={{
                 flex: 1,
-                backgroundColor: props.app.colors.background
+                backgroundColor: props.app.colors.whiteText
             }}>
                 <Text style={{
                     fontWeight: 'bold',

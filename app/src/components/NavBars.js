@@ -29,7 +29,7 @@ class CustomTabBarStateless extends React.PureComponent{
 				return {'name':'home',
 					'size' : 25,
 					'color': this.props.app.colors.icon,
-					'label': 'cabeen',
+					'label': 'home',
 					'active': true
 				}
 			}
@@ -37,7 +37,7 @@ class CustomTabBarStateless extends React.PureComponent{
 				return {'name':'home-outline',
 					'size' : 25,
 					'color': this.props.app.colors.statusBar,
-					'label': 'cabeen',
+					'label': 'home',
 					'active': false
 				}
 			}
@@ -93,6 +93,8 @@ class CustomTabBarStateless extends React.PureComponent{
 			}}>
 				<View style={{
 					margin: 20,
+					marginLeft: 60,
+					marginRight: 60,
 					flexDirection: 'row',
 					justifyContent: 'space-evenly',
 					height: 60,

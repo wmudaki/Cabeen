@@ -71,7 +71,7 @@ function Login(props){
         <>
             <ScrollView style={{
                 flex:1,
-                backgroundColor: props.app.colors.background
+                backgroundColor: props.app.colors.whiteText
             }}>
                 <Text style={{
                     color: props.app.colors.primaryText,

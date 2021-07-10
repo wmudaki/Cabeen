@@ -90,13 +90,12 @@ class CustomSectionListStateless extends React.PureComponent{
 						renderItem={({section:{carouselData}}) =>
 							this.renderCarousel(carouselData)}
 						keyExtractor={(item,index) => item+index}
-						SectionSeparatorComponent={() => <View style={{margin:0}}/>}
-						ItemSeparatorComponent={() => <View style={{margin:0}}/>}
+						SectionSeparatorComponent={() => <View style={{margin:15}}/>}
 						ListHeaderComponent={() => <View style={{margin:50}}/>}
 						ListFooterComponent={() => <View style={{margin:30}}/>}
 						// horizontal={true}
 						renderSectionHeader={({ section: { title } }) => (
-							<Text style={{fontSize: 30,
+							<Text style={{fontSize: 25,
 								color: this.props.app.colors.statusBar,
 								fontWeight: 'bold',
 								marginLeft: 10

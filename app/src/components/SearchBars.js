@@ -9,7 +9,7 @@ import * as React from 'react'
 import {
 	View,
 	TextInput,
-	TouchableOpacity, FlatList, Text,
+	TouchableOpacity, FlatList, Text, Image,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Feather from "react-native-vector-icons/Feather";
@@ -48,11 +48,22 @@ class FloatingSearchBarStateless extends React.PureComponent{
 					paddingRight: 20
 				}}>
 					<TouchableOpacity onPress={this.props.leftIconPress}>
-						<Ionicons
-							name={this.props.leftIcon}
-							size={32}
-							color={this.props.app.colors.statusBar}
+						<Image
+							source={{
+								uri: 'uri'
+							}}
+							style={{
+								height: 40,
+								width: 40,
+								borderRadius: 20,
+								backgroundColor: this.props.app.colors.background
+							}}
 						/>
+						{/*<Ionicons*/}
+						{/*	name={this.props.leftIcon}*/}
+						{/*	size={32}*/}
+						{/*	color={this.props.app.colors.statusBar}*/}
+						{/*/>*/}
 					</TouchableOpacity>
 					<TextInput
 						placeholder={this.props.placeholder}
