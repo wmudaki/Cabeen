@@ -58,7 +58,7 @@ function NavigationBar(props){
 					fontWeight: "bold",
 					fontSize: 23
 				}}>
-					Cabeens
+					Home
 				</Text>
 				<TouchableOpacity onPress={() => Actions.account()}>
 					<Image
@@ -106,7 +106,37 @@ function CarouselList(props){
 				<FlatList
 					data={props.fetchResults}
 					renderItem={_renderItem}
-					ListHeaderComponent={() => <View style={{margin: 50}}/>}
+					ListHeaderComponent={() => (
+						<View style={{marginTop: 20,
+							flexDirection: "row",
+							justifyContent: "space-between",
+							alignItems: "center",
+							elevation: 10,
+							backgroundColor: 'white',
+							padding: 7,
+							borderRadius: 10,
+							margin: 20, marginBottom: 50}}>
+							<Text style={{
+								fontWeight: "bold",
+								fontSize: 25,
+								color: props.app.colors.statusBar
+							}}>
+								Your cabeens
+							</Text>
+							<TouchableOpacity onPress={() => Actions.account()}>
+								<Image
+									source={{
+										uri: 'uri'
+									}}
+									style={{
+										height: 40,
+										width: 40,
+										borderRadius: 20,
+										backgroundColor: props.app.colors.background
+									}}
+								/>
+							</TouchableOpacity>
+						</View>)}
 					ListFooterComponent={() => <View style={{margin: 50}}/>}
 					keyExtractor={(item, key) => item+key}
 					ListEmptyComponent={() => (
@@ -260,16 +290,16 @@ function Discover(props){
 						{...props}
 					/>
 				</View>
-				<View style={{
-					position: "absolute",
-					top: 0,
-					left: 0,
-					right: 0
-				}}>
-					<NavigationBar
-						{...props}
-					/>
-				</View>
+				{/*<View style={{*/}
+				{/*	position: "absolute",*/}
+				{/*	top: 0,*/}
+				{/*	left: 0,*/}
+				{/*	right: 0*/}
+				{/*}}>*/}
+				{/*	<NavigationBar*/}
+				{/*		{...props}*/}
+				{/*	/>*/}
+				{/*</View>*/}
 
 				{
 					isFetchingCabeens?

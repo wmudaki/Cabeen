@@ -276,14 +276,13 @@ class Cabeen extends React.PureComponent{
 		return(
 			<>
 				<TouchableOpacity style={{
-					elevation: 30
+					elevation: 0
 				}}>
 					<Image
-						resizeMethod={"scale"}
 						style={{
 							width: '100%',
 							height: 320,
-							borderRadius: 20,
+							borderRadius: 10,
 							marginTop: 10
 						}}
 						source={{

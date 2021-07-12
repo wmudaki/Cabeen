@@ -43,7 +43,7 @@ class RegularTextInput extends React.PureComponent{
                             fontSize: 20,
                             color: this.props.textColor,
                             alignSelf: 'center',
-                            fontWeight: 'bold'
+                            fontWeight: 'bold',
                         }}
                         secureTextEntry={this.props.secureTextEntry}
                         onChangeText={this.props.onChangeText}

@@ -53,6 +53,8 @@ class FloatingActonButtonStateless extends React.PureComponent{
         return(
             <>
                 <TouchableOpacity
+
+                    userInte
                     onPress={this.props.onPress}
                     style={{
                     height: 50,
@@ -61,7 +63,7 @@ class FloatingActonButtonStateless extends React.PureComponent{
                     elevation: 10,
                     padding: this.props.management ? 15: 0,
                     backgroundColor: this.props.app.colors.buttonColor,
-                    alignItems: 'center',
+                    alignItems: "center",
                     justifyContent: this.props.management ? 'space-between':'center',
                     flexDirection:this.props.management ? "row": "column",
                 }}>

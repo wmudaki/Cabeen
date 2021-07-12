@@ -130,7 +130,7 @@ class CustomFlatListStateless extends React.PureComponent{
 							fontSize: 16,
 							color: this.props.app.colors.primaryText
 						}}>
-							A very long welcoming text
+							A very <bold>long</bold> welcoming text
 						</Text>
 					</View>
 
