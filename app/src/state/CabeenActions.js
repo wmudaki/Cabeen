@@ -35,3 +35,12 @@ export const updateCabeens = () => (
         type: "UPDATE_CABEENS"
     }
 )
+
+export const selectImages = (operation, payload) => (
+    {
+        type: 'SELECT_IMAGES',
+        operation: operation,
+        payload: payload
+    }
+)
+

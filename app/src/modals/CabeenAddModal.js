@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
     ScrollView,
     ActivityIndicator,
-    VirtualizedList, FlatList
+    VirtualizedList, FlatList, PermissionsAndroid, Image
 } from "react-native";
 import {bindActionCreators} from "redux";
 import {addTenant, addCabeen} from "../state/CabeenActions";
@@ -15,6 +15,259 @@ import {connect} from "react-redux";
 import {Actions} from "react-native-router-flux";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import {AutoCompleteComponent} from "../screens/Search";
+import CameraRoll from "@react-native-community/cameraroll";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import {selectImages} from "../state/CabeenActions";
+
+function CabeenImage(props){
+    const [selected, setSelected] = React.useState(false)
+
+    return(
+        <>
+            <TouchableOpacity
+                onPress={() => {
+                    props.selectImages(selected ? 'unselect' : "select", props.item.item.node.image.uri)
+                    setSelected(!selected)
+
+                }}
+
+                style={{
+                flex: 1,
+                margin: 3,
+                borderWidth: selected ? 3: 0,
+                borderColor: props.app.colors.buttonColor,
+                borderRadius: 5
+            }}>
+                <Image
+                    style={{
+                        width: '100%',
+                        height: 150,
+                        borderRadius: 5,
+                    }}
+                    source={{
+                        uri: props.item.item.node.image.uri
+                    }}/>
+                {
+                    selected ?
+                        <Ionicons
+                            name={'checkmark-circle'}
+                            size={30}
+                            style={{
+                                top: 0,
+                                position: 'absolute'
+                            }}
+                            color={props.app.colors.buttonColor}
+                        />: null
+                }
+
+            </TouchableOpacity>
+        </>
+    )
+}
+
+function CabeenAddModalImageSelect(props){
+
+    const [images, setImages] = React.useState([])
+    const [isLoading, setIsLoading] = React.useState(false)
+    const [page_info, set_page_info] = React.useState({"end_cursor": "0", "has_next_page": true})
+
+
+    async function hasAndroidPermission() {
+        const permission = PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE;
+
+        const hasPermission = await PermissionsAndroid.check(permission);
+        if (hasPermission) {
+            return true;
+        }
+
+        const status = await PermissionsAndroid.request(permission);
+        return status === 'granted';
+    }
+
+    async function getPhotos(){
+        if(await hasAndroidPermission() === 'granted'){
+            setIsLoading(true)
+            CameraRoll.getPhotos({first: 20, assetType: "Photos",})
+                .then((value) => {
+                    setIsLoading(false)
+                    setImages(value.edges)
+                    set_page_info(value.page_info)
+                })
+                .catch(err => {
+                    setIsLoading(false)
+                })
+        }
+
+        else if (await hasAndroidPermission()){
+            setIsLoading(true)
+            CameraRoll.getPhotos({first: 20, assetType: "Photos",})
+                .then((value) => {
+                    setIsLoading(false)
+                    setImages(value.edges)
+                    set_page_info(value.page_info)
+                })
+                .catch(err => {
+                    setIsLoading(false)
+                })
+        }
+    }
+
+    function _onEndReached(){
+        if (page_info.has_next_page){
+            setIsLoading(true)
+            CameraRoll.getPhotos({first: 20, assetType: "Photos", after: page_info.end_cursor})
+                .then((value) => {
+                    setIsLoading(false)
+                    let oldImages = [...images]
+                    let newImages = value.edges
+                    let newState = oldImages.concat(newImages)
+                    setImages(newState)
+                    set_page_info(value.page_info)
+                })
+                .catch(err => {
+                    setIsLoading(false)
+                })
+        }
+    }
+
+
+    React.useEffect(() => {
+        getPhotos()
+            .then()
+    }, [])
+
+    React.useEffect(() => {
+        props.selectImages('clear', 'clear')
+    }, [])
+
+    const _renderItem = (item) => {
+        return(
+            <CabeenImage
+                {...props}
+                item={item}
+            />
+        )
+    }
+
+    return(
+        <>
+            <View style={{
+                height: '80%',
+                width: "95%",
+                borderRadius: 10,
+                elevation: 20,
+                margin: 20,
+                // alignSelf: "center",
+                backgroundColor: props.app.colors.whiteText,
+                // alignItems: 'center',
+                // justifyContent: "center"
+            }}>
+                <View style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    margin: 20
+                }}>
+                    <Text style={{
+                        fontWeight: "bold",
+                        fontSize: 20,
+                        color: props.app.colors.statusBar
+                    }}>
+                        Select cabeen Images
+
+                    </Text>
+                    <Text style={{
+                        fontSize: 20,
+                        fontWeight: "bold",
+                        color: props.app.colors.blackText
+
+                    }}>
+                        {props.cabeen.cabeenImages.length}
+                    </Text>
+                </View>
+
+                {
+                    images.length > 0 ?
+                        <FlatList
+                            data={images}
+                            numColumns={2}
+                            renderItem={_renderItem}
+                            keyExtractor={(item, key) => item + key}
+                            onEndReached={() => _onEndReached()}
+                        />: null
+                }
+                <View style={{
+                    flexDirection: 'row',
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    margin: 20,
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                }}>
+                    <TouchableOpacity
+                        onPress={props.onImageSelectCancel}
+                        style={{
+                            borderRadius: 5,
+                            height: 40,
+                            width: '45%',
+                            justifyContent: "center",
+                            alignItems:"center",
+                            borderWidth: 1,
+                            borderColor: props.app.colors.secondaryText,
+                        }}>
+                        <Text style={{
+                            fontSize: 18,
+
+                        }}>
+                            Cancel
+                        </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        onPress={props.onImageSelectOk}
+                        style={{
+                            backgroundColor: props.app.colors.buttonColor,
+                            borderRadius: 5,
+                            height: 40,
+                            width: '45%',
+                            justifyContent: "center",
+                            alignItems:"center"
+                        }}>
+                        <Text style={{
+                            fontSize: 18,
+                            fontWeight: "bold"
+                        }}>
+                            OK
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+                {
+                    isLoading?
+                        <View style={{
+                            position: 'absolute',
+                            top: 80,
+                            alignSelf: "center",
+                            borderRadius: 50,
+                            padding: 10,
+                            elevation: 30,
+                            backgroundColor: props.app.colors.whiteText
+                        }}>
+                            <ActivityIndicator
+                                color={props.app.colors.buttonColor}
+                                size={"small"}
+                            />
+
+                        </View>: null
+                }
+
+
+
+            </View>
+
+        </>
+    )
+}
 
 function CabeenAddModalLoading(props) {
     return(
@@ -289,7 +542,7 @@ function CabeenAddModalContent(props){
     return(
         <>
             <View style={{
-                height: '70%',
+                height: '80%',
                 width: '95%',
                 justifyContent: "center",
                 borderRadius: 10,
@@ -305,36 +558,58 @@ function CabeenAddModalContent(props){
                 </Text>
                 <ScrollView>
 
+                    <Text style={{
+                        fontSize: 18,
+                        margin: 20,
+                        marginBottom: 10,
+                    }}>
+                        Name
+                    </Text>
                     <TextInput
-                        placeholder={'Cabeen name'}
+                        placeholder={'cabeen name'}
                         placeholderTextColor={props.app.colors.secondaryText}
                         onChangeText={(value) => props.addCabeen('name', value)}
                         style={{
-                            // borderRadius: 10,
+                            borderRadius: 5,
                             borderBottomColor: props.app.colors.background,
-                            borderBottomWidth: 2,
-                            // backgroundColor: props.app.colors.background,
+                            marginTop: 0,
+                            backgroundColor: props.app.colors.background,
                             fontSize: 20,
                             padding:10,
-                            margin: 20,
+                            marginLeft: 20,
+                            marginRight: 20,
                             color: props.app.colors.primaryText
                         }}
                     />
+                    <Text style={{
+                        fontSize: 18,
+                        margin: 20,
+                        marginBottom: 10,
+                    }}>
+                        Price
+                    </Text>
                     <TextInput
-                        placeholder={'Price'}
+                        placeholder={'price'}
                         placeholderTextColor={props.app.colors.secondaryText}
                         onChangeText={(value) => props.addCabeen('price', value)}
                         style={{
-                            // borderRadius: 10,
+                            borderRadius: 5,
                             borderBottomColor: props.app.colors.background,
-                            borderBottomWidth: 2,
-                            // backgroundColor: props.app.colors.background,
+                            backgroundColor: props.app.colors.background,
                             fontSize: 20,
                             padding:10,
-                            margin: 20,
+                            marginLeft: 20,
+                            marginRight: 20,
                             color: props.app.colors.primaryText
                         }}
                     />
+                    <Text style={{
+                        fontSize: 18,
+                        margin: 20,
+                        marginBottom: 10,
+                    }}>
+                        Location
+                    </Text>
                     <TextInput
                         placeholder={'Location'}
                         placeholderTextColor={props.app.colors.secondaryText}
@@ -343,26 +618,32 @@ function CabeenAddModalContent(props){
                         selectTextOnFocus
                         // onChangeText={(value) => props.addTenant('houseLabel', value)}
                         style={{
-                            // borderRadius: 10,
+                            borderRadius: 5,
                             borderBottomColor: props.app.colors.background,
-                            borderBottomWidth: 2,
-                            // backgroundColor: props.app.colors.background,
+                            backgroundColor: props.app.colors.background,
                             fontSize: 20,
                             padding:10,
-                            margin: 20,
+                            marginLeft: 20,
+                            marginRight: 20,
                             color: props.app.colors.primaryText
                         }}
                     />
+                    <Text style={{
+                        fontSize: 18,
+                        margin: 20,
+                        marginBottom: 10,
+                    }}>
+                        Description
+                    </Text>
                     <TextInput
-                        placeholder={'Description'}
+                        placeholder={'description'}
                         placeholderTextColor={props.app.colors.secondaryText}
                         multiline
                         onChangeText={(value) => props.addCabeen('description', value)}
                         style={{
-                            // borderRadius: 10,
+                            borderRadius: 5,
                             borderBottomColor: props.app.colors.background,
-                            borderBottomWidth: 2,
-                            // backgroundColor: props.app.colors.background,
+                            backgroundColor: props.app.colors.background,
                             fontSize: 20,
                             maxHeight: 150,
                             padding:10,
@@ -371,7 +652,7 @@ function CabeenAddModalContent(props){
                         }}
                     />
                     <TouchableOpacity
-                        // onPress={props.onCancel}
+                        onPress={props.onImageSelect}
                         style={{
                             borderRadius: 20,
                             height: 40,
@@ -470,6 +751,14 @@ function Content(props){
         )
     }
 
+    else if (props.isType === 'imageSelect'){
+        return (
+            <CabeenAddModalImageSelect
+                {...props}
+            />
+        )
+    }
+
     else return(
             <CabeenAddModalContent {...props}/>)
 }
@@ -516,7 +805,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => (
     bindActionCreators({
         addTenant,
-        addCabeen
+        addCabeen,
+        selectImages
 
     }, dispatch)
 )

@@ -23,7 +23,8 @@ const INITIAL_STATE = {
         price: '',
         images: []
     },
-    updateCabeens: true
+    updateCabeens: true,
+    cabeenImages : []
 
 }
 
@@ -109,6 +110,26 @@ export const cabeenReducer = (state = INITIAL_STATE, action) => {
         case "UPDATE_CABEENS":
             state.updateCabeens = !state.updateCabeens
             return {...state}
+
+        case "SELECT_IMAGES":
+            if (action.operation === 'select'){
+                state.cabeenImages.push(action.payload)
+                return {...state}
+            }
+            else if (action.operation === 'unselect'){
+                let index = state.cabeenImages.indexOf(action.payload)
+                if (index !== -1){
+                    state.cabeenImages.splice(index,1)
+                    return {...state}
+                }
+                return state
+            }
+            else if (action.operation === 'clear'){
+                state.cabeenImages = []
+                return {...state}
+            }
+
+            else return state
 
         default:
             return state

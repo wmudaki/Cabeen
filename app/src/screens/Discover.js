@@ -30,7 +30,7 @@ import {useBackHandler} from "@react-native-community/hooks";
 import {Actions} from "react-native-router-flux";
 import Carousel from "react-native-snap-carousel";
 import CabeenCard from "../components/Cards";
-import {getCabeenDetails} from "../state/CabeenActions";
+import {getCabeenDetails, selectImages} from "../state/CabeenActions";
 
 
 
@@ -365,6 +365,16 @@ function Discover(props){
 					}
 
 				}}
+				onImageSelect={() => {
+					setIsType('imageSelect')
+				}}
+				onImageSelectCancel={() => {
+					setIsType('normal')
+					props.selectImages('clear', 'clear')
+				}}
+				onImageSelectOk={() => {
+					console.log("Selected Images")
+				}}
 			/>
 		</>
 	)
@@ -478,7 +488,8 @@ const mapDispatchToProps = dispatch => (
 		searchPlace,
 		showAutocomplete,
 		showOverlay,
-		getCabeenDetails
+		getCabeenDetails,
+		selectImages
 
 	}, dispatch)
 )
