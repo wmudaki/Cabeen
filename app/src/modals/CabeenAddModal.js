@@ -19,6 +19,173 @@ import CameraRoll from "@react-native-community/cameraroll";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {selectImages} from "../state/CabeenActions";
 
+function CabeenImages(props){
+
+    function _renderItem(item){
+        return(
+            <>
+                <TouchableOpacity
+                    style={{
+                    margin: 5,
+                    borderRadius: 5,
+                }}>
+                    <Image
+                        style={{
+                            height: 150,
+                            width: 150,
+                            borderRadius: 5,
+                        }}
+                        source={{
+                            uri: item.item
+                        }}
+                        />
+                    <TouchableOpacity
+                        onPress={() => {
+                            props.selectImages('unselect', item.item)
+                        }}
+                        style={{
+                        top: 0,
+                        right: 0,
+                        position: "absolute",
+                        elevation: 20
+                    }}>
+                        <Ionicons
+                            name={'close-circle'}
+                            size={30}
+                            color={props.app.colors.greyText}
+                        />
+                    </TouchableOpacity>
+                </TouchableOpacity>
+            </>
+        )
+    }
+
+    return(
+        <>
+            <View style={{
+                margin: 10
+            }}>
+                <FlatList
+                    data={props.cabeen.cabeenImages}
+                    renderItem={_renderItem}
+                    horizontal={true}
+                    keyExtractor={(item, key) => item + key}
+                    />
+            </View>
+        </>
+    )
+}
+
+function CabeenFeatures(props){
+
+    function _renderItem(item){
+        return(
+            <>
+                <TouchableOpacity
+                    // onPress={() => {
+                    //     // setSelected(item.item)
+                    // }}
+                    style={{
+
+                        flex: 1,
+                        padding: 5,
+                        elevation: 10,
+                        margin : 5,
+                        borderRadius: 10,
+                        backgroundColor: props.app.colors.whiteText,
+                        borderColor: props.app.colors.background,
+                        alignItems: "center",
+                        justifyContent: "center"
+                    }}>
+                    <Text style={{
+
+                        fontSize: 16,
+                        fontWeight: "bold"
+                    }}>
+                        {item.item}
+                    </Text>
+                </TouchableOpacity>
+            </>
+        )
+    }
+
+    return(
+        <>
+            <View style={{
+                margin: 10
+            }}>
+                <FlatList
+                    data={props.features}
+                    renderItem={_renderItem}
+                    numColumns={3}
+                    keyExtractor={(item, key) => item + key}
+                    />
+
+            </View>
+        </>
+    )
+}
+
+function CabeenType(props){
+    const types = [
+        'Bedsitter',
+        'Studio',
+        '1 bedroom',
+        '2 bedrooms',
+        '3 bedrooms',
+        '4+ bedrooms',
+
+    ]
+
+    const [selected, setSelected] = React.useState(props.cabeen.cabeenInfo.type)
+
+    function _renderItem(item){
+        return(
+            <>
+                <TouchableOpacity
+                    onPress={() => {
+                        setSelected(item.item)
+                        props.addCabeen('type', item.item)
+                    }}
+                    style={{
+                    borderWidth: selected === item.item ? 0: 1,
+                    elevation: selected === item.item ? 10: 0,
+                    flex: 1,
+                    padding: 3,
+                    margin : 5,
+                    borderRadius: 10,
+                    backgroundColor: selected === item.item ? props.app.colors.buttonColor: null,
+                    borderColor: props.app.colors.background,
+                    alignItems: "center",
+                    justifyContent: "center"
+                }}>
+                    <Text style={{
+
+                        fontSize: 16
+                    }}>
+                        {item.item}
+                    </Text>
+                </TouchableOpacity>
+            </>
+        )
+    }
+
+    return(
+        <>
+            <View style={{
+                margin: 10
+            }}>
+                <FlatList
+                    data={types}
+                    renderItem={_renderItem}
+                    numColumns={3}
+                    keyExtractor={(item, key) => item + key}
+                    />
+            </View>
+        </>
+    )
+}
+
 function CabeenImage(props){
     const [selected, setSelected] = React.useState(false)
 
@@ -327,12 +494,12 @@ function CabeenAddModalLocation(props){
                     setIsSearching(false)
                     setAutocompleting(true)
                     setLocationData(results.predictions)
-                    console.log('results', results)
+                    // console.log('results', results)
                 })
                 .catch(err => {
                     setIsSearching(false)
                     setAutocompleting(false)
-                    console.log('err', err)
+                    // console.log('err', err)
                 })
         }
         else if (input.length > 0){
@@ -344,7 +511,7 @@ function CabeenAddModalLocation(props){
         <>
             <View style={{
                 backgroundColor: props.app.colors.whiteText,
-                height: '50%',
+                height: '60%',
                 width: '90%',
                 borderRadius: 10,
             }}>
@@ -353,11 +520,13 @@ function CabeenAddModalLocation(props){
                     flexDirection: "row",
                     alignItems: "center",
                     justifyContent: "space-between",
-                    borderRadius: 30,
+                    borderRadius: 5,
                     paddingLeft:10,
                     paddingRight: 10,
-                    elevation: 10,
+                    elevation: 0,
                     padding: 0,
+                    borderWidth: 2,
+                    borderColor: props.app.colors.background,
                     backgroundColor: props.app.colors.whiteText
                 }}>
                     <View style={{
@@ -366,9 +535,9 @@ function CabeenAddModalLocation(props){
                     }}>
 
                         <TouchableOpacity onPressIn={props.onLocation}>
-                            <AntDesign
-                                name={'close'}
-                                size={25}
+                            <Ionicons
+                                name={'close-circle'}
+                                size={30}
                                 color={props.app.colors.statusBar}
                             />
                         </TouchableOpacity>
@@ -539,6 +708,9 @@ function CabeenAddModalError(props){
 }
 
 function CabeenAddModalContent(props){
+
+    const [features, setFeatures] = React.useState([])
+
     return(
         <>
             <View style={{
@@ -556,123 +728,221 @@ function CabeenAddModalContent(props){
                 }}>
                     Add Cabeen
                 </Text>
-                <ScrollView>
 
-                    <Text style={{
-                        fontSize: 18,
-                        margin: 20,
-                        marginBottom: 10,
-                    }}>
-                        Name
-                    </Text>
-                    <TextInput
-                        placeholder={'cabeen name'}
-                        placeholderTextColor={props.app.colors.secondaryText}
-                        onChangeText={(value) => props.addCabeen('name', value)}
-                        style={{
-                            borderRadius: 5,
-                            borderBottomColor: props.app.colors.background,
-                            marginTop: 0,
-                            backgroundColor: props.app.colors.background,
-                            fontSize: 20,
-                            padding:10,
-                            marginLeft: 20,
-                            marginRight: 20,
-                            color: props.app.colors.primaryText
-                        }}
-                    />
-                    <Text style={{
-                        fontSize: 18,
-                        margin: 20,
-                        marginBottom: 10,
-                    }}>
-                        Price
-                    </Text>
-                    <TextInput
-                        placeholder={'price'}
-                        placeholderTextColor={props.app.colors.secondaryText}
-                        onChangeText={(value) => props.addCabeen('price', value)}
-                        style={{
-                            borderRadius: 5,
-                            borderBottomColor: props.app.colors.background,
-                            backgroundColor: props.app.colors.background,
-                            fontSize: 20,
-                            padding:10,
-                            marginLeft: 20,
-                            marginRight: 20,
-                            color: props.app.colors.primaryText
-                        }}
-                    />
-                    <Text style={{
-                        fontSize: 18,
-                        margin: 20,
-                        marginBottom: 10,
-                    }}>
-                        Location
-                    </Text>
-                    <TextInput
-                        placeholder={'Location'}
-                        placeholderTextColor={props.app.colors.secondaryText}
-                        onKeyPress={props.onLocation}
-                        defaultValue={props.cabeen.cabeenInfo.location}
-                        selectTextOnFocus
-                        // onChangeText={(value) => props.addTenant('houseLabel', value)}
-                        style={{
-                            borderRadius: 5,
-                            borderBottomColor: props.app.colors.background,
-                            backgroundColor: props.app.colors.background,
-                            fontSize: 20,
-                            padding:10,
-                            marginLeft: 20,
-                            marginRight: 20,
-                            color: props.app.colors.primaryText
-                        }}
-                    />
-                    <Text style={{
-                        fontSize: 18,
-                        margin: 20,
-                        marginBottom: 10,
-                    }}>
-                        Description
-                    </Text>
-                    <TextInput
-                        placeholder={'description'}
-                        placeholderTextColor={props.app.colors.secondaryText}
-                        multiline
-                        onChangeText={(value) => props.addCabeen('description', value)}
-                        style={{
-                            borderRadius: 5,
-                            borderBottomColor: props.app.colors.background,
-                            backgroundColor: props.app.colors.background,
-                            fontSize: 20,
-                            maxHeight: 150,
-                            padding:10,
-                            margin: 20,
-                            color: props.app.colors.primaryText
-                        }}
-                    />
-                    <TouchableOpacity
-                        onPress={props.onImageSelect}
-                        style={{
-                            borderRadius: 20,
-                            height: 40,
-                            margin: 20,
-                            width: '45%',
-                            justifyContent: "center",
-                            alignItems:"center",
-                            alignSelf: "center",
-                            borderWidth: 1,
-                            borderColor: props.app.colors.buttonColor,
-                        }}>
-                        <Text style={{
-                            fontSize: 18,
-                            color: props.app.colors.buttonColor
+                <FlatList
+                    data={[1]}
+                    renderItem={() => (
+                        <View>
+                            <Text style={{
+                                fontSize: 18,
+                                margin: 10,
+                                marginBottom: 10,
+                                fontWeight: "bold",
+                                color: props.app.colors.statusBar
+                            }}>
+                                Name
+                            </Text>
+                            <TextInput
+                                placeholder={'cabeen name'}
+                                placeholderTextColor={props.app.colors.secondaryText}
+                                defaultValue={props.cabeen.cabeenInfo.name}
+                                onChangeText={(value) => props.addCabeen('name', value)}
+                                style={{
+                                borderRadius: 20,
+                                borderColor: props.app.colors.background,
+                                marginTop: 0,
+                                // backgroundColor: props.app.colors.background,
+                                fontSize: 20,
+                                padding:10,
+                                marginLeft: 20,
+                                marginRight: 20,
+                                marginBottom: 10,
+                                borderWidth: 2,
+                                color: props.app.colors.primaryText
+                            }}
+                                />
 
-                        }}>
-                            Add Images
-                        </Text>
-                    </TouchableOpacity>
-                </ScrollView>
+                            <Text style={{
+                                fontSize: 18,
+                                margin: 10,
+                                marginBottom: 10,
+                                fontWeight: "bold",
+                                color: props.app.colors.statusBar
+                            }}>
+                                Type
+                            </Text>
+                            <CabeenType {...props}/>
+                            <Text style={{
+                                fontSize: 18,
+                                margin: 10,
+                                marginBottom: 10,
+                                fontWeight: "bold",
+                                color: props.app.colors.statusBar
+                            }}>
+                                Features
+                            </Text>
+                            {
+                                features.length > 1 ?
+                                    <CabeenFeatures
+                                        {...props}
+                                        features={features}
+                                    />: null
+                            }
+                            <TextInput
+                                placeholder={'Enter features separated by a coma e.g. Wifi,balcony,swimming pool'}
+                                placeholderTextColor={props.app.colors.secondaryText}
+                                multiline
+                                defaultValue={props.cabeen.cabeenInfo.features}
+                                onChangeText={(value) => {
+                                    setFeatures(value.split(','))
+                                    props.addCabeen('features', value)
+                                }}
+                                style={{
+                                    borderRadius: 20,
+                                    borderColor: props.app.colors.background,
+                                    borderWidth: 2,
+                                    // backgroundColor: props.app.colors.background,
+                                    fontSize: 17,
+                                    maxHeight: 160,
+                                    padding:10,
+                                    marginLeft: 20,
+                                    marginRight: 20,
+                                    marginBottom: 20,
+                                    color: props.app.colors.primaryText
+                                }}
+                            />
+                            <Text style={{
+                                fontSize: 18,
+                                margin: 10,
+                                marginBottom: 10,
+                                fontWeight: "bold",
+                                color: props.app.colors.statusBar
+                            }}>
+                                Price
+                            </Text>
+                            <TextInput
+                                placeholder={'cabeen price'}
+                                placeholderTextColor={props.app.colors.secondaryText}
+                                keyboardType={"numeric"}
+                                defaultValue={props.cabeen.cabeenInfo.price}
+                                onChangeText={(value) => props.addCabeen('price', value)}
+                                style={{
+                                borderRadius: 20,
+                                borderColor: props.app.colors.background,
+                                borderWidth: 2,
+                                // backgroundColor: props.app.colors.background,
+                                fontSize: 20,
+                                padding:10,
+                                marginLeft: 20,
+                                marginRight: 20,
+                                marginBottom: 10,
+                                color: props.app.colors.primaryText
+                            }}
+                                />
+                            <Text style={{
+                                fontSize: 18,
+                                margin: 10,
+                                marginBottom: 10,
+                                fontWeight: "bold",
+                                color: props.app.colors.statusBar
+                            }}>
+                                Location
+                            </Text>
+                            <TextInput
+                                placeholder={'cabeen location'}
+                                placeholderTextColor={props.app.colors.secondaryText}
+                                onKeyPress={props.onLocation}
+                                defaultValue={props.cabeen.cabeenInfo.location}
+                                selectTextOnFocus
+                                // onChangeText={(value) => props.addTenant('houseLabel', value)}
+                                style={{
+                                borderRadius: 20,
+                                borderColor: props.app.colors.background,
+                                // backgroundColor: props.app.colors.background,
+                                fontSize: 20,
+                                borderWidth: 2,
+                                padding:10,
+                                marginLeft: 20,
+                                marginRight: 20,
+                                marginBottom: 10,
+                                color: props.app.colors.primaryText
+                            }}
+                                />
+                            <Text style={{
+                                fontSize: 18,
+                                margin: 10,
+                                marginBottom: 10,
+                                fontWeight: "bold",
+                                color: props.app.colors.statusBar
+                            }}>
+                                Description
+                            </Text>
+                            <TextInput
+                                placeholder={'cabeen description'}
+                                placeholderTextColor={props.app.colors.secondaryText}
+                                multiline
+                                defaultValue={props.cabeen.cabeenInfo.description}
+                                onChangeText={(value) => props.addCabeen('description', value)}
+                                style={{
+                                borderRadius: 20,
+                                borderColor: props.app.colors.background,
+                                borderWidth: 2,
+                                // backgroundColor: props.app.colors.background,
+                                fontSize: 20,
+                                maxHeight: 150,
+                                padding:10,
+                                marginLeft: 20,
+                                marginRight: 20,
+                                marginBottom: 20,
+                                color: props.app.colors.primaryText
+                            }}
+                                />
+                            {
+                                props.cabeen.cabeenImages.length > 0 ?
+                                    <CabeenImages {...props} />: null
+                            }
+                            {
+                                props.cabeen.cabeenImages.length < 1 ?
+                                    <TouchableOpacity
+                                        onPress={props.onImageSelect}
+                                        style={{
+                                            borderRadius: 20,
+                                            height: 45,
+                                            margin: 20,
+                                            width: '50%',
+                                            justifyContent: "center",
+                                            alignItems:"center",
+                                            alignSelf: "center",
+                                            flexDirection: "row",
+                                            // elevation: 10,
+                                            borderWidth: 1,
+                                            // backgroundColor: props.app.colors.background,
+                                            borderColor: props.app.colors.background,
+                                        }}>
+                                        <Ionicons
+                                            name={'images-outline'}
+                                            size={23}
+                                            color={props.app.colors.statusBar}
+                                            style={{
+                                                marginRight: 10,
+                                            }}
+                                        />
+                                        <Text style={{
+                                            fontSize: 18,
+                                            color: props.app.colors.statusBar
+
+                                        }}>
+                                            Add Images
+                                        </Text>
+                                    </TouchableOpacity> : null
+
+                            }
+
+                        </View>
+                    )}
+                    keyExtractor={(key, item) => key + item}
+                    />
+
                 <View style={{
                     flexDirection: 'row',
                     justifyContent: "space-between",

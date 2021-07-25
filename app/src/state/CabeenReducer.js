@@ -5,6 +5,7 @@ const INITIAL_STATE = {
         description: '',
         location: '',
         currency: '',
+        features: '',
         price: '',
         images: []
     },
@@ -57,6 +58,20 @@ export const cabeenReducer = (state = INITIAL_STATE, action) => {
             }
             else if (action.field === "images"){
                 state.cabeenInfo.images = action.payload
+                return {...state}
+            }
+            else if(action.field === 'features'){
+                state.cabeenInfo.features = action.payload
+                return {...state}
+            }
+            else if(action.field === 'clear'){
+                state.cabeenInfo.name = ''
+                state.cabeenInfo.type = ''
+                state.cabeenInfo.price = ''
+                state.cabeenInfo.currency = ''
+                state.cabeenInfo.description = ''
+                state.cabeenInfo.location = ''
+                state.cabeenInfo.features = ''
                 return {...state}
             }
             else return state

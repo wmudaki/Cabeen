@@ -374,6 +374,7 @@ function Discover(props){
 				}}
 				onImageSelectOk={() => {
 					console.log("Selected Images")
+					setIsType('normal')
 				}}
 			/>
 		</>
