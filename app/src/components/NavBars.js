@@ -110,7 +110,7 @@ class CustomTabBarStateless extends React.PureComponent{
 									alignItems: 'center',
 									flexDirection: 'row',
 									borderRadius: 50,
-									margin: 8,
+									margin: 6,
 									borderWidth:this.getIcon(elements.key).active ? 2 : 0,
 									borderColor: this.props.app.colors.buttonColor,
 									elevation: this.getIcon(elements.key).active ?
