@@ -43,20 +43,20 @@ class CustomTabBarStateless extends React.PureComponent{
 			}
 		}
 
-		else if (key === 'notifications'){
-			if (state.routes[activeTabIndex].key === 'notifications'){
-				return {'name':'notifications',
-					'size' : 25,
+		else if (key === 'find'){
+			if (state.routes[activeTabIndex].key === 'find'){
+				return {'name':'search',
+					'size' : 28,
 					'color': this.props.app.colors.icon,
-					'label': 'notifications',
+					'label': 'search',
 					'active': true
 				}
 			}
 			else {
-				return {'name':'notifications-outline',
+				return {'name':'search',
 					'size' : 25,
 					'color': this.props.app.colors.statusBar,
-					'label': 'notifications',
+					'label': 'find',
 					'active': false
 				}
 			}
@@ -72,7 +72,7 @@ class CustomTabBarStateless extends React.PureComponent{
 			}
 			else {
 				return {'name':'compass-outline',
-					'size' : 30,
+					'size' : 32,
 					'color': this.props.app.colors.statusBar,
 					'label': 'discover',
 					'active': false
@@ -93,8 +93,8 @@ class CustomTabBarStateless extends React.PureComponent{
 			}}>
 				<View style={{
 					margin: 20,
-					marginLeft: 60,
-					marginRight: 60,
+					marginLeft: 40,
+					marginRight: 40,
 					flexDirection: 'row',
 					justifyContent: 'space-evenly',
 					height: 60,

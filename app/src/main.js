@@ -110,15 +110,16 @@ export default function App (){
                                         hideNavBar
                                     />
                                     <Scene
+                                        component={Search}
+                                        key={'find'}
+                                        hideNavBar
+                                    />
+                                    <Scene
                                         component={Discover}
                                         key={'home'}
                                         hideNavBar
                                     />
-                                    {/*<Scene*/}
-                                    {/*    component={Notification}*/}
-                                    {/*    key={'notifications'}*/}
-                                    {/*    hideNavBar*/}
-                                    {/*/>*/}
+
                                 </Tabs>
                                 <Scene
                                     component={Cabeen}

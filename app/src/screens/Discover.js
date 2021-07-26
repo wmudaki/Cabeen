@@ -103,41 +103,9 @@ function CarouselList(props){
 			<View style={{
 				width:'100%'
 			}}>
-				<FlatList
+				<Carousel
 					data={props.fetchResults}
 					renderItem={_renderItem}
-					ListHeaderComponent={() => (
-						<View style={{marginTop: 20,
-							flexDirection: "row",
-							justifyContent: "space-between",
-							alignItems: "center",
-							elevation: 10,
-							backgroundColor: 'white',
-							padding: 7,
-							borderRadius: 10,
-							margin: 20, marginBottom: 50}}>
-							<Text style={{
-								fontWeight: "bold",
-								fontSize: 25,
-								color: props.app.colors.statusBar
-							}}>
-								Your cabeens
-							</Text>
-							<TouchableOpacity onPress={() => Actions.account()}>
-								<Image
-									source={{
-										uri: 'uri'
-									}}
-									style={{
-										height: 40,
-										width: 40,
-										borderRadius: 20,
-										backgroundColor: props.app.colors.background
-									}}
-								/>
-							</TouchableOpacity>
-						</View>)}
-					ListFooterComponent={() => <View style={{margin: 50}}/>}
 					keyExtractor={(item, key) => item+key}
 					ListEmptyComponent={() => (
 						<View style={{
@@ -154,12 +122,12 @@ function CarouselList(props){
 							</Text>
 						</View>
 					)}
-					// sliderHeight={height}
-					// itemHeight={0.6*height}
+					sliderWidth={width}
+					itemWidth={width}
 					// inactiveSlideOpacity={0.7}
 					// inactiveSlideScale={0.85}
 					// vertical
-					// layout={"stack"}
+					// layout={"tinder"}
 
 				/>
 			</View>
@@ -171,7 +139,9 @@ function CarouselList(props){
 function Content(props){
 	return(
 		<>
-			<View>
+			<View style={{
+				marginTop: 0
+			}}>
 				{
 					props.hasFetchResults ?
 						<CarouselList
@@ -283,23 +253,25 @@ function Discover(props){
 				backgroundColor: props.app.colors.whiteText
 			}}>
 
-				<View>
+				<View style={{
+					marginTop: 130
+				}}>
 					<Content
 						hasFetchResults={hasFetchResults}
 						fetchResults={fetchResults}
 						{...props}
 					/>
 				</View>
-				{/*<View style={{*/}
-				{/*	position: "absolute",*/}
-				{/*	top: 0,*/}
-				{/*	left: 0,*/}
-				{/*	right: 0*/}
-				{/*}}>*/}
-				{/*	<NavigationBar*/}
-				{/*		{...props}*/}
-				{/*	/>*/}
-				{/*</View>*/}
+				<View style={{
+					position: "absolute",
+					top: 0,
+					left: 0,
+					right: 0
+				}}>
+					<NavigationBar
+						{...props}
+					/>
+				</View>
 
 				{
 					isFetchingCabeens?
