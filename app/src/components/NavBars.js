@@ -28,7 +28,7 @@ class CustomTabBarStateless extends React.PureComponent{
 			if (state.routes[activeTabIndex].key === 'home'){
 				return {'name':'home',
 					'size' : 25,
-					'color': this.props.app.colors.icon,
+					'color': this.props.app.colors.buttonColor,
 					'label': 'home',
 					'active': true
 				}
@@ -47,7 +47,7 @@ class CustomTabBarStateless extends React.PureComponent{
 			if (state.routes[activeTabIndex].key === 'find'){
 				return {'name':'search',
 					'size' : 28,
-					'color': this.props.app.colors.icon,
+					'color': this.props.app.colors.buttonColor,
 					'label': 'search',
 					'active': true
 				}
@@ -65,7 +65,7 @@ class CustomTabBarStateless extends React.PureComponent{
 			if (state.routes[activeTabIndex].key === 'discover'){
 				return {'name':'compass',
 					'size' : 32,
-					'color': this.props.app.colors.icon,
+					'color': this.props.app.colors.buttonColor,
 					'label': 'discover',
 					'active': true
 				}
@@ -92,14 +92,14 @@ class CustomTabBarStateless extends React.PureComponent{
 				left: 0
 			}}>
 				<View style={{
-					margin: 20,
+					margin: 10,
 					marginLeft: 40,
 					marginRight: 40,
 					flexDirection: 'row',
 					justifyContent: 'space-evenly',
 					height: 60,
 					backgroundColor: '#ffffff',
-					borderRadius: 50,
+					borderRadius: 30,
 					elevation: 10
 				}}>
 					{
@@ -110,11 +110,13 @@ class CustomTabBarStateless extends React.PureComponent{
 									alignItems: 'center',
 									flexDirection: 'row',
 									borderRadius: 50,
-									margin: 7,
+									margin: 8,
+									borderWidth:this.getIcon(elements.key).active ? 2 : 0,
+									borderColor: this.props.app.colors.buttonColor,
 									elevation: this.getIcon(elements.key).active ?
-										5: null,
+										0: null,
 									backgroundColor:this.getIcon(elements.key).active ?
-										this.props.app.colors.background : null
+										null : null
 								}}
 								key={elements.key}
 								onPress={() => Actions[elements.key]()}
