@@ -92,7 +92,7 @@ class CustomTabBarStateless extends React.PureComponent{
 				left: 0
 			}}>
 				<View style={{
-					margin: 10,
+					margin: 20,
 					marginLeft: 40,
 					marginRight: 40,
 					flexDirection: 'row',
