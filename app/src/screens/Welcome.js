@@ -44,7 +44,7 @@ function Welcome(props){
 
             }}>
                 <Text style={{
-                    // fontWeight: 'bold',
+                    fontWeight: 'bold',
                     color: props.app.colors.primaryText,
                     fontSize: 70,
                     // marginTop: 70,

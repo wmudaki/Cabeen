@@ -12,7 +12,7 @@ import {
 	TouchableOpacity,
 	Text,
 	ScrollView,
-	Dimensions,
+	Dimensions, FlatList,
 } from "react-native";
 import { bindActionCreators } from "redux";
 import { agreeToTerms } from "../state/AppActions";
@@ -252,12 +252,64 @@ function Navigation(props) {
 	)
 }
 
+function CabeenFeatures(props){
+
+	function _renderItem(item){
+		return(
+			<>
+				<TouchableOpacity
+					// onPress={() => {
+					//     // setSelected(item.item)
+					// }}
+					style={{
+
+						flex: 1,
+						padding: 5,
+						elevation: 3,
+						margin : 5,
+						borderRadius: 10,
+						backgroundColor: props.app.colors.whiteText,
+						borderColor: props.app.colors.background,
+						alignItems: "center",
+						justifyContent: "center"
+					}}>
+					<Text style={{
+
+						fontSize: 19,
+						// fontWeight: "bold"
+					}}>
+						{item.item}
+					</Text>
+				</TouchableOpacity>
+			</>
+		)
+	}
+
+	return(
+		<>
+			<View style={{
+				margin: 10
+			}}>
+				<FlatList
+					data={props.features}
+					renderItem={_renderItem}
+					numColumns={2}
+					keyExtractor={(item, key) => item + key}
+				/>
+
+			</View>
+		</>
+	)
+}
+
 class Cabeen extends React.PureComponent{
 	constructor(props) {
 		super(props);
 		this.orient()
 		this.state ={
-			isManager: true
+			isManager: true,
+			currentIndex: 0,
+			imageData: 0
 		}
 	}
 
@@ -282,12 +334,28 @@ class Cabeen extends React.PureComponent{
 						style={{
 							width: '100%',
 							height: 320,
-							borderRadius: 10,
-							marginTop: 10
+							borderRadius: 0,
+							marginTop: 10,
+							borderBottomLeftRadius: 10,
+							borderBottomRightRadius:10
 						}}
 						source={{
 						uri: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.hZBRkPchyD8tthZCC47YpQHaE9%26pid%3DApi&f=1'
 					}}/>
+					<View style={{
+						position: "absolute",
+						bottom: 10,
+						right: 10,
+						backgroundColor: 'rgba(1,1,1,.8)',
+						padding: 5,
+						borderRadius: 20
+					}}>
+						<Text style={{
+							color: 'white',
+						}}>
+							{this.state.currentIndex + 1} / {this.state.imageData}
+						</Text>
+					</View>
 
 				</TouchableOpacity>
 			</>
@@ -373,6 +441,29 @@ class Cabeen extends React.PureComponent{
 							</Text>
 						</View>
 					</View>
+                    <View style={{
+
+                    }}>
+                        <Text style={{
+                            fontWeight: "bold",
+                            fontSize: 25,
+                            color: this.props.app.colors.statusBar
+                        }}>
+                            Features
+                        </Text>
+
+                        <View style={{
+                            // flexDirection: "row",
+                            // alignItems: "center",
+                            margin: 0
+                        }}>
+                            <CabeenFeatures
+								{...this.props}
+								features={[1,3,4,5,6,7]}
+								// features={this.props.cabeen.cabeenDetails.features.split(',')}
+							/>
+                        </View>
+                    </View>
 					<View style={{
 						marginTop: 10,
 						// flexDirection: 'row',
@@ -480,10 +571,16 @@ class Cabeen extends React.PureComponent{
 						paddingBottom: 30,
 					}}>
 						<Carousel
+							ref={(c) => this._carousel = c}
 							data={[1,2,3,4,5]}
 							renderItem={() => this.renderCabeenImages()}
 							sliderWidth={this.props.app.portrait ?width: height}
 							itemWidth={this.props.app.portrait ?0.98* width: 0.98*height}
+							onSnapToItem={(index) => {
+								this.setState({
+									currentIndex: index
+								})
+							}}
 						/>
 					</View>
 					<View style={{

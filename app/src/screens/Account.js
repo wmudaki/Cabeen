@@ -90,7 +90,7 @@ function AccountProfile(props){
 							width: 200,
 							borderRadius: 200,
 							alignSelf: 'center',
-							backgroundColor: props.app.colors.primaryText
+							backgroundColor: props.app.colors.background
 						}}
 						source={{
 							uri: 'photo'

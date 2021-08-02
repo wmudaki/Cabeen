@@ -99,8 +99,8 @@ function CabeenFeatures(props){
                     }}>
                     <Text style={{
 
-                        fontSize: 16,
-                        fontWeight: "bold"
+                        fontSize: 19,
+                        // fontWeight: "bold"
                     }}>
                         {item.item}
                     </Text>
@@ -117,7 +117,7 @@ function CabeenFeatures(props){
                 <FlatList
                     data={props.features}
                     renderItem={_renderItem}
-                    numColumns={3}
+                    numColumns={2}
                     keyExtractor={(item, key) => item + key}
                     />
 
