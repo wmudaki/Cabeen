@@ -83,17 +83,53 @@ function CarouselList(props){
 	const _renderItem = (item) => {
 		return(
 			<>
-				<CabeenCard
-					name={item.item.name}
-					price={item.item.price}
-					location={item.item.location}
-					vertical={true}
+				<TouchableOpacity
 					onPress={() => {
 						props.getCabeenDetails(item.item)
 						Actions.cabeen()
-
 					}}
-				/>
+					style={{
+					flex: 1,
+					margin: 5,
+					borderRadius: 10,
+					elevation: 10,
+					backgroundColor: 'white'
+				}}>
+					<Image
+						source={{
+							uri: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.BEyMW2mX7ojl1e1TQo4vPwHaE8%26pid%3DApi&f=1'
+						}}
+						style={{
+							height: 200,
+							width: '100%',
+							borderRadius: 10,
+							backgroundColor: props.app.colors.background
+						}}
+					/>
+					<View style={{
+						margin: 10
+					}}>
+						<Text
+							numberOfLines={2}
+							style={{
+							fontSize: 18,
+							// fontWeight: 'bold'
+						}}>
+							{item.item.name}
+						</Text>
+					</View>
+				</TouchableOpacity>
+				{/*<CabeenCard*/}
+				{/*	name={item.item.name}*/}
+				{/*	price={item.item.price}*/}
+				{/*	location={item.item.location}*/}
+				{/*	vertical={true}*/}
+				{/*	onPress={() => {*/}
+				{/*		props.getCabeenDetails(item.item)*/}
+				{/*		Actions.cabeen()*/}
+
+				{/*	}}*/}
+				{/*/>*/}
 			</>
 		)
 	}
@@ -106,7 +142,9 @@ function CarouselList(props){
 				<FlatList
 					data={props.fetchResults}
 					renderItem={_renderItem}
+					numColumns={2}
 					keyExtractor={(item, key) => item+key}
+					ItemSeparatorComponent={() => (<View style={{margin: 5}}/>)}
 					ListHeaderComponent={() => (<View style={{margin: 50}}/>)}
 					ListFooterComponent={() => (<View style={{margin: 50}}/>)}
 					ListEmptyComponent={() => (
@@ -288,8 +326,8 @@ function Discover(props){
 				}
 				<View style={{
 					position: "absolute",
-					bottom: 120,
-					right: 25
+					bottom: 100,
+					right: 5
 
 				}}>
 					<FloatingActionButton
