@@ -71,7 +71,7 @@ function CabeenButtons(props) {
 	const [editCabeen] = useMutation(EDIT_CABEEN)
 	const [isEditingCabeen, setIsEditingCabeen] = React.useState(false)
 	const [isType, setIsType] = React.useState('normal')
-	const [accessLevel, setAccessLevel] = React.useState('user')
+	const [accessLevel, setAccessLevel] = React.useState('manager')
 	const [showContact, setShowContact] = React.useState(false)
 
 	const edit = () => {
@@ -111,11 +111,11 @@ function CabeenButtons(props) {
 						props.setEditInfo()
 					}}
 					style={{
-						borderWidth: 1,
+						borderWidth: 2,
 						flexDirection:"row",
 						alignItems: 'center',
 						justifyContent:'space-evenly',
-						borderRadius: 10,
+						borderRadius: 30,
 						width: '47%',
 						height: 50,
 						borderColor: props.app.colors.statusBar,
@@ -141,7 +141,8 @@ function CabeenButtons(props) {
 						backgroundColor: props.app.colors.buttonColor,
 						width: '47%',
 						height: 50,
-						borderRadius: 10,
+						borderRadius: 30,
+						elevation: 5,
 						justifyContent:'center'
 					}}>
 					<Text style={{
@@ -277,14 +278,14 @@ function CabeenFeatures(props){
 					style={{
 
 						flex: 1,
-						padding: 5,
-						elevation: 3,
+						padding: 2,
+						elevation: 0,
 						margin : 5,
 						borderRadius: 10,
-						backgroundColor: props.app.colors.whiteText,
-						borderColor: props.app.colors.background,
-						alignItems: "center",
-						justifyContent: "center"
+						// backgroundColor: props.app.colors.whiteText,
+						// borderColor: props.app.colors.background,
+						// alignItems: "center",
+						// justifyContent: "center"
 					}}>
 					<Text style={{
 
@@ -352,6 +353,7 @@ class Cabeen extends React.PureComponent{
 						style={{
 							width: '100%',
 							height: 320,
+							backgroundColor: this.props.app.colors.background,
 							borderRadius: 10,
 							borderBottomLeftRadius: 10,
 							borderBottomRightRadius:10
@@ -363,8 +365,8 @@ class Cabeen extends React.PureComponent{
 						position: "absolute",
 						bottom: 10,
 						right: 10,
-						elevation: 10,
-						backgroundColor: 'rgba(1,1,1,.8)',
+						// elevation: 10,
+						backgroundColor: 'rgba(1,1,1,.5)',
 						padding: 5,
 						paddingLeft: 10,
 						paddingRight: 10,

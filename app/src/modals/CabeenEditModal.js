@@ -515,12 +515,12 @@ function CabeenEditModalContent(props){
                     <TouchableOpacity
                         onPress={props.onCancel}
                         style={{
-                            borderRadius: 5,
+                            borderRadius: 25,
                             height: 40,
                             width: '45%',
                             justifyContent: "center",
                             alignItems:"center",
-                            borderWidth: 1,
+                            borderWidth: 2,
                             borderColor: props.app.colors.secondaryText,
                         }}>
                         <Text style={{
@@ -535,7 +535,8 @@ function CabeenEditModalContent(props){
                         onPress={props.onSubmit}
                         style={{
                             backgroundColor: props.app.colors.buttonColor,
-                            borderRadius: 5,
+                            borderRadius: 25,
+                            elevation: 5,
                             height: 40,
                             width: '45%',
                             justifyContent: "center",

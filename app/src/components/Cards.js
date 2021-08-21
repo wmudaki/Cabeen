@@ -217,30 +217,30 @@ class TenantCardStateless extends React.PureComponent{
 					<View style={{
 						flexDirection: "row",
 						alignItems: "center",
-						justifyContent: 'space-between',
+						justifyContent: 'center',
 						margin: 10,
 						padding: 10,
 
 					}}>
-						<TouchableOpacity style={{
-							flexDirection: "row",
-							alignItems: "center",
-							borderWidth: 1,
-							borderRadius: 10,
-							padding: 5,
-							width: '40%',
-							justifyContent: "center"
-						}}>
-							<Ionicons
-								name={'mail'}
-								size={20}
-							/>
-							<Text style={{
-								marginLeft: 10
-							}}>
-								Message
-							</Text>
-						</TouchableOpacity>
+						{/*<TouchableOpacity style={{*/}
+						{/*	flexDirection: "row",*/}
+						{/*	alignItems: "center",*/}
+						{/*	borderWidth: 1,*/}
+						{/*	borderRadius: 10,*/}
+						{/*	padding: 5,*/}
+						{/*	width: '40%',*/}
+						{/*	justifyContent: "center"*/}
+						{/*}}>*/}
+						{/*	<Ionicons*/}
+						{/*		name={'mail'}*/}
+						{/*		size={20}*/}
+						{/*	/>*/}
+						{/*	<Text style={{*/}
+						{/*		marginLeft: 10*/}
+						{/*	}}>*/}
+						{/*		Message*/}
+						{/*	</Text>*/}
+						{/*</TouchableOpacity>*/}
 						<TouchableOpacity
 							onPress={() => this.props.onRemovePress(this.props._id)}
 							style={{
@@ -248,7 +248,7 @@ class TenantCardStateless extends React.PureComponent{
 							alignItems: "center",
 							justifyContent: "center",
 							// borderWidth: 1,
-							borderRadius: 10,
+							borderRadius: 20,
 							padding: 7,
 							width: '40%',
 							elevation: 5,

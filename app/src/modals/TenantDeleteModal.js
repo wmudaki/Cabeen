@@ -82,7 +82,7 @@ function TenantDeleteModalSuccess(props){
                         onPress={props.onSuccessfully}
                         style={{
                             backgroundColor: props.app.colors.successText,
-                            borderRadius: 5,
+                            borderRadius: 25,
                             height: 40,
                             width: '45%',
                             justifyContent: "center",
@@ -138,7 +138,7 @@ function TenantDeleteModalError(props){
                         onPress={props.onError}
                         style={{
                             backgroundColor: props.app.colors.buttonColor,
-                            borderRadius: 5,
+                            borderRadius: 25,
                             height: 40,
                             width: '45%',
                             justifyContent: "center",
@@ -179,7 +179,7 @@ function TenantDeleteModalContent(props) {
                         alignSelf: 'center',
                         color: props.app.colors.errorText,
                     }}>
-                    Are you sure you want to remove the tenant from the cabeen ?
+                    Are you sure you want to remove this tenant from the cabeen ?
                 </Text>
                 <View style={{
                     flexDirection: 'row',
@@ -191,12 +191,12 @@ function TenantDeleteModalContent(props) {
                     <TouchableOpacity
                         onPress={props.onCancel}
                         style={{
-                            borderRadius: 5,
+                            borderRadius: 25,
                             height: 40,
                             width: '45%',
                             justifyContent: "center",
                             alignItems:"center",
-                            borderWidth: 1,
+                            borderWidth: 2,
                             borderColor: props.app.colors.secondaryText,
                         }}>
                         <Text style={{
@@ -211,9 +211,10 @@ function TenantDeleteModalContent(props) {
                         onPress={props.onSubmit}
                         style={{
                             backgroundColor: props.app.colors.buttonColor,
-                            borderRadius: 5,
+                            borderRadius: 25,
                             height: 40,
                             width: '45%',
+                            elevation: 5,
                             justifyContent: "center",
                             alignItems:"center"
                         }}>
