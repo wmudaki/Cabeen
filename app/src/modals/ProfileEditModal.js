@@ -49,7 +49,7 @@ function ProfileEditModalSuccess(props){
                         onPress={props.onSuccessfully}
                         style={{
                             backgroundColor: props.app.colors.successText,
-                            borderRadius: 5,
+                            borderRadius: 25,
                             height: 40,
                             width: '45%',
                             justifyContent: "center",
@@ -105,7 +105,7 @@ function ProfileEditModalError(props){
                         onPress={props.onError}
                         style={{
                             backgroundColor: props.app.colors.buttonColor,
-                            borderRadius: 5,
+                            borderRadius: 25,
                             height: 40,
                             width: '45%',
                             justifyContent: "center",
@@ -131,29 +131,30 @@ function ProfileEditModalContent(props){
     return(
         <>
             <View style={{
-                height: '75%',
-                width: '95%',
+                height: '70%',
+                width: '90%',
                 justifyContent: "center",
                 borderRadius: 10,
                 padding: 10,
                 backgroundColor: props.app.colors.whiteText
             }}>
+                <Text style={{
+                    fontWeight: "bold",
+                    fontSize: 25,
+                    margin: 10,
+                    marginBottom: 20,
+                    color: props.app.colors.statusBar
+                }}>
+                    Edit profile
+                </Text>
                 <ScrollView>
-                    <Text style={{
-                        fontWeight: "bold",
-                        fontSize: 25,
-                        margin: 10,
-                        marginBottom: 20
-                    }}>
-                        Edit Profile
-                    </Text>
                     <TouchableOpacity>
                         <Image
                             style={{
                                 height: 150,
                                 width:150,
                                 borderRadius: 100,
-                                backgroundColor: 'black',
+                                backgroundColor: props.app.colors.background,
                                 alignSelf: "center"
                             }}
                             source={{
@@ -174,11 +175,13 @@ function ProfileEditModalContent(props){
                         placeholderTextColor={props.app.colors.secondaryText}
                         onChangeText={(value) => props.editProfile('name', value)}
                         style={{
-                            // borderRadius: 10,
+                            borderRadius: 10,
                             borderBottomColor: props.app.colors.background,
-                            borderBottomWidth: 3,
+                            // borderBottomWidth: 3,
+                            borderColor: props.app.colors.background,
                             // backgroundColor: props.app.colors.background,
                             fontSize: 20,
+                            borderWidth: 2,
                             padding:10,
                             margin: 10,
                             color: props.app.colors.primaryText
@@ -189,9 +192,11 @@ function ProfileEditModalContent(props){
                         placeholderTextColor={props.app.colors.secondaryText}
                         onChangeText={(value) => props.editProfile('email', value)}
                         style={{
-                            // borderRadius: 10,
+                            borderRadius: 10,
                             borderBottomColor: props.app.colors.background,
-                            borderBottomWidth: 3,
+                            borderBottomWidth: 2,
+                            borderWidth: 2,
+                            borderColor: props.app.colors.background,
                             // backgroundColor: props.app.colors.background,
                             fontSize: 20,
                             padding:10,
@@ -205,9 +210,11 @@ function ProfileEditModalContent(props){
                         keyboardType={"numeric"}
                         onChangeText={(value) => props.editProfile('phone', value)}
                         style={{
-                            // borderRadius: 10,
+                            borderRadius: 10,
                             borderBottomColor: props.app.colors.background,
-                            borderBottomWidth: 3,
+                            borderBottomWidth: 2,
+                            borderWidth: 2,
+                            borderColor: props.app.colors.background,
                             // backgroundColor: props.app.colors.background,
                             fontSize: 20,
                             padding:10,
@@ -215,51 +222,52 @@ function ProfileEditModalContent(props){
                             color: props.app.colors.primaryText
                         }}
                     />
-                    <View style={{
-                        flexDirection: 'row',
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        margin: 20,
-                        marginTop: 30,
-                    }}>
-                        <TouchableOpacity
-                            onPress={props.onCancel}
-                            style={{
-                                borderRadius: 5,
-                                height: 40,
-                                width: '45%',
-                                justifyContent: "center",
-                                alignItems:"center",
-                                borderWidth: 1,
-                                borderColor: props.app.colors.secondaryText,
-                            }}>
-                            <Text style={{
-                                fontSize: 18,
-
-                            }}>
-                                Cancel
-                            </Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            onPress={props.onSubmit}
-                            style={{
-                                backgroundColor: props.app.colors.buttonColor,
-                                borderRadius: 5,
-                                height: 40,
-                                width: '45%',
-                                justifyContent: "center",
-                                alignItems:"center"
-                            }}>
-                            <Text style={{
-                                fontSize: 18,
-                                fontWeight: "bold"
-                            }}>
-                                Submit
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
                 </ScrollView>
+                <View style={{
+                    flexDirection: 'row',
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    margin: 20,
+                    marginTop: 30,
+                }}>
+                    <TouchableOpacity
+                        onPress={props.onCancel}
+                        style={{
+                            borderRadius: 25,
+                            height: 40,
+                            width: '45%',
+                            justifyContent: "center",
+                            alignItems:"center",
+                            borderWidth: 1,
+                            borderColor: props.app.colors.secondaryText,
+                        }}>
+                        <Text style={{
+                            fontSize: 18,
+
+                        }}>
+                            Cancel
+                        </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        onPress={props.onSubmit}
+                        style={{
+                            backgroundColor: props.app.colors.buttonColor,
+                            borderRadius: 25,
+                            height: 40,
+                            width: '45%',
+                            justifyContent: "center",
+                            alignItems:"center"
+                        }}>
+                        <Text style={{
+                            fontSize: 18,
+                            fontWeight: "bold",
+                            color: props.app.colors.whiteText,
+                        }}>
+                            Submit
+                        </Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </>
     )

@@ -120,6 +120,16 @@ export const cabeenReducer = (state = INITIAL_STATE, action) => {
                 state.cabeenEditInfo.images = action.payload
                 return {...state}
             }
+            else if (action.field === 'clear'){
+                state.cabeenEditInfo.type = ''
+                state.cabeenEditInfo.currency = ''
+                state.cabeenEditInfo.name = ''
+                state.cabeenEditInfo.description = ''
+                state.cabeenEditInfo.price = ''
+                state.cabeenEditInfo.images = ''
+                state.cabeenEditInfo.location = ''
+                return {...state}
+            }
             else return state
 
         case "UPDATE_CABEENS":
@@ -146,6 +156,15 @@ export const cabeenReducer = (state = INITIAL_STATE, action) => {
 
             else return state
 
+        case "SET_EDIT_INFO":
+            state.cabeenEditInfo.name = state.cabeenDetails.name
+            state.cabeenEditInfo.location = state.cabeenDetails.location
+            state.cabeenEditInfo.type = state.cabeenDetails.type
+            state.cabeenEditInfo.price = state.cabeenDetails.price
+            state.cabeenEditInfo.currency = state.cabeenDetails.currency
+            state.cabeenEditInfo.images = state.cabeenDetails.images
+            state.cabeenEditInfo.description = state.cabeenDetails.description
+            return {...state}
         default:
             return state
 

@@ -30,7 +30,7 @@ import {useBackHandler} from "@react-native-community/hooks";
 import {Actions} from "react-native-router-flux";
 import Carousel from "react-native-snap-carousel";
 import CabeenCard from "../components/Cards";
-import {getCabeenDetails, selectImages} from "../state/CabeenActions";
+import {getCabeenDetails, selectImages, addCabeen} from "../state/CabeenActions";
 
 
 
@@ -103,10 +103,12 @@ function CarouselList(props){
 			<View style={{
 				width:'100%'
 			}}>
-				<Carousel
+				<FlatList
 					data={props.fetchResults}
 					renderItem={_renderItem}
 					keyExtractor={(item, key) => item+key}
+					ListHeaderComponent={() => (<View style={{margin: 50}}/>)}
+					ListFooterComponent={() => (<View style={{margin: 50}}/>)}
 					ListEmptyComponent={() => (
 						<View style={{
 							marginTop: 100,
@@ -122,13 +124,6 @@ function CarouselList(props){
 							</Text>
 						</View>
 					)}
-					sliderWidth={width}
-					itemWidth={width}
-					// inactiveSlideOpacity={0.7}
-					// inactiveSlideScale={0.85}
-					// vertical
-					// layout={"tinder"}
-
 				/>
 			</View>
 		</>
@@ -254,7 +249,7 @@ function Discover(props){
 			}}>
 
 				<View style={{
-					marginTop: 130
+					marginTop: 0
 				}}>
 					<Content
 						hasFetchResults={hasFetchResults}
@@ -317,6 +312,7 @@ function Discover(props){
 				}}
 				onCancel={() => {
 					setIsAddingCabeen(false)
+					props.addCabeen('clear', 'clear')
 				}}
 
 				onError={() => {
@@ -462,7 +458,8 @@ const mapDispatchToProps = dispatch => (
 		showAutocomplete,
 		showOverlay,
 		getCabeenDetails,
-		selectImages
+		selectImages,
+		addCabeen
 
 	}, dispatch)
 )

@@ -37,7 +37,7 @@ class CabeenCard extends React.PureComponent{
 						backgroundColor: this.props.app.colors.whiteText,
 						width: this.props.vertical ? 0.85*width: 0.85*width,
 						borderRadius: 10,
-						elevation: this.props.vertical ? 1: 10,
+						elevation: this.props.vertical ? 5: 10,
 						margin:10,
 						borderBottomRightRadius: 10,
 						borderBottomLeftRadius: 10,

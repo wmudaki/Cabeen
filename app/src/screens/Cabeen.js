@@ -30,7 +30,8 @@ import Account from "./Account";
 import CabeenEditModal from "../modals/CabeenEditModal";
 import {gql, useMutation} from "@apollo/client";
 import CabeenDeleteModal from "../modals/CabeenDeleteModal";
-import {updateCabeens} from "../state/CabeenActions";
+import {updateCabeens, setEditInfo} from "../state/CabeenActions";
+import ContactModal from "../modals/ContactModal";
 
 const {height,width} = Dimensions.get('window')
 
@@ -70,7 +71,8 @@ function CabeenButtons(props) {
 	const [editCabeen] = useMutation(EDIT_CABEEN)
 	const [isEditingCabeen, setIsEditingCabeen] = React.useState(false)
 	const [isType, setIsType] = React.useState('normal')
-	const [accessLevel, setAccessLevel] = React.useState('manager')
+	const [accessLevel, setAccessLevel] = React.useState('user')
+	const [showContact, setShowContact] = React.useState(false)
 
 	const edit = () => {
 		// console.log(props.cabeen)
@@ -85,11 +87,11 @@ function CabeenButtons(props) {
 				location: props.cabeen.cabeenEditInfo.location,
 			}})
 			.then((res) => {
-				console.log(res)
+				console.log("Edited success", res)
 				setIsType('successful')
 			})
 			.catch((err) => {
-				console.log(err)
+				console.log("Error editing", err)
 				setIsType('error')
 			})
 
@@ -106,6 +108,7 @@ function CabeenButtons(props) {
 				<TouchableOpacity
 					onPress={() => {
 						accessLevel === 'manager' ? setIsEditingCabeen(true) : null
+						props.setEditInfo()
 					}}
 					style={{
 						borderWidth: 1,
@@ -118,7 +121,7 @@ function CabeenButtons(props) {
 						borderColor: props.app.colors.statusBar,
 					}}>
 					<SimpleLineIcons
-						name={accessLevel === 'manager' ? 'pencil':'directions'}
+						name={accessLevel === 'manager' ? 'pencil':'heart'}
 						size={25}
 						color={props.app.colors.statusBar}
 					/>
@@ -126,12 +129,12 @@ function CabeenButtons(props) {
 						color: props.app.colors.statusBar,
 						fontSize: 20
 					}}>
-						{accessLevel === 'manager' ? 'Edit': 'Directions'}
+						{accessLevel === 'manager' ? 'Edit': 'Like'}
 					</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
 					onPress={() => accessLevel === 'manager' ?
-						Actions.cabeenManagement(): Actions.cabeenManagement()}
+						Actions.cabeenManagement(): setShowContact(true)}
 					style={{
 						// flex: 1,
 						alignItems: 'center',
@@ -146,7 +149,7 @@ function CabeenButtons(props) {
 						fontWeight: 'bold',
 						fontSize: 20
 					}}>
-						{accessLevel === 'manager'? 'Manage': 'Reserve'}
+						{accessLevel === 'manager'? 'Manage': 'Contact'}
 					</Text>
 				</TouchableOpacity>
 			</View>
@@ -173,6 +176,15 @@ function CabeenButtons(props) {
 					setIsType('normal')
 					// setIsSuccessfully(false)
 					setIsEditingCabeen(false)
+				}}
+			/>
+			<ContactModal
+				modalVisible={showContact}
+				onRequestClose={() => {
+					setShowContact(false)
+				}}
+				onOK={() => {
+					setShowContact(false)
 				}}
 			/>
 		</>
@@ -346,8 +358,11 @@ class Cabeen extends React.PureComponent{
 						position: "absolute",
 						bottom: 10,
 						right: 10,
+						elevation: 10,
 						backgroundColor: 'rgba(1,1,1,.8)',
 						padding: 5,
+						paddingLeft: 10,
+						paddingRight: 10,
 						borderRadius: 20
 					}}>
 						<Text style={{
@@ -560,36 +575,36 @@ class Cabeen extends React.PureComponent{
 						{...this.props}
 					/>
 				</View>
+				<FlatList
+					data={[1]}
+					keyExtractor={(item, key) => item + key}
+					renderItem={() => (
+						<>
+							<View style={{
+								paddingBottom: 30,
+							}}>
+								<Carousel
+									ref={(c) => this._carousel = c}
+									data={[1,2,3,4,5]}
+									renderItem={() => this.renderCabeenImages()}
+									sliderWidth={this.props.app.portrait ?width: height}
+									itemWidth={this.props.app.portrait ?0.98* width: 0.98*height}
+									onSnapToItem={(index) => {
+										this.setState({
+											currentIndex: index
+										})
+									}}
+								/>
+							</View>
+							<View style={{
+								marginBottom: 100
+							}}>
+								{this.renderDescription()}
 
-				<ScrollView
-					style={{
-					flex: 1,
-					backgroundColor: this.props.app.colors.whiteText
-				}}>
-
-					<View style={{
-						paddingBottom: 30,
-					}}>
-						<Carousel
-							ref={(c) => this._carousel = c}
-							data={[1,2,3,4,5]}
-							renderItem={() => this.renderCabeenImages()}
-							sliderWidth={this.props.app.portrait ?width: height}
-							itemWidth={this.props.app.portrait ?0.98* width: 0.98*height}
-							onSnapToItem={(index) => {
-								this.setState({
-									currentIndex: index
-								})
-							}}
-						/>
-					</View>
-					<View style={{
-						marginBottom: 100
-					}}>
-						{this.renderDescription()}
-
-					</View>
-				</ScrollView>
+							</View>
+						</>
+					)}
+				/>
 				<View style={{
 					// margin: 10,
 					position: "absolute",
@@ -618,7 +633,8 @@ const mapDispatchToProps = dispatch => (
 	bindActionCreators({
 		agreeToTerms,
 		rotate,
-		updateCabeens
+		updateCabeens,
+		setEditInfo
 
 	}, dispatch)
 )

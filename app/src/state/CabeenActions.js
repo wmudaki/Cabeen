@@ -44,3 +44,8 @@ export const selectImages = (operation, payload) => (
     }
 )
 
+export const setEditInfo = () => (
+    {
+        type: "SET_EDIT_INFO"
+    }
+)

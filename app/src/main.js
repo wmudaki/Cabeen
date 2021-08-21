@@ -36,6 +36,7 @@ import CabeenAdd from "./screens/CabeenAdd";
 import CabeenManagement from "./screens/CabeenManagement";
 import Search from "./screens/Search";
 import Splash from "./screens/Splash";
+import Find from "./screens/Find";
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2'
 import {
     ApolloProvider,
@@ -68,7 +69,7 @@ export default function App (){
 // const store = createStore(rootReducer);
 
     const httpLink = createHttpLink({
-        uri: "http://192.168.0.11:4000/"
+        uri: "http://192.168.43.173:4000/graphql"
     })
 
     const client = new ApolloClient({
@@ -110,7 +111,7 @@ export default function App (){
                                         hideNavBar
                                     />
                                     <Scene
-                                        component={Search}
+                                        component={Find}
                                         key={'find'}
                                         hideNavBar
                                     />
