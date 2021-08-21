@@ -198,7 +198,8 @@ function Discover(props){
 			$description: String,
 			$price: String,
 			$currency: String,
-			$location: String
+			$location: String,
+			$features: String
 		){
 			createCabeen(
 				input: {
@@ -206,6 +207,7 @@ function Discover(props){
 					type: $type,
 					description: $description,
 					price: $price,
+					features: $features,
 					currency: $currency,
 					location: $location
 
@@ -215,6 +217,8 @@ function Discover(props){
 				name,
 				price,
 				location,
+				type,
+				features,
 				description
 			}
 		}
@@ -227,6 +231,8 @@ function Discover(props){
 				name,
 				price,
 				location,
+				features,
+				type,
 				description
 			}
 		}
@@ -246,6 +252,7 @@ function Discover(props){
 		createCabeen({variables: {
 				name: props.cabeen.cabeenInfo.name,
 				type: props.cabeen.cabeenInfo.type,
+				features: props.cabeen.cabeenInfo.features,
 				description: props.cabeen.cabeenInfo.description,
 				price: props.cabeen.cabeenInfo.price,
 				currency: props.cabeen.cabeenInfo.currency,

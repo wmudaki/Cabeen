@@ -29,6 +29,8 @@ function Home (props){
 				recommendation{
 					name,
 					price,
+					type,
+					features,
 					location,
 					description
 				}

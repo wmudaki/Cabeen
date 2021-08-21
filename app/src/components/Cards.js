@@ -106,7 +106,7 @@ class CabeenCard extends React.PureComponent{
 									fontSize: 18,
 									marginLeft: 10
 								}}>
-								2 Bedroom
+								{this.props.type}
 							</Text>
 
 						</View>

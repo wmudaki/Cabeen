@@ -278,18 +278,22 @@ function CabeenFeatures(props){
 					style={{
 
 						flex: 1,
-						padding: 2,
-						elevation: 0,
+						padding: 5,
+						paddingTop: 10,
+						paddingBottom: 10,
+						elevation: 3,
 						margin : 5,
 						borderRadius: 10,
-						// backgroundColor: props.app.colors.whiteText,
+						backgroundColor: props.app.colors.whiteText,
 						// borderColor: props.app.colors.background,
-						// alignItems: "center",
+						alignItems: "center",
 						// justifyContent: "center"
 					}}>
-					<Text style={{
+					<Text
 
-						fontSize: 19,
+						style={{
+
+						fontSize: 18,
 						// fontWeight: "bold"
 					}}>
 						{item.item}
@@ -407,6 +411,38 @@ class Cabeen extends React.PureComponent{
 							fontSize: 25,
 							color: this.props.app.colors.statusBar
 						}}>
+							Type
+						</Text>
+						<View style={{
+							flexDirection: "row",
+							alignItems: "center",
+							margin: 10
+						}}>
+							<Ionicons
+								name={"bed-outline"}
+								size={25}
+							/>
+							<Text
+								// numberOfLines={1}
+								style={{
+									fontSize: 22,
+									margin: 10,
+									marginTop: 10,
+									color: this.props.app.colors.primaryText
+								}}>
+								{this.props.cabeen.cabeenDetails.type}
+							</Text>
+						</View>
+
+					</View>
+					<View style={{
+						marginTop: 0
+					}}>
+						<Text style={{
+							fontWeight: "bold",
+							fontSize: 25,
+							color: this.props.app.colors.statusBar
+						}}>
 							Location
 						</Text>
 						<View style={{
@@ -481,8 +517,8 @@ class Cabeen extends React.PureComponent{
                         }}>
                             <CabeenFeatures
 								{...this.props}
-								features={[1,3,4,5,6,7]}
-								// features={this.props.cabeen.cabeenDetails.features.split(',')}
+								// features={[1,3,4,5,6,7]}
+								features={this.props.cabeen.cabeenDetails.features.split(',')}
 							/>
                         </View>
                     </View>

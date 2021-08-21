@@ -37,6 +37,7 @@ class CustomSectionListStateless extends React.PureComponent{
 					name={item.item.name}
 					location={item.item.location}
 					price={item.item.price}
+					type={item.item.type}
 					onPress={() => this.props.onPress(item.item)}
 				/>
 			</>
