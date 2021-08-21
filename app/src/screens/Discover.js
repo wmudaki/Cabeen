@@ -30,7 +30,7 @@ import {useBackHandler} from "@react-native-community/hooks";
 import {Actions} from "react-native-router-flux";
 import Carousel from "react-native-snap-carousel";
 import CabeenCard from "../components/Cards";
-import {getCabeenDetails, selectImages, addCabeen} from "../state/CabeenActions";
+import {getCabeenDetails, selectImages, addCabeen, updateCabeens} from "../state/CabeenActions";
 
 
 
@@ -368,6 +368,8 @@ function Discover(props){
 					setIsType('normal')
 					// setIsSuccessfully(false)
 					setIsAddingCabeen(false)
+					props.updateCabeens()
+					props.addCabeen('clear', 'clear')
 				}}
 				onLocation={() => {
 					if (isType === 'location'){
@@ -504,7 +506,8 @@ const mapDispatchToProps = dispatch => (
 		showOverlay,
 		getCabeenDetails,
 		selectImages,
-		addCabeen
+		addCabeen,
+		updateCabeens
 
 	}, dispatch)
 )

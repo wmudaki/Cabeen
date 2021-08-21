@@ -49,3 +49,9 @@ export const authenticate = (field, payload) => (
         payload: payload
     }
 )
+
+export const setEditInfo = () => (
+    {
+        type: "SET_PROFILE_EDIT_INFO",
+    }
+)

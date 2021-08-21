@@ -107,6 +107,7 @@ function CabeenFeatures(props){
                 margin: 10
             }}>
                 <FlatList
+                    listKey={'features'}
                     data={props.features}
                     renderItem={_renderItem}
                     numColumns={2}
@@ -193,12 +194,12 @@ function CabeenEditModalSuccess(props){
                         onPress={props.onSuccessfully}
                         style={{
                             backgroundColor: props.app.colors.successText,
-                            borderRadius: 5,
+                            borderRadius: 25,
                             height: 40,
                             width: '45%',
                             justifyContent: "center",
                             alignItems:"center",
-                            elevation: 10,
+                            elevation: 5,
                         }}>
                         <Text style={{
                             fontSize: 18,
@@ -249,12 +250,12 @@ function CabeenEditModalError(props){
                         onPress={props.onError}
                         style={{
                             backgroundColor: props.app.colors.buttonColor,
-                            borderRadius: 5,
+                            borderRadius: 25,
                             height: 40,
                             width: '45%',
                             justifyContent: "center",
                             alignItems:"center",
-                            elevation: 10,
+                            elevation: 5,
                         }}>
                         <Text style={{
                             fontSize: 18,
@@ -357,8 +358,9 @@ function CabeenEditModalContent(props){
                                 multiline
                                 defaultValue={props.cabeen.cabeenEditInfo.features}
                                 onChangeText={(value) => {
-                                    setFeatures(value.split(','))
                                     props.cabeenEdit('features', value)
+                                    setFeatures(value.split(','))
+
                                 }}
                                 style={{
                                     borderRadius: 20,

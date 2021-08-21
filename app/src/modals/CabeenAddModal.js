@@ -115,6 +115,7 @@ function CabeenFeatures(props){
                 margin: 10
             }}>
                 <FlatList
+                    listKey={'features'}
                     data={props.features}
                     renderItem={_renderItem}
                     numColumns={2}

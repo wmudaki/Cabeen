@@ -149,6 +149,13 @@ export const appReducer = (state=INITIAL_STATE, action) => {
             }
             else return state
 
+        case "SET_PROFILE_EDIT_INFO":
+            state.editProfile.name = state.currentUser.user.fullName
+            state.editProfile.email = state.currentUser.user.email
+            state.editProfile.phone = state.currentUser.user.phone
+            // state.editProfile.avatar = state.currentUser.user.avatar
+            return {...state}
+
         default:
             return state
     }

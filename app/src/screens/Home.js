@@ -17,7 +17,7 @@ import {FloatingSearchBar} from "../components/SearchBars";
 import { CustomSectionList } from "../components/Lists";
 import { Actions } from "react-native-router-flux";
 import {gql, useMutation} from "@apollo/client";
-import {getCabeenDetails} from "../state/CabeenActions";
+import {getCabeenDetails, updateCabeens} from "../state/CabeenActions";
 
 function Home (props){
 
@@ -27,6 +27,7 @@ function Home (props){
 				title,
 				data,
 				recommendation{
+					_id,
 					name,
 					price,
 					type,
@@ -58,7 +59,7 @@ function Home (props){
 
 	React.useEffect(() => {
 		getCabeens()
-	}, [])
+	}, [props.cabeen.updateCabeens])
 
 	return(
 		<>
@@ -118,13 +119,14 @@ function Home (props){
 
 
 const mapStateToProps = state => {
-	const {app} = state;
-	return {app}
+	const {app, cabeen} = state;
+	return {app, cabeen}
 }
 
 const mapDispatchToProps = dispatch => (
 	bindActionCreators({
 		getCabeenDetails,
+		updateCabeens
 
 	}, dispatch)
 )

@@ -24,7 +24,7 @@ import ProfileEditModal from "../modals/ProfileEditModal";
 import {useMutation, gql} from "@apollo/client";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 // import {editProfile} from "../state/AppActions";
-import {authenticate} from "../state/AppActions";
+import {authenticate, setEditInfo} from "../state/AppActions";
 
 
 
@@ -33,22 +33,23 @@ const {height,width} = Dimensions.get('window')
 function AccountProfile(props){
 	const EDIT_PROFILE = gql`
 		mutation EDIT_PROFILE(
-			$_id: String
-			$name: String,
+			$_id: ID
+			$fullName: String,
 			$email: String,
 			$phone: String,
-			$avatar: String,
+#			$avatar: String,
 		){
 			updateUser(
 				_id: $_id,
 				input: {
-					name: $name,
+					fullName: $fullName,
 					email: $email,
 					phone: $phone,
-					avatar: $avatar
+#					avatar: $avatar
 				}
 			){
-				name,
+				_id,
+				fullName,
 				email,
 				phone,
 			}
@@ -59,14 +60,20 @@ function AccountProfile(props){
 	const [isType, setIsType] = React.useState('normal')
 
 	const editProfile = () => {
+		// console.log(props.app.editProfile)
+		// console.log(props.app.currentUser.user._id)
+		setIsType('loading')
 		updateUser({variables: {
-			_id: props.app.editProfile._id,
-				name: props.app.editProfile.name,
+			_id: props.app.currentUser.user._id,
+				fullName: props.app.editProfile.name,
 				phone: props.app.editProfile.phone,
-				avatar: props.app.editProfile.avatar
+				email: props.app.editProfile.email,
+				// avatar: props.app.editProfile.avatar
 			}})
 			.then((res) => {
 				console.log(res)
+				setIsType('success')
+				props.authenticate('user', res.data.updateUser)
 			})
 			.catch(err => {
 				setIsType('error')
@@ -96,11 +103,26 @@ function AccountProfile(props){
 							uri: 'photo'
 						}}/>
 					<View style={{
+						borderBottomWidth: 2,
+						marginTop: 20,
+						borderBottomColor: props.app.colors.background,
+					}}>
+						<Text style={{
+							color: 'black',
+							fontSize: 30,
+							fontWeight: 'bold',
+							margin: 10
+						}}>
+							Profile
+						</Text>
+					</View>
+					<View style={{
 						marginTop: 10,
+						margin: 10
 					}}>
 						<Text style={{
 							color: props.app.colors.statusBar,
-							fontSize: 25,
+							fontSize: 20,
 							fontWeight: "bold"
 						}}>
 							Name
@@ -112,15 +134,15 @@ function AccountProfile(props){
 							// fontWeight:"bold",
 							margin: 10
 						}}>
-							Wilson Mudaki
+							{props.app.currentUser.user.fullName}
 						</Text>
 					</View>
 					<View style={{
-						marginTop: 10
+						margin: 10
 					}}>
 
 						<Text style={{
-							fontSize: 25,
+							fontSize: 20,
 							fontWeight: "bold",
 							color: props.app.colors.statusBar
 						}}>
@@ -132,14 +154,14 @@ function AccountProfile(props){
 							// fontWeight: "bold",
 							margin: 5
 						}}>
-							mudakiwilson@yahoo.com
+							{props.app.currentUser.user.email}
 						</Text>
 					</View>
 					<View style={{
-						marginTop: 10
+						margin: 10
 					}}>
 						<Text style={{
-							fontSize: 25,
+							fontSize: 20,
 							fontWeight: "bold",
 							color: props.app.colors.statusBar
 						}}>
@@ -151,11 +173,14 @@ function AccountProfile(props){
 							fontSize: 20,
 							margin: 5
 						}}>
-							0700868636
+							{props.app.currentUser.user.phone}
 						</Text>
 					</View>
 					<TouchableOpacity
-						onPress={() => setIsEditingProfile(true)}
+						onPress={() => {
+							props.setEditInfo()
+							setIsEditingProfile(true)
+						}}
 						style={{
 						borderWidth: 1,
 						padding: 10,
@@ -163,7 +188,7 @@ function AccountProfile(props){
 						borderRadius: 25,
 						paddingLeft: 15,
 						paddingRight: 15,
-						alignSelf: 'flex-end',
+						alignSelf: 'center',
 						flexDirection: "row",
 						alignItems: 'center',
 						borderColor: props.app.colors.primaryText
@@ -264,6 +289,50 @@ function CabeenInfo (props){
 	)
 }
 
+function Privacy(props){
+	return(
+		<>
+			<View style={{
+				margin: 20
+			}}>
+				<View style={{
+					borderBottomWidth: 2,
+					borderBottomColor: props.app.colors.background,
+					marginTop: 0
+				}}>
+					<Text style={{
+						color: 'black',
+						fontSize: 30,
+						margin: 10,
+						fontWeight: 'bold'
+					}}>
+						Privacy
+					</Text>
+				</View>
+				<TouchableOpacity style={{
+					margin: 10
+				}}>
+					<Text style={{
+						fontSize: 20
+					}}>
+						Privacy policy
+					</Text>
+				</TouchableOpacity>
+				<TouchableOpacity style={{
+					margin: 10
+				}}>
+					<Text style={{
+						fontSize: 20
+					}}>
+						Terms of Use
+					</Text>
+				</TouchableOpacity>
+
+			</View>
+		</>
+	)
+}
+
 function Logout(props){
 	const logout = () => {
 		props.authenticate('logout', 'logout')
@@ -307,6 +376,7 @@ function Account(props){
 				<AccountProfile
 					{...props}
 				/>
+				<Privacy {...props}/>
 				<Logout
 					{...props}
 				/>
@@ -435,7 +505,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => (
 	bindActionCreators({
 		// editProfile
-		authenticate
+		authenticate,
+		setEditInfo
 
 	}, dispatch)
 )

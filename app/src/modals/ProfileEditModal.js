@@ -6,7 +6,7 @@ import {
     TextInput,
     TouchableOpacity,
     Image,
-    ScrollView
+    ScrollView, ActivityIndicator
 } from "react-native";
 import {bindActionCreators} from "redux";
 import {addTenant} from "../state/CabeenActions";
@@ -173,6 +173,7 @@ function ProfileEditModalContent(props){
                     <TextInput
                         placeholder={'Name'}
                         placeholderTextColor={props.app.colors.secondaryText}
+                        defaultValue={props.app.editProfile.name}
                         onChangeText={(value) => props.editProfile('name', value)}
                         style={{
                             borderRadius: 10,
@@ -190,6 +191,7 @@ function ProfileEditModalContent(props){
                     <TextInput
                         placeholder={'Email'}
                         placeholderTextColor={props.app.colors.secondaryText}
+                        defaultValue={props.app.editProfile.email}
                         onChangeText={(value) => props.editProfile('email', value)}
                         style={{
                             borderRadius: 10,
@@ -208,6 +210,7 @@ function ProfileEditModalContent(props){
                         placeholder={'Phone'}
                         placeholderTextColor={props.app.colors.secondaryText}
                         keyboardType={"numeric"}
+                        defaultValue={props.app.editProfile.phone}
                         onChangeText={(value) => props.editProfile('phone', value)}
                         style={{
                             borderRadius: 10,
@@ -272,6 +275,47 @@ function ProfileEditModalContent(props){
         </>
     )
 }
+function ProfileEditLoading(props) {
+    return(
+        <>
+            <View style={{
+                height: '35%',
+                width: "90%",
+                borderRadius: 10,
+                elevation: 20,
+                margin: 20,
+                // alignSelf: "center",
+                backgroundColor: props.app.colors.whiteText,
+                // alignItems: 'center',
+                justifyContent: "center"
+            }}>
+                <Text style={{
+                    fontWeight: "bold",
+                    fontSize: 25,
+                    alignSelf: 'center',
+                    margin: 10,
+                    color: props.app.colors.primaryText
+                }}>
+                    Please wait...
+
+                </Text>
+                <View style={{
+                    flexDirection: "row",
+                    justifyContent: 'center',
+                    // alignItems: "center",
+                    marginTop: 30
+                }}>
+                    <ActivityIndicator
+                        color={props.app.colors.buttonColor}
+                        size={'large'}
+                    />
+                </View>
+
+            </View>
+
+        </>
+    )
+}
 
 function Content(props){
     if (props.isType === 'error'){
@@ -279,6 +323,11 @@ function Content(props){
             <ProfileEditModalError
                 {...props}
             />
+        )
+    }
+    else if (props.isType === 'loading'){
+        return (
+            <ProfileEditLoading {...props}/>
         )
     }
     else if (props.isType === 'success'){

@@ -116,6 +116,10 @@ export const cabeenReducer = (state = INITIAL_STATE, action) => {
                 state.cabeenEditInfo.currency = action.payload
                 return {...state}
             }
+            else if (action.field === 'features'){
+                state.cabeenEditInfo.features = action.payload
+                return {...state}
+            }
             else if (action.field === "images"){
                 state.cabeenEditInfo.images = action.payload
                 return {...state}
@@ -160,6 +164,7 @@ export const cabeenReducer = (state = INITIAL_STATE, action) => {
             state.cabeenEditInfo.name = state.cabeenDetails.name
             state.cabeenEditInfo.location = state.cabeenDetails.location
             state.cabeenEditInfo.type = state.cabeenDetails.type
+            state.cabeenEditInfo.features = state.cabeenDetails.features
             state.cabeenEditInfo.price = state.cabeenDetails.price
             state.cabeenEditInfo.currency = state.cabeenDetails.currency
             state.cabeenEditInfo.images = state.cabeenDetails.images

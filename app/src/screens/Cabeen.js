@@ -42,6 +42,7 @@ function CabeenButtons(props) {
 			$_id: ID,
 			$name: String,
 			$type: String,
+			$features: String,
 			$description: String,
 			$price: String,
 			$currency: String,
@@ -53,6 +54,7 @@ function CabeenButtons(props) {
 					name: $name,
 					type: $type,
 					description: $description,
+					features: $features,
 					price: $price,
 					currency: $currency,
 					location: $location
@@ -61,6 +63,7 @@ function CabeenButtons(props) {
 			){
 				_id,
 				name,
+				features,
 				price,
 				location,
 				description
@@ -75,11 +78,12 @@ function CabeenButtons(props) {
 	const [showContact, setShowContact] = React.useState(false)
 
 	const edit = () => {
-		// console.log(props.cabeen)
+		console.log(props.cabeen.cabeenEditInfo)
 		setIsType('loading')
 		editCabeen({variables: {
 				_id: props.cabeen.cabeenDetails._id,
 				name: props.cabeen.cabeenEditInfo.name,
+				features: props.cabeen.cabeenEditInfo.features,
 				type: props.cabeen.cabeenEditInfo.type,
 				description: props.cabeen.cabeenEditInfo.description,
 				price: props.cabeen.cabeenEditInfo.price,
@@ -177,6 +181,8 @@ function CabeenButtons(props) {
 					setIsType('normal')
 					// setIsSuccessfully(false)
 					setIsEditingCabeen(false)
+					props.updateCabeens()
+					Actions.pop()
 				}}
 			/>
 			<ContactModal
