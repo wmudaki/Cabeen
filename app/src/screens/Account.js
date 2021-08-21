@@ -24,7 +24,7 @@ import ProfileEditModal from "../modals/ProfileEditModal";
 import {useMutation, gql} from "@apollo/client";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 // import {editProfile} from "../state/AppActions";
-import {authenticate, setEditInfo} from "../state/AppActions";
+import {authenticate, setProfileEditInfo} from "../state/AppActions";
 
 
 
@@ -178,7 +178,7 @@ function AccountProfile(props){
 					</View>
 					<TouchableOpacity
 						onPress={() => {
-							props.setEditInfo()
+							props.setProfileEditInfo()
 							setIsEditingProfile(true)
 						}}
 						style={{
@@ -506,7 +506,7 @@ const mapDispatchToProps = dispatch => (
 	bindActionCreators({
 		// editProfile
 		authenticate,
-		setEditInfo
+		setProfileEditInfo
 
 	}, dispatch)
 )

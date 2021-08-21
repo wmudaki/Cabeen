@@ -321,7 +321,7 @@ function Discover(props){
 							alignSelf: "center",
 							borderRadius: 50,
 							padding: 10,
-							elevation: 30,
+							elevation: 10,
 							backgroundColor: props.app.colors.whiteText
 						}}>
 							<ActivityIndicator

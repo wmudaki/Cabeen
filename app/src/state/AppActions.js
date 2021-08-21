@@ -50,8 +50,8 @@ export const authenticate = (field, payload) => (
     }
 )
 
-export const setEditInfo = () => (
+export const setProfileEditInfo = () => (
     {
-        type: "SET_PROFILE_EDIT_INFO",
+        type: "SET_PROFILE_EDIT_INFO"
     }
 )
