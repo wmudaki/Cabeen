@@ -229,6 +229,7 @@ function Navigation(props) {
 			<BackButtonTopNavBar
 				title={props.cabeen.cabeenDetails.name}
 				icon={'trash-outline'}
+				isManager={true}
 				onIconPress={() => {
 					setIsDeletingCabeen(true)
 				}}

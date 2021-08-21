@@ -160,7 +160,7 @@ function AccountProfile(props){
 						borderWidth: 1,
 						padding: 10,
 						marginTop: 20,
-						borderRadius: 10,
+						borderRadius: 25,
 						paddingLeft: 15,
 						paddingRight: 15,
 						alignSelf: 'flex-end',
@@ -279,7 +279,7 @@ function Logout(props){
 				style={{
 				backgroundColor: props.app.colors.buttonColor,
 				margin: 10,
-				borderRadius: 10,
+				borderRadius: 25,
 				marginTop: 30,
 				elevation: 5
 			}}>

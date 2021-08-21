@@ -82,7 +82,7 @@ function CabeenDeleteModalSuccess(props){
                         onPress={props.onSuccessfully}
                         style={{
                             backgroundColor: props.app.colors.successText,
-                            borderRadius: 5,
+                            borderRadius: 25,
                             height: 40,
                             width: '45%',
                             justifyContent: "center",
@@ -138,7 +138,7 @@ function CabeenDeleteModalError(props){
                         onPress={props.onError}
                         style={{
                             backgroundColor: props.app.colors.buttonColor,
-                            borderRadius: 5,
+                            borderRadius: 25,
                             height: 40,
                             width: '45%',
                             justifyContent: "center",
@@ -176,10 +176,10 @@ function CabeenDeleteModalContent(props) {
                     fontWeight: "bold",
                     fontSize: 20,
                     margin: 10,
-                    alignSelf: 'center',
+                    // alignSelf: 'center',
                     color: props.app.colors.errorText,
                 }}>
-                    Are you sure you want to delete the cabeen ?
+                    Are you sure you want to delete this cabeen ?
                 </Text>
                 <View style={{
                     flexDirection: 'row',
@@ -191,12 +191,12 @@ function CabeenDeleteModalContent(props) {
                     <TouchableOpacity
                         onPress={props.onCancel}
                         style={{
-                            borderRadius: 5,
+                            borderRadius: 25,
                             height: 40,
                             width: '45%',
                             justifyContent: "center",
                             alignItems:"center",
-                            borderWidth: 1,
+                            borderWidth: 2,
                             borderColor: props.app.colors.secondaryText,
                         }}>
                         <Text style={{
@@ -211,7 +211,7 @@ function CabeenDeleteModalContent(props) {
                         onPress={props.onSubmit}
                         style={{
                             backgroundColor: props.app.colors.buttonColor,
-                            borderRadius: 5,
+                            borderRadius: 25,
                             height: 40,
                             width: '45%',
                             justifyContent: "center",

@@ -247,22 +247,23 @@ class BackButtonTopNavBarStateless extends React.PureComponent{
 							</Text>
 						</View>
 					</View>
-					<TouchableOpacity
-						onPress={this.props.onIconPress}
-						style={{
-						alignItems: 'center',
-						justifyContent: 'center',
-					}}>
-						<Ionicons
-							name={this.props.icon}
-							size={30}
-							color={this.props.app.colors.statusBar}
+					{
+						this.props.isManager ?
+							<TouchableOpacity
+								onPress={this.props.onIconPress}
+								style={{
+									alignItems: 'center',
+									justifyContent: 'center',
+								}}>
+								<Ionicons
+									name={this.props.icon}
+									size={30}
+									color={this.props.app.colors.statusBar}
 
-						/>
-					</TouchableOpacity>
-
-
-
+								/>
+							</TouchableOpacity>
+							: null
+					}
 				</View>
 			</>
 		)
