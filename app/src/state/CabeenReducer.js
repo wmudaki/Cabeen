@@ -26,7 +26,8 @@ const INITIAL_STATE = {
     },
     updateCabeens: true,
     cabeenImages : [],
-    accessLevel: 'user'
+    accessLevel: 'user',
+    contactPerson: {}
 
 }
 
@@ -189,6 +190,10 @@ export const cabeenReducer = (state = INITIAL_STATE, action) => {
 
         case "SET_ACCESS_LEVEL":
             state.accessLevel = action.payload
+            return {...state}
+
+        case "FIND_CONTACT_PERSON":
+            state.contactPerson = action.payload
             return {...state}
 
         default:

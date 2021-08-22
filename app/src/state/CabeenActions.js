@@ -64,3 +64,11 @@ export const likeCallback = (operation, payload) => (
         payload: payload
     }
 )
+
+export const findContactPerson = (payload) => (
+    {
+        type: "FIND_CONTACT_PERSON",
+        payload: payload
+    }
+)
+

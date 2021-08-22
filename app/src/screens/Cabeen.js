@@ -30,7 +30,12 @@ import Account from "./Account";
 import CabeenEditModal from "../modals/CabeenEditModal";
 import {gql, useMutation} from "@apollo/client";
 import CabeenDeleteModal from "../modals/CabeenDeleteModal";
-import {updateCabeens, setEditInfo, setAccessLevel, likeCallback} from "../state/CabeenActions";
+import {
+	updateCabeens,
+	setEditInfo,
+	setAccessLevel,
+	findContactPerson,
+	likeCallback} from "../state/CabeenActions";
 import ContactModal from "../modals/ContactModal";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
@@ -75,11 +80,27 @@ function CabeenButtons(props) {
 		}
 	`
 
+	const FETCH_USER = gql`
+		mutation FETCH_USER(
+			$_id: ID
+		){
+			fetchUser(
+				_id: $_id
+			){
+				fullName,
+				phone,
+				email
+			}
+		}
+	`
+
+	const [fetchUser] = useMutation(FETCH_USER)
 	const [editCabeen] = useMutation(EDIT_CABEEN)
 	const [isEditingCabeen, setIsEditingCabeen] = React.useState(false)
 	const [isType, setIsType] = React.useState('normal')
 	const [accessLevel, setAccessLevel] = React.useState('manager')
 	const [showContact, setShowContact] = React.useState(false)
+	const [contactType, setContactType] = React.useState('normal')
 
 	const edit = () => {
 		console.log(props.cabeen.cabeenEditInfo)
@@ -103,6 +124,23 @@ function CabeenButtons(props) {
 				setIsType('error')
 			})
 
+	}
+
+	function getUser() {
+		setShowContact(true)
+		setContactType('loading')
+		fetchUser({variables: {
+			_id: props.cabeen.cabeenDetails.admin
+			}})
+			.then((res) => {
+				console.log('successful', res.data)
+				props.findContactPerson(res.data.fetchUser[0])
+				setContactType('normal')
+			})
+			.catch(error => {
+				console.log('An error occurred', error)
+				setContactType('error')
+			})
 	}
 
 	function like(){
@@ -135,6 +173,8 @@ function CabeenButtons(props) {
 				console.log('An error occurred',error)
 			})
 	}
+
+
 
 	return(
 		<>
@@ -177,7 +217,7 @@ function CabeenButtons(props) {
 				</TouchableOpacity>
 				<TouchableOpacity
 					onPress={() => props.cabeen.cabeenDetails.admin === props.app.currentUser.user._id ?
-						Actions.cabeenManagement(): setShowContact(true)}
+						Actions.cabeenManagement(): getUser()}
 					style={{
 						// flex: 1,
 						alignItems: 'center',
@@ -226,12 +266,17 @@ function CabeenButtons(props) {
 			/>
 			<ContactModal
 				modalVisible={showContact}
+				contactType={contactType}
 				onRequestClose={() => {
 					setShowContact(false)
 				}}
 				onOK={() => {
 					setShowContact(false)
 				}}
+				onError={() => {
+					getUser()
+				}}
+
 			/>
 		</>
 	)
@@ -390,7 +435,7 @@ class Cabeen extends React.PureComponent{
 	renderCabeenImages(){
 		return(
 			<>
-				<TouchableOpacity style={{
+				<View style={{
 					elevation: 5,
 					width: '100%',
 					borderRadius: 10,
@@ -428,7 +473,7 @@ class Cabeen extends React.PureComponent{
 						</Text>
 					</View>
 
-				</TouchableOpacity>
+				</View>
 			</>
 		)
 	}
@@ -724,7 +769,8 @@ const mapDispatchToProps = dispatch => (
 		updateCabeens,
 		setEditInfo,
 		setAccessLevel,
-		likeCallback
+		likeCallback,
+		findContactPerson
 
 	}, dispatch)
 )

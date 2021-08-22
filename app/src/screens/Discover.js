@@ -228,8 +228,12 @@ function Discover(props){
 	`
 	
 	const FETCH_CABEENS = 	gql`
-		mutation FETCH_CABEENS{
-			fetchCabeens{
+		mutation FETCH_CABEENS(
+			$admin: String
+		){
+			fetchCabeens(
+				admin: $admin
+			){
 				_id,
 				name,
 				price,
@@ -276,7 +280,9 @@ function Discover(props){
 
 	const getCabeens = () => {
 		setIsFetchingCabeens(true)
-		fetchCabeens()
+		fetchCabeens({variables: {
+			admin: props.app.currentUser.user._id
+			}})
 			.then((res) => {
 				setIsFetchingCabeens(false)
 				setHasFetchResults(true)

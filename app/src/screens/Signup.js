@@ -250,6 +250,7 @@ function Signup(props) {
                 }}
                 onSuccessfully={() => {
                     Actions.discover({initial: true})
+                    setIsSigningIn(false)
                 }}
             />
         </>

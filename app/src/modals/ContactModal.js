@@ -2,7 +2,7 @@ import * as React from 'react'
 import {
     Modal,
     View,
-    Text, TouchableOpacity,
+    Text, TouchableOpacity, ActivityIndicator,
 } from 'react-native'
 import {bindActionCreators} from "redux";
 import {addCabeen, addTenant, selectImages} from "../state/CabeenActions";
@@ -11,45 +11,70 @@ import {ScrollView} from "react-native-gesture-handler";
 
 
 function Content(props){
-    return(
-        <>
-            <View style={{
-                // alignItems: 'center',
-                height: '43%',
-                width: '90%',
-                justifyContent: "center",
-                borderRadius: 10,
-                padding: 10,
-                backgroundColor: props.app.colors.whiteText
-            }}>
-                <ScrollView>
-                    <Text
-                        style={{
-                        fontSize: 30,
-                        margin: 10,
-                        marginTop: 35,
-                        color: props.app.colors.statusBar,
-                        // alignSelf: 'center',
-                        fontWeight: 'bold'
-                    }}>
-                        Contact person
-                    </Text>
+    if (props.contactType === 'loading'){
+        return (
+            <>
+                <View style={{
+                    height: '35%',
+                    width: "90%",
+                    borderRadius: 10,
+                    elevation: 20,
+                    margin: 20,
+                    // alignSelf: "center",
+                    backgroundColor: props.app.colors.whiteText,
+                    // alignItems: 'center',
+                    justifyContent: "center"
+                }}>
                     <Text style={{
+                        fontWeight: "bold",
                         fontSize: 25,
+                        alignSelf: 'center',
                         margin: 10,
-                        marginTop: 20,
-                        fontWeight: 'bold',
-                        alignSelf: 'center'
+                        color: props.app.colors.primaryText
                     }}>
-                        Wilson Mudaki
+                        Please wait...
+
                     </Text>
-                    <Text style={{
-                        fontSize: 20,
-                        margin: 10,
-                        color: props.app.colors.greyText,
-                        alignSelf: 'center'
+                    <View style={{
+                        flexDirection: "row",
+                        justifyContent: 'center',
+                        // alignItems: "center",
+                        marginTop: 30
                     }}>
-                        0700868636
+                        <ActivityIndicator
+                            color={props.app.colors.buttonColor}
+                            size={'large'}
+                        />
+                    </View>
+
+                </View>
+
+            </>
+        )
+    }
+    else if (props.contactType === 'error'){
+        return (
+            <>
+                <View style={{
+                    height: '36%',
+                    width: "90%",
+                    borderRadius: 10,
+                    elevation: 20,
+                    margin: 20,
+                    // alignSelf: "center",
+                    backgroundColor: props.app.colors.whiteText,
+                    // alignItems: 'center',
+                    justifyContent: "center"
+                }}>
+                    <Text style={{
+                        fontWeight: "bold",
+                        fontSize: 25,
+                        alignSelf: 'center',
+                        margin: 10,
+                        color: props.app.colors.errorText
+                    }}>
+                        An error occurred Please try again ...
+
                     </Text>
                     <View style={{
                         flexDirection: "row",
@@ -58,7 +83,7 @@ function Content(props){
                         marginTop: 30
                     }}>
                         <TouchableOpacity
-                            onPress={props.onOK}
+                            onPress={props.onError}
                             style={{
                                 backgroundColor: props.app.colors.buttonColor,
                                 borderRadius: 25,
@@ -66,21 +91,104 @@ function Content(props){
                                 width: '45%',
                                 justifyContent: "center",
                                 alignItems:"center",
-                                // elevation: 10,
+                                elevation: 10,
                             }}>
                             <Text style={{
                                 fontSize: 18,
-                                fontWeight: "bold",
-                                color: props.app.colors.whiteText
+                                fontWeight: "bold"
                             }}>
                                 OK
                             </Text>
                         </TouchableOpacity>
                     </View>
-                </ScrollView>
-            </View>
-        </>
-    )
+
+                </View>
+
+            </>
+        )
+    }
+    else {
+        return(
+            <>
+                <View style={{
+                    // alignItems: 'center',
+                    height: '55%',
+                    width: '90%',
+                    justifyContent: "center",
+                    borderRadius: 10,
+                    padding: 10,
+                    backgroundColor: props.app.colors.whiteText
+                }}>
+                    <ScrollView>
+                        <Text
+                            style={{
+                                fontSize: 30,
+                                margin: 10,
+                                marginTop: 35,
+                                color: props.app.colors.statusBar,
+                                // alignSelf: 'center',
+                                fontWeight: 'bold'
+                            }}>
+                            Contact person
+                        </Text>
+                        <Text style={{
+                            fontSize: 25,
+                            margin: 10,
+                            marginTop: 20,
+                            fontWeight: 'bold',
+                            alignSelf: 'center'
+                        }}>
+                            {props.cabeen.contactPerson.fullName}
+                        </Text>
+                        <Text style={{
+                            fontSize: 20,
+                            margin: 10,
+                            color: props.app.colors.blackText,
+                            alignSelf: 'center'
+                        }}>
+                            {props.cabeen.contactPerson.email}
+                        </Text>
+                        <Text style={{
+                            fontSize: 20,
+                            margin: 10,
+                            color: props.app.colors.greyText,
+                            alignSelf: 'center'
+                        }}>
+                            {props.cabeen.contactPerson.phone}
+                        </Text>
+                        <View style={{
+                            flexDirection: "row",
+                            justifyContent: 'center',
+                            // alignItems: "center",
+                            marginTop: 30,
+                            marginBottom: 20
+                        }}>
+                            <TouchableOpacity
+                                onPress={props.onOK}
+                                style={{
+                                    backgroundColor: props.app.colors.buttonColor,
+                                    borderRadius: 25,
+                                    height: 40,
+                                    width: '45%',
+                                    justifyContent: "center",
+                                    alignItems:"center",
+                                    // elevation: 10,
+                                }}>
+                                <Text style={{
+                                    fontSize: 18,
+                                    fontWeight: "bold",
+                                    color: props.app.colors.whiteText
+                                }}>
+                                    OK
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </ScrollView>
+                </View>
+            </>
+        )
+    }
+
 }
 
 function ContactModal(props){
