@@ -25,7 +25,8 @@ const INITIAL_STATE = {
         images: []
     },
     updateCabeens: true,
-    cabeenImages : []
+    cabeenImages : [],
+    accessLevel: 'user'
 
 }
 
@@ -160,6 +161,21 @@ export const cabeenReducer = (state = INITIAL_STATE, action) => {
 
             else return state
 
+        case 'LIKE_CALLBACK':
+            if (action.operation === 'like'){
+                state.cabeenDetails.likes.push(action.payload)
+                return {...state}
+            }
+            else if (action.operation === 'unlike'){
+                let index = state.cabeenDetails.likes.indexOf(action.payload)
+                if (index !== -1){
+                    state.cabeenDetails.likes.splice(index, 1)
+                    return {...state}
+                }
+                return state
+            }
+            else return state
+
         case "SET_EDIT_INFO":
             state.cabeenEditInfo.name = state.cabeenDetails.name
             state.cabeenEditInfo.location = state.cabeenDetails.location
@@ -170,6 +186,11 @@ export const cabeenReducer = (state = INITIAL_STATE, action) => {
             state.cabeenEditInfo.images = state.cabeenDetails.images
             state.cabeenEditInfo.description = state.cabeenDetails.description
             return {...state}
+
+        case "SET_ACCESS_LEVEL":
+            state.accessLevel = action.payload
+            return {...state}
+
         default:
             return state
 

@@ -49,3 +49,18 @@ export const setEditInfo = () => (
         type: "SET_EDIT_INFO"
     }
 )
+
+export const setAccessLevel = (payload) => (
+    {
+        type: "SET_ACCESS_LEVEL",
+        payload: payload
+    }
+)
+
+export const likeCallback = (operation, payload) => (
+    {
+        type: "LIKE_CALLBACK",
+        operation: operation,
+        payload: payload
+    }
+)

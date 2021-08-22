@@ -199,7 +199,8 @@ function Discover(props){
 			$price: String,
 			$currency: String,
 			$location: String,
-			$features: String
+			$features: String,
+			$admin: String
 		){
 			createCabeen(
 				input: {
@@ -209,7 +210,8 @@ function Discover(props){
 					price: $price,
 					features: $features,
 					currency: $currency,
-					location: $location
+					location: $location,
+					admin: $admin
 
 				}
 			){
@@ -219,7 +221,8 @@ function Discover(props){
 				location,
 				type,
 				features,
-				description
+				description,
+				admin
 			}
 		}
 	`
@@ -233,7 +236,9 @@ function Discover(props){
 				location,
 				features,
 				type,
-				description
+				description,
+				admin,
+				likes
 			}
 		}
 	`
@@ -257,6 +262,7 @@ function Discover(props){
 				price: props.cabeen.cabeenInfo.price,
 				currency: props.cabeen.cabeenInfo.currency,
 				location: props.cabeen.cabeenInfo.location,
+				admin: props.app.currentUser.user._id
 			}})
 			.then((res) => {
 				setIsType('success')

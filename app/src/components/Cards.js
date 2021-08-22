@@ -136,25 +136,25 @@ class CabeenCard extends React.PureComponent{
 									{this.props.price} KES / Night
 								</Text>
 							</View>
-							<TouchableOpacity
-								onPress={() => this.setState({
-									liked: !this.state.liked
-								})}
-								style={{
-								alignItems: 'center',
-								justifyContent: 'center',
-								marginRight: 10,
-							}}>
-								<Fontisto
-									name={this.state.liked ?
-										'heart': 'heart-alt'}
-									size={20}
-									color={!this.state.liked ?
-										this.props.app.colors.statusBar:
-										this.props.app.colors.errorText
-									}
-								/>
-							</TouchableOpacity>
+							{/*<TouchableOpacity*/}
+							{/*	onPress={() => this.setState({*/}
+							{/*		liked: !this.state.liked*/}
+							{/*	})}*/}
+							{/*	style={{*/}
+							{/*	alignItems: 'center',*/}
+							{/*	justifyContent: 'center',*/}
+							{/*	marginRight: 10,*/}
+							{/*}}>*/}
+							{/*	<Fontisto*/}
+							{/*		name={this.state.liked ?*/}
+							{/*			'heart': 'heart-alt'}*/}
+							{/*		size={20}*/}
+							{/*		color={!this.state.liked ?*/}
+							{/*			this.props.app.colors.statusBar:*/}
+							{/*			this.props.app.colors.errorText*/}
+							{/*		}*/}
+							{/*	/>*/}
+							{/*</TouchableOpacity>*/}
 
 						</View>
 					</View>

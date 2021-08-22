@@ -33,7 +33,8 @@ function Home (props){
 					type,
 					features,
 					location,
-					description
+					description,
+					likes
 				}
 			}
 		}

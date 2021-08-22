@@ -30,8 +30,9 @@ import Account from "./Account";
 import CabeenEditModal from "../modals/CabeenEditModal";
 import {gql, useMutation} from "@apollo/client";
 import CabeenDeleteModal from "../modals/CabeenDeleteModal";
-import {updateCabeens, setEditInfo} from "../state/CabeenActions";
+import {updateCabeens, setEditInfo, setAccessLevel, likeCallback} from "../state/CabeenActions";
 import ContactModal from "../modals/ContactModal";
+import AntDesign from "react-native-vector-icons/AntDesign";
 
 const {height,width} = Dimensions.get('window')
 
@@ -46,7 +47,8 @@ function CabeenButtons(props) {
 			$description: String,
 			$price: String,
 			$currency: String,
-			$location: String
+			$location: String,
+			$likes: [String]
 		){
 			updateCabeen(
 				_id: $_id,
@@ -58,6 +60,7 @@ function CabeenButtons(props) {
 					price: $price,
 					currency: $currency,
 					location: $location
+					likes: $likes
 
 				}
 			){
@@ -66,7 +69,8 @@ function CabeenButtons(props) {
 				features,
 				price,
 				location,
-				description
+				description,
+				likes
 			}
 		}
 	`
@@ -101,6 +105,37 @@ function CabeenButtons(props) {
 
 	}
 
+	function like(){
+		return(
+			<>
+				<AntDesign
+					name={props.cabeen.cabeenDetails.likes.includes(props.app.currentUser.user._id) ? 'heart': 'hearto'}
+					size={25}
+					color={props.cabeen.cabeenDetails.likes.includes(props.app.currentUser.user._id) ? 'red': 'black'}
+				/>
+			</>
+		)
+	}
+
+	function likeExecute(){
+		if (props.cabeen.cabeenDetails.likes.includes(props.app.currentUser.user._id)){
+			props.likeCallback('unlike', props.app.currentUser.user._id)
+		}
+		else props.likeCallback('like', props.app.currentUser.user._id)
+
+		editCabeen({variables:{
+				_id: props.cabeen.cabeenDetails._id,
+				likes: props.cabeen.cabeenDetails.likes
+			}})
+			.then((res) => {
+				props.updateCabeens()
+				console.log('Successful', res.data)
+			})
+			.catch(error => {
+				console.log('An error occurred',error)
+			})
+	}
+
 	return(
 		<>
 			<View style={{
@@ -111,7 +146,7 @@ function CabeenButtons(props) {
 			}}>
 				<TouchableOpacity
 					onPress={() => {
-						accessLevel === 'manager' ? setIsEditingCabeen(true) : null
+						props.cabeen.cabeenDetails.admin === props.app.currentUser.user._id ? setIsEditingCabeen(true) : likeExecute()
 						props.setEditInfo()
 					}}
 					style={{
@@ -122,22 +157,26 @@ function CabeenButtons(props) {
 						borderRadius: 30,
 						width: '47%',
 						height: 50,
-						borderColor: props.app.colors.statusBar,
+						borderColor: props.cabeen.cabeenDetails.admin === props.app.currentUser.user._id ? props.app.colors.statusBar: props.cabeen.cabeenDetails.likes.includes(props.app.currentUser.user._id) ? 'red': props.app.colors.statusBar,
 					}}>
-					<SimpleLineIcons
-						name={accessLevel === 'manager' ? 'pencil':'heart'}
-						size={25}
-						color={props.app.colors.statusBar}
-					/>
+					{
+						props.cabeen.cabeenDetails.admin === props.app.currentUser.user._id ?
+							<SimpleLineIcons
+								name={'pencil'}
+								size={25}
+								color={props.app.colors.statusBar}
+							/>:
+							like()
+					}
 					<Text style={{
-						color: props.app.colors.statusBar,
+						color: props.cabeen.cabeenDetails.admin === props.app.currentUser.user._id ? props.app.colors.statusBar: props.cabeen.cabeenDetails.likes.includes(props.app.currentUser.user._id) ? 'red': props.app.colors.statusBar,
 						fontSize: 20
 					}}>
-						{accessLevel === 'manager' ? 'Edit': 'Like'}
+						{props.cabeen.cabeenDetails.admin === props.app.currentUser.user._id? 'Edit': props.cabeen.cabeenDetails.likes.includes(props.app.currentUser.user._id) ? 'Loved': 'Love'}
 					</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
-					onPress={() => accessLevel === 'manager' ?
+					onPress={() => props.cabeen.cabeenDetails.admin === props.app.currentUser.user._id ?
 						Actions.cabeenManagement(): setShowContact(true)}
 					style={{
 						// flex: 1,
@@ -154,7 +193,7 @@ function CabeenButtons(props) {
 						fontWeight: 'bold',
 						fontSize: 20
 					}}>
-						{accessLevel === 'manager'? 'Manage': 'Contact'}
+						{props.cabeen.cabeenDetails.admin === props.app.currentUser.user._id ? 'Manage': 'Contact'}
 					</Text>
 				</TouchableOpacity>
 			</View>
@@ -236,7 +275,7 @@ function Navigation(props) {
 			<BackButtonTopNavBar
 				title={props.cabeen.cabeenDetails.name}
 				icon={'trash-outline'}
-				isManager={true}
+				isManager={props.cabeen.cabeenDetails.admin === props.app.currentUser.user._id}
 				onIconPress={() => {
 					setIsDeletingCabeen(true)
 				}}
@@ -683,7 +722,9 @@ const mapDispatchToProps = dispatch => (
 		agreeToTerms,
 		rotate,
 		updateCabeens,
-		setEditInfo
+		setEditInfo,
+		setAccessLevel,
+		likeCallback
 
 	}, dispatch)
 )
