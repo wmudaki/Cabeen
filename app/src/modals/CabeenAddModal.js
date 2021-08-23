@@ -36,7 +36,7 @@ function CabeenImages(props){
                             borderRadius: 5,
                         }}
                         source={{
-                            uri: item.item
+                            uri: item.item.image.uri
                         }}
                         />
                     <TouchableOpacity
@@ -47,12 +47,18 @@ function CabeenImages(props){
                         top: 0,
                         right: 0,
                         position: "absolute",
-                        elevation: 20
+                        elevation: 20,
+                        borderRadius: 20,
+                        margin: 5,
+                        paddingLeft: 2,
+                        backgroundColor: props.app.colors.background,
+                        alignContent: 'center',
+                        justifyContent: "center"
                     }}>
                         <Ionicons
                             name={'close-circle'}
                             size={30}
-                            color={props.app.colors.greyText}
+                            color={props.app.colors.blackText}
                         />
                     </TouchableOpacity>
                 </TouchableOpacity>
@@ -194,7 +200,7 @@ function CabeenImage(props){
         <>
             <TouchableOpacity
                 onPress={() => {
-                    props.selectImages(selected ? 'unselect' : "select", props.item.item.node.image.uri)
+                    props.selectImages(selected ? 'unselect' : "select", props.item.item.node)
                     setSelected(!selected)
 
                 }}
@@ -255,7 +261,7 @@ function CabeenAddModalImageSelect(props){
     async function getPhotos(){
         if(await hasAndroidPermission() === 'granted'){
             setIsLoading(true)
-            CameraRoll.getPhotos({first: 20, assetType: "Photos",})
+            CameraRoll.getPhotos({first: 20, assetType: "Photos", include: ["filename"]})
                 .then((value) => {
                     setIsLoading(false)
                     setImages(value.edges)
@@ -268,7 +274,7 @@ function CabeenAddModalImageSelect(props){
 
         else if (await hasAndroidPermission()){
             setIsLoading(true)
-            CameraRoll.getPhotos({first: 20, assetType: "Photos",})
+            CameraRoll.getPhotos({first: 20, assetType: "Photos", include: ["filename"]})
                 .then((value) => {
                     setIsLoading(false)
                     setImages(value.edges)
@@ -283,7 +289,7 @@ function CabeenAddModalImageSelect(props){
     function _onEndReached(){
         if (page_info.has_next_page){
             setIsLoading(true)
-            CameraRoll.getPhotos({first: 20, assetType: "Photos", after: page_info.end_cursor})
+            CameraRoll.getPhotos({first: 20, assetType: "Photos", after: page_info.end_cursor, include: ["filename"]})
                 .then((value) => {
                     setIsLoading(false)
                     let oldImages = [...images]
@@ -316,6 +322,8 @@ function CabeenAddModalImageSelect(props){
             />
         )
     }
+
+    // console.log('Ima', images[0].node)
 
     return(
         <>
@@ -711,6 +719,7 @@ function CabeenAddModalError(props){
 function CabeenAddModalContent(props){
 
     const [features, setFeatures] = React.useState([])
+    console.log('ccc', props.cabeen.cabeenImages)
 
     return(
         <>
