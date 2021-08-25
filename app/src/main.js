@@ -44,7 +44,7 @@ import {
     createHttpLink,
     InMemoryCache
 } from "@apollo/client";
-
+import {createUploadLink} from "apollo-upload-client";
 
 LogBox.ignoreLogs(['Deprecation in \'createStackNavigator\':\n' +
 '\'transitionConfig\' is removed in favor of the new animation APIs', 'Deprecation in \'navigationOptions\':\n' +
@@ -68,7 +68,7 @@ export default function App (){
 
 // const store = createStore(rootReducer);
 
-    const httpLink = createHttpLink({
+    const httpLink = createUploadLink({
         uri: "http://192.168.43.173:4000/graphql"
     })
 

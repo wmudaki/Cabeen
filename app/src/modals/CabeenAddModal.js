@@ -719,7 +719,7 @@ function CabeenAddModalError(props){
 function CabeenAddModalContent(props){
 
     const [features, setFeatures] = React.useState([])
-    console.log('ccc', props.cabeen.cabeenImages)
+    // console.log('ccc', props.cabeen.cabeenImages)
 
     return(
         <>

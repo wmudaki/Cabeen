@@ -35,7 +35,8 @@ function Home (props){
 					location,
 					description,
 					likes,
-					admin
+					admin,
+					images
 				}
 			}
 		}

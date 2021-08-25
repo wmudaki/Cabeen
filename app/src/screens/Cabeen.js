@@ -432,7 +432,7 @@ class Cabeen extends React.PureComponent{
 		})
 	}
 
-	renderCabeenImages(){
+	renderCabeenImages(item){
 		return(
 			<>
 				<View style={{
@@ -453,7 +453,7 @@ class Cabeen extends React.PureComponent{
 							borderBottomRightRadius:10
 						}}
 						source={{
-						uri: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.hZBRkPchyD8tthZCC47YpQHaE9%26pid%3DApi&f=1'
+						uri: `http://192.168.43.173:4000/cabeens/${item.item}`
 					}}/>
 					<View style={{
 						position: "absolute",
@@ -469,7 +469,7 @@ class Cabeen extends React.PureComponent{
 						<Text style={{
 							color: 'white',
 						}}>
-							{this.state.currentIndex + 1} / {this.state.imageData}
+							{this.state.currentIndex + 1} / {this.props.cabeen.cabeenDetails.images.length}
 						</Text>
 					</View>
 
@@ -718,8 +718,8 @@ class Cabeen extends React.PureComponent{
 							}}>
 								<Carousel
 									ref={(c) => this._carousel = c}
-									data={[1,2,3,4,5]}
-									renderItem={() => this.renderCabeenImages()}
+									data={this.props.cabeen.cabeenDetails.images}
+									renderItem={(item) => this.renderCabeenImages(item)}
 									sliderWidth={this.props.app.portrait ?width: height}
 									itemWidth={this.props.app.portrait ?0.98* width: 0.98*height}
 									onSnapToItem={(index) => {

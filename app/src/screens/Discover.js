@@ -30,6 +30,7 @@ import {useBackHandler} from "@react-native-community/hooks";
 import {Actions} from "react-native-router-flux";
 import Carousel from "react-native-snap-carousel";
 import CabeenCard from "../components/Cards";
+import {ReactNativeFile} from "apollo-upload-client";
 import {getCabeenDetails, selectImages, addCabeen, updateCabeens} from "../state/CabeenActions";
 
 
@@ -97,7 +98,7 @@ function CarouselList(props){
 				}}>
 					<Image
 						source={{
-							uri: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.BEyMW2mX7ojl1e1TQo4vPwHaE8%26pid%3DApi&f=1'
+							uri: `http://192.168.43.173:4000/cabeens/${item.item.images[0]}`
 						}}
 						style={{
 							height: 200,
@@ -200,9 +201,12 @@ function Discover(props){
 			$currency: String,
 			$location: String,
 			$features: String,
-			$admin: String
+			$admin: String,
+			$images: [String],
+			$files: [Upload!]!
 		){
 			createCabeen(
+				files: $files
 				input: {
 					name: $name,
 					type: $type,
@@ -211,7 +215,8 @@ function Discover(props){
 					features: $features,
 					currency: $currency,
 					location: $location,
-					admin: $admin
+					admin: $admin,
+					images: $images
 
 				}
 			){
@@ -222,7 +227,8 @@ function Discover(props){
 				type,
 				features,
 				description,
-				admin
+				admin,
+				images,
 			}
 		}
 	`
@@ -242,10 +248,29 @@ function Discover(props){
 				type,
 				description,
 				admin,
-				likes
+				likes,
+				images
 			}
 		}
 	`
+	const SINGLE_UPLOAD = gql`
+		mutation SINGLE_UPLOAD(
+			$file: [Upload!]!
+			$name: String
+		){
+			singleUpload(
+				file: $file,
+				name: $name
+			){
+				filename,
+				encoding,
+				mimetype
+			}
+		}
+	`
+
+
+	const [singleUpload] = useMutation(SINGLE_UPLOAD)
 	const [isFetchingCabeens, setIsFetchingCabeens] = React.useState(false)
 	const [hasFetchResults, setHasFetchResults] = React.useState(false)
 	const [fetchResults, setFetchResults] = React.useState([])
@@ -257,7 +282,17 @@ function Discover(props){
 
 	const addCabeen = () => {
 		setIsType('loading')
-		console.log(props.cabeen.cabeenInfo)
+		// console.log(props.cabeen.cabeenInfo)
+		let fileList = []
+		props.cabeen.cabeenImages.map((value, index) => {
+			let file = new ReactNativeFile({
+				name: value.image.filename,
+				type: value.type,
+				uri: value.image.uri,
+			})
+			fileList.push(file)
+		})
+
 		createCabeen({variables: {
 				name: props.cabeen.cabeenInfo.name,
 				type: props.cabeen.cabeenInfo.type,
@@ -266,14 +301,15 @@ function Discover(props){
 				price: props.cabeen.cabeenInfo.price,
 				currency: props.cabeen.cabeenInfo.currency,
 				location: props.cabeen.cabeenInfo.location,
-				admin: props.app.currentUser.user._id
+				admin: props.app.currentUser.user._id,
+				files: fileList
 			}})
 			.then((res) => {
 				setIsType('success')
 				// setIsCreatingCabeen(false)
 			})
-			.catch(e => {
-				console.log("Error",e)
+			.catch(error => {
+				console.log('An error occurred while uploading', JSON.stringify(error, null, 2))
 				setIsType('error')
 			})
 	}
@@ -292,6 +328,30 @@ function Discover(props){
 				console.log("Error occurred",err)
 				setIsFetchingCabeens(false)
 			})
+	}
+
+	function uploadImage(){
+		// console.log(props.cabeen.cabeenImages[0])
+		let fileList = []
+		props.cabeen.cabeenImages.map((value, index) => {
+			let file = new ReactNativeFile({
+				name: value.image.filename,
+				type: value.type,
+				uri: value.image.uri,
+			})
+			fileList.push(file)
+		})
+
+
+		console.log(fileList)
+		singleUpload({variables:{
+			file: fileList,
+			name: "MUDACHI"
+			}})
+			.then((res) => {
+				console.log('Successfully uploaded', res.data.singleUpload)
+			})
+			.catch(error => console.log('An error occurred while uploading', JSON.stringify(error, null, 2)))
 	}
 
 	React.useEffect(() => {
@@ -364,6 +424,7 @@ function Discover(props){
 					setIsAddingCabeen(false)
 				}}
 				onSubmit={() => {
+					// uploadImage()
 					addCabeen()
 					console.log('submitted')
 				}}
