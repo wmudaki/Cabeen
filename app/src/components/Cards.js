@@ -74,7 +74,7 @@ class CabeenCard extends React.PureComponent{
 							margin: 5,
 						}}>
 							<Ionicons
-								name={'location'}
+								name={'location-outline'}
 								size={20}
 								color={this.props.app.colors.statusBar}
 							/>
@@ -94,8 +94,8 @@ class CabeenCard extends React.PureComponent{
 							alignItems: 'center',
 							margin: 5
 						}}>
-							<MaterialCommunityIcons
-								name={'bed'}
+							<Ionicons
+								name={'bed-outline'}
 								size={20}
 								color={this.props.app.colors.statusBar}
 							/>
@@ -121,9 +121,9 @@ class CabeenCard extends React.PureComponent{
 								flexDirection: "row",
 								alignItems: "center"
 							}}>
-								<Ionicons
-									name={'cash-outline'}
-									size={20}
+								<MaterialCommunityIcons
+									name={'cash-multiple'}
+									size={22}
 									color={this.props.app.colors.statusBar}
 								/>
 								<Text

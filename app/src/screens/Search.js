@@ -5,7 +5,7 @@ import {
     TouchableOpacity,
     View,
     Text,
-    ActivityIndicator,
+    ActivityIndicator, Image,
 } from "react-native";
 import {bindActionCreators} from "redux";
 import {searchPlace, showAutocomplete, showOverlay} from "../state/MapActions";
@@ -13,13 +13,14 @@ import {connect} from "react-redux";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import {Actions} from "react-native-router-flux";
+import {gql, useMutation} from "@apollo/client";
 
 function AutoCompleteComponent(props){
     const _renderItem = (item) => {
         return(
             <>
                 <TouchableOpacity
-                    onPress={() => props.onPress(item)}
+                    // onPress={() => props.onPress(item)}
                     style={{
                     flexDirection: "row",
                     alignItems: 'center'
@@ -50,6 +51,7 @@ function AutoCompleteComponent(props){
             }}>
                 <FlatList
                     data={props.locationData}
+                    listKey={'autocomplete'}
                     renderItem={_renderItem}
                     keyExtractor={(item, key) => item+key}
                     />
@@ -59,11 +61,115 @@ function AutoCompleteComponent(props){
     )
 }
 
+function CabeenSearch(props){
+
+    function _renderItem(item){
+        return(
+            <>
+                <TouchableOpacity style={{
+                    flexDirection: "row",
+                    alignItems: 'center',
+                    margin: 10
+                }}>
+                    <Image
+                        source={{
+                            uri: `http://192.168.43.173:4000/cabeens/${item.item.images[0]}`
+                        }}
+                        style={{
+                            height: 50,
+                            width: 50,
+                            borderRadius: 5
+                        }}
+                    />
+                    <View style={{
+                        flex: 1
+                    }}>
+                        <Text
+                            numberOfLines={1}
+                            style={{
+                                fontSize: 20,
+                                marginLeft: 10,
+                                fontWeight: "bold",
+                                color: props.app.colors.primaryText
+                            }}>
+                            {item.item.name}
+                        </Text>
+                        <Text
+                            numberOfLines={1}
+                            style={{
+                                fontSize: 16,
+                                marginLeft: 10,
+                                // fontWeight: "bold",
+                                color: props.app.colors.primaryText
+                            }}>
+                            {item.item.location}
+                        </Text>
+                    </View>
+
+                </TouchableOpacity>
+            </>
+        )
+    }
+
+    return(
+        <>
+            <View>
+                <FlatList
+                    data={props.cabeenSearchResults}
+                    listKey={'cabeenSearch'}
+                    renderItem={_renderItem}
+                    keyExtractor={(item, key) => item + key}
+                />
+            </View>
+        </>
+    )
+}
+
 function Search(props) {
 
+    const SEARCH_CABEENS = gql`
+        mutation SEARCH_CABEENS(
+            $query: String
+        ){
+            searchCabeen(
+                query: $query
+            ){
+                _id,
+                name,
+                price,
+                location,
+                features,
+                type,
+                description,
+                admin,
+                likes,
+                images
+            }
+        }
+    `
+
+    const [searchCabeen] = useMutation(SEARCH_CABEENS)
+    const [cabeenSearchResults, setCabeenSearchResults] = React.useState([])
+    const [isCabeenSearching, setIsCabeenSearching] = React.useState(false)
     const [isSearching, setIsSearching] = React.useState(false)
     const [autocompleting, setAutocompleting] = React.useState(false)
     const [locationData, setLocationData] = React.useState([])
+
+    const cabeenSearch = async (input) => {
+        setIsCabeenSearching(true)
+        searchCabeen({variables: {
+            query: input
+            }})
+            .then((res) => {
+                setCabeenSearchResults(res.data.searchCabeen)
+                console.log('Search complete', res.data.searchCabeen)
+                setIsCabeenSearching(false)
+            })
+            .catch((error) => {
+                console.log('An error occurred while searching', error)
+                setIsCabeenSearching(false)
+            })
+    }
 
     const autocomplete  = async (input) => {
         setAutocompleting(false)
@@ -76,7 +182,7 @@ function Search(props) {
                     setIsSearching(false)
                     setAutocompleting(true)
                     setLocationData(results.predictions)
-                    console.log('results', results)
+                    // console.log('results', results)
                 })
                 .catch(err => {
                     setIsSearching(false)
@@ -94,63 +200,85 @@ function Search(props) {
             <View style={{
                 flex: 1
             }}>
-                <View style={{
-                    margin: 10,
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    borderRadius: 5,
-                    paddingLeft:10,
-                    paddingRight: 10,
-                    elevation: 10,
-                    padding: 5,
-                    backgroundColor: props.app.colors.whiteText
-                }}>
-                    <View style={{
-                        flexDirection: "row",
-                        alignItems: "center"
-                    }}>
+                <FlatList
+                    data={[1]}
+                    listKey={'main'}
+                    keyExtractor={(item, key) => item + key}
+                    renderItem={() => (
+                        <>
+                            <View style={{
+                                margin: 10,
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                                borderRadius: 5,
+                                paddingLeft:10,
+                                paddingRight: 10,
+                                elevation: 10,
+                                padding: 5,
+                                backgroundColor: props.app.colors.whiteText
+                            }}>
+                                <View style={{
+                                    flexDirection: "row",
+                                    alignItems: "center"
+                                }}>
 
-                        <TouchableOpacity onPressIn={() => Actions.pop()}>
-                            <AntDesign
-                                name={'arrowleft'}
-                                size={28}
-                                color={props.app.colors.statusBar}
-                            />
-                        </TouchableOpacity>
-                        <TextInput
-                            placeholder={'search here'}
-                            placeholderTextColor={props.app.colors.secondaryText}
-                            autoFocus={true}
-                            onChangeText={(value) => autocomplete(value)}
-                            selectionColor={props.app.colors.StatusBar}
-                            style={{
-                                fontSize: 20,
-                                marginLeft: 10,
-                                color: props.app.colors.primaryText,
-                                maxWidth: '80%'
-                            }}
-                        />
-                    </View>
-                    {
-                        isSearching ?
-                            <ActivityIndicator
-                                color={props.app.colors.statusBar}
-                            />
-                            : null
-                    }
+                                    <TouchableOpacity onPressIn={() => Actions.pop()}>
+                                        <AntDesign
+                                            name={'arrowleft'}
+                                            size={28}
+                                            color={props.app.colors.statusBar}
+                                        />
+                                    </TouchableOpacity>
+                                    <TextInput
+                                        placeholder={'search here'}
+                                        placeholderTextColor={props.app.colors.secondaryText}
+                                        autoFocus={true}
+                                        onChangeText={(value) => {
+                                            autocomplete(value)
+                                            cabeenSearch(value)
+                                        }}
+                                        selectionColor={props.app.colors.StatusBar}
+                                        style={{
+                                            fontSize: 20,
+                                            marginLeft: 10,
+                                            color: props.app.colors.primaryText,
+                                            maxWidth: '80%',
+                                            height: 45
+                                        }}
+                                    />
+                                </View>
+                                {
+                                    isSearching ?
+                                        <ActivityIndicator
+                                            color={props.app.colors.statusBar}
+                                        />
+                                        : null
+                                }
 
 
-                </View>
-                {
-                    autocompleting ?
-                        <AutoCompleteComponent
-                            {...props}
-                            locationData={locationData}
-                        />
-                        : null
+                            </View>
+                            {
+                                autocompleting ?
+                                    <CabeenSearch
+                                        {...props}
+                                        cabeenSearchResults={cabeenSearchResults}
+                                    />: null
+                            }
+                            {
+                                autocompleting ?
+                                    <AutoCompleteComponent
+                                        {...props}
+                                        locationData={locationData}
+                                    />
+                                    : null
 
-                }
+                            }
+
+                        </>
+                    )}
+                />
+
 
             </View>
         </>

@@ -573,8 +573,8 @@ class Cabeen extends React.PureComponent{
 							alignItems: "center",
 							margin: 10
 						}}>
-							<Ionicons
-								name={"cash-outline"}
+							<MaterialCommunityIcons
+								name={"cash-multiple"}
 								size={25}
 							/>
 							<Text

@@ -18,6 +18,7 @@ import {AutoCompleteComponent} from "../screens/Search";
 import CameraRoll from "@react-native-community/cameraroll";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {selectImages} from "../state/CabeenActions";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 function CabeenImages(props){
 
@@ -384,12 +385,12 @@ function CabeenAddModalImageSelect(props){
                     <TouchableOpacity
                         onPress={props.onImageSelectCancel}
                         style={{
-                            borderRadius: 5,
+                            borderRadius: 25,
                             height: 40,
                             width: '45%',
                             justifyContent: "center",
                             alignItems:"center",
-                            borderWidth: 1,
+                            borderWidth: 2,
                             borderColor: props.app.colors.secondaryText,
                         }}>
                         <Text style={{
@@ -404,8 +405,9 @@ function CabeenAddModalImageSelect(props){
                         onPress={props.onImageSelectOk}
                         style={{
                             backgroundColor: props.app.colors.buttonColor,
-                            borderRadius: 5,
+                            borderRadius: 25,
                             height: 40,
+                            elevation: 5,
                             width: '45%',
                             justifyContent: "center",
                             alignItems:"center"
@@ -426,7 +428,7 @@ function CabeenAddModalImageSelect(props){
                             alignSelf: "center",
                             borderRadius: 50,
                             padding: 10,
-                            elevation: 30,
+                            elevation: 10,
                             backgroundColor: props.app.colors.whiteText
                         }}>
                             <ActivityIndicator
@@ -916,7 +918,7 @@ function CabeenAddModalContent(props){
                                     <TouchableOpacity
                                         onPress={props.onImageSelect}
                                         style={{
-                                            borderRadius: 20,
+                                            borderRadius: 30,
                                             height: 45,
                                             margin: 20,
                                             width: '50%',
@@ -924,17 +926,17 @@ function CabeenAddModalContent(props){
                                             alignItems:"center",
                                             alignSelf: "center",
                                             flexDirection: "row",
-                                            // elevation: 10,
-                                            borderWidth: 1,
-                                            // backgroundColor: props.app.colors.background,
-                                            borderColor: props.app.colors.background,
+                                            elevation: 5,
+                                            // borderWidth: 2,
+                                            backgroundColor: props.app.colors.background,
+                                            // borderColor: props.app.colors.blackText,
                                         }}>
-                                        <Ionicons
-                                            name={'images-outline'}
+                                        <MaterialCommunityIcons
+                                            name={'camera-plus-outline'}
                                             size={23}
                                             color={props.app.colors.statusBar}
                                             style={{
-                                                marginRight: 10,
+                                               marginRight: 10,
                                             }}
                                         />
                                         <Text style={{
