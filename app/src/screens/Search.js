@@ -14,13 +14,14 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import {Actions} from "react-native-router-flux";
 import {gql, useMutation} from "@apollo/client";
+import {getCabeenDetails} from "../state/CabeenActions";
 
 function AutoCompleteComponent(props){
     const _renderItem = (item) => {
         return(
             <>
                 <TouchableOpacity
-                    // onPress={() => props.onPress(item)}
+                    onPress={() => props.onPress(item)}
                     style={{
                     flexDirection: "row",
                     alignItems: 'center'
@@ -66,7 +67,12 @@ function CabeenSearch(props){
     function _renderItem(item){
         return(
             <>
-                <TouchableOpacity style={{
+                <TouchableOpacity
+                    onPress={() => {
+                        props.getCabeenDetails(item.item)
+                        Actions.cabeen()
+                    }}
+                    style={{
                     flexDirection: "row",
                     alignItems: 'center',
                     margin: 10
@@ -154,6 +160,7 @@ function Search(props) {
     const [isSearching, setIsSearching] = React.useState(false)
     const [autocompleting, setAutocompleting] = React.useState(false)
     const [locationData, setLocationData] = React.useState([])
+    const [inputValue, setInputValue] = React.useState('')
 
     const cabeenSearch = async (input) => {
         setIsCabeenSearching(true)
@@ -162,7 +169,7 @@ function Search(props) {
             }})
             .then((res) => {
                 setCabeenSearchResults(res.data.searchCabeen)
-                console.log('Search complete', res.data.searchCabeen)
+                // console.log('Search complete', res.data.searchCabeen)
                 setIsCabeenSearching(false)
             })
             .catch((error) => {
@@ -195,6 +202,18 @@ function Search(props) {
         }
     }
 
+    let locationTextInput = React.useRef(null)
+
+    function getSelectedLocation(loc){
+        // console.log(' REf Location', loc.item.description)
+        setInputValue(loc.item.description)
+        autocomplete(loc.item.description)
+        cabeenSearch(loc.item.description)
+        // locationTextInput.current.clear()
+
+        // locationTextInput.current.Value = loc.item.description
+    }
+
     return(
         <>
             <View style={{
@@ -202,6 +221,7 @@ function Search(props) {
             }}>
                 <FlatList
                     data={[1]}
+                    extraData={locationTextInput}
                     listKey={'main'}
                     keyExtractor={(item, key) => item + key}
                     renderItem={() => (
@@ -231,10 +251,13 @@ function Search(props) {
                                         />
                                     </TouchableOpacity>
                                     <TextInput
+                                        ref={locationTextInput}
                                         placeholder={'search here'}
                                         placeholderTextColor={props.app.colors.secondaryText}
                                         autoFocus={true}
+                                        value={inputValue}
                                         onChangeText={(value) => {
+                                            setInputValue(value)
                                             autocomplete(value)
                                             cabeenSearch(value)
                                         }}
@@ -269,6 +292,7 @@ function Search(props) {
                                 autocompleting ?
                                     <AutoCompleteComponent
                                         {...props}
+                                        onPress={(item) => getSelectedLocation(item)}
                                         locationData={locationData}
                                     />
                                     : null
@@ -296,7 +320,8 @@ const mapDispatchToProps = dispatch => (
     bindActionCreators({
         searchPlace,
         showAutocomplete,
-        showOverlay
+        showOverlay,
+        getCabeenDetails
 
     }, dispatch)
 )
