@@ -86,7 +86,7 @@ function TenantAddModalSuccess(props){
                         onPress={props.onSuccessfully}
                         style={{
                             backgroundColor: props.app.colors.successText,
-                            borderRadius: 5,
+                            borderRadius: 25,
                             height: 40,
                             width: '45%',
                             justifyContent: "center",
@@ -142,7 +142,7 @@ function TenantAddModalError(props){
                         onPress={props.onError}
                         style={{
                             backgroundColor: props.app.colors.buttonColor,
-                            borderRadius: 5,
+                            borderRadius: 25,
                             height: 40,
                             width: '45%',
                             justifyContent: "center",
@@ -223,12 +223,12 @@ function TenantAddModalContent(props){
                     <TouchableOpacity
                         onPress={props.onCancel}
                         style={{
-                        borderRadius: 5,
+                        borderRadius: 25,
                         height: 40,
                         width: '45%',
                         justifyContent: "center",
                         alignItems:"center",
-                        borderWidth: 1,
+                        borderWidth: 2,
                         borderColor: props.app.colors.secondaryText,
                     }}>
                         <Text style={{
@@ -243,7 +243,7 @@ function TenantAddModalContent(props){
                         onPress={props.onSubmit}
                         style={{
                         backgroundColor: props.app.colors.buttonColor,
-                        borderRadius: 5,
+                        borderRadius: 25,
                         height: 40,
                         width: '45%',
                         justifyContent: "center",

@@ -37,6 +37,7 @@ import CabeenManagement from "./screens/CabeenManagement";
 import Search from "./screens/Search";
 import Splash from "./screens/Splash";
 import Find from "./screens/Find";
+import Privacy from "./screens/Privacy";
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2'
 import {
     ApolloProvider,
@@ -150,6 +151,11 @@ export default function App (){
                                 <Scene
                                     component={Search}
                                     key={'search'}
+                                    hideNavBar
+                                />
+                                <Scene
+                                    component={Privacy}
+                                    key={'privacy'}
                                     hideNavBar
                                 />
                             </Scene>

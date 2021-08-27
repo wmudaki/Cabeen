@@ -309,7 +309,9 @@ function Privacy(props){
 						Privacy
 					</Text>
 				</View>
-				<TouchableOpacity style={{
+				<TouchableOpacity
+					onPress={()  => Actions.privacy()}
+					style={{
 					margin: 10
 				}}>
 					<Text style={{

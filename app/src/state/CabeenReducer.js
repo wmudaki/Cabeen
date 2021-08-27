@@ -12,7 +12,8 @@ const INITIAL_STATE = {
 
     tenantInfo: {
         userId: '',
-        houseLabel: ''
+        houseLabel: '',
+        cabeenId: ''
     },
     cabeenDetails: {},
     cabeenEditInfo: {
@@ -85,6 +86,10 @@ export const cabeenReducer = (state = INITIAL_STATE, action) => {
             }
             else if (action.field === 'houseLabel'){
                 state.tenantInfo.houseLabel = action.payload
+                return {...state}
+            }
+            else if (action.field === 'cabeenId'){
+                state.tenantInfo.cabeenId = action.payload
                 return {...state}
             }
             else return state

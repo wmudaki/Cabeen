@@ -27,27 +27,35 @@ function CabeenManagement(props){
 		mutation ADD_TENANT(
 			$userId: String,
 			$houseLabel: String,
+			$cabeenId: String
 		){
 			addTenant(
 				input:{
 					userId: $userId,
-					houseLabel: $houseLabel
+					houseLabel: $houseLabel,
+					cabeenId: $cabeenId
 				}
 			){
 				_id,
 				userId,
-				houseLabel
+				houseLabel,
+				cabeenId
 			}
 		}
 	
 	`
 
 	const GET_TENANTS = gql`
-		mutation GET_TENANTS{
-			fetchTenants{
+		mutation GET_TENANTS(
+			$cabeenId: String
+		){
+			fetchTenants(
+				cabeenId: $cabeenId
+			){
 				_id,
 				userId,
 				houseLabel,
+				cabeenId,
 			}
 		}
 	`
@@ -84,7 +92,8 @@ function CabeenManagement(props){
 		setIsError(false)
 		createTenant({variables:{
 			userId: props.cabeen.tenantInfo.userId,
-				houseLabel: props.cabeen.tenantInfo.houseLabel
+				houseLabel: props.cabeen.tenantInfo.houseLabel,
+				cabeenId: props.cabeen.cabeenDetails._id
 			}})
 			.then((res) => {
 				console.log(res)
@@ -102,7 +111,9 @@ function CabeenManagement(props){
 
 	const getTenants = () => {
 		setIsFetchingTenants(true)
-		fetchTenants()
+		fetchTenants({variables: {
+			cabeenId: props.cabeen.cabeenDetails._id
+			}})
 			.then((res) => {
 				console.log(res)
 				setTenants(res.data.fetchTenants)
