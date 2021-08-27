@@ -39,11 +39,7 @@ const INITIAL_STATE = {
         password: ''
     },
     editProfile: {
-        _id: '',
-        name: '',
-        phone: '',
-        email: '',
-        avatar: ''
+
     },
 }
 
@@ -150,9 +146,9 @@ export const appReducer = (state=INITIAL_STATE, action) => {
             else return state
 
         case "SET_PROFILE_EDIT_INFO":
-            state.editProfile.name = state.currentUser.user.fullName
-            state.editProfile.email = state.currentUser.user.email
-            state.editProfile.phone = state.currentUser.user.phone
+            console.log('Settin ingo')
+            state.editProfile = state.currentUser.user
+            console.log('Setted')
             // state.editProfile.avatar = state.currentUser.user.avatar
             return {...state}
 

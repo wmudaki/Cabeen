@@ -173,7 +173,7 @@ function ProfileEditModalContent(props){
                     <TextInput
                         placeholder={'Name'}
                         placeholderTextColor={props.app.colors.secondaryText}
-                        defaultValue={props.app.editProfile.name}
+                        defaultValue={props.app.editProfile.fullName}
                         onChangeText={(value) => props.editProfile('name', value)}
                         style={{
                             borderRadius: 10,
