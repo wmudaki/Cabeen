@@ -217,7 +217,7 @@ class TenantCardStateless extends React.PureComponent{
 					<View style={{
 						flexDirection: "row",
 						alignItems: "center",
-						justifyContent: 'center',
+						justifyContent: 'flex-end',
 						margin: 10,
 						padding: 10,
 
@@ -248,9 +248,10 @@ class TenantCardStateless extends React.PureComponent{
 							alignItems: "center",
 							justifyContent: "center",
 							// borderWidth: 1,
-							borderRadius: 20,
+							borderRadius: 25,
 							padding: 7,
 							width: '40%',
+							height: 45,
 							elevation: 5,
 							backgroundColor: this.props.app.colors.errorText
 						}}>
