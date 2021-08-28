@@ -453,7 +453,7 @@ class Cabeen extends React.PureComponent{
 							borderBottomRightRadius:10
 						}}
 						source={{
-						uri: `http://192.168.43.173:4000/cabeens/${item.item}`
+						uri: `${this.props.app.urls.cabeenImages}${item.item}`
 					}}/>
 					<View style={{
 						position: "absolute",

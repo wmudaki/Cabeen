@@ -53,7 +53,7 @@ class CabeenCard extends React.PureComponent{
 							borderTopRightRadius: 10,
 						}}
 						source={{
-							uri: `http://192.168.43.173:4000/cabeens/${this.props.images[0]}`
+							uri: `${this.props.app.urls.cabeenImages}${this.props.images[0]}`
 						}}/>
 					<View style={{
 						margin: 5
