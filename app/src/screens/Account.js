@@ -89,19 +89,9 @@ function AccountProfile(props){
 					style={{
 						// alignItems: 'center',
 						// justifyContent: 'center',
-						margin: 20
+						margin: 20,
+						marginTop:30
 					}}>
-					<Image
-						style={{
-							height: 200,
-							width: 200,
-							borderRadius: 200,
-							alignSelf: 'center',
-							backgroundColor: props.app.colors.background
-						}}
-						source={{
-							uri: 'photo'
-						}}/>
 					<View style={{
 						borderBottomWidth: 2,
 						marginTop: 20,

@@ -148,28 +148,28 @@ function ProfileEditModalContent(props){
                     Edit profile
                 </Text>
                 <ScrollView>
-                    <TouchableOpacity>
-                        <Image
-                            style={{
-                                height: 150,
-                                width:150,
-                                borderRadius: 100,
-                                backgroundColor: props.app.colors.background,
-                                alignSelf: "center"
-                            }}
-                            source={{
-                            uri: 'path'
-                        }}/>
-                        <Ionicons
-                            name={'camera'}
-                            size={25}
-                            style={{
-                                top: -85,
-                                alignSelf: 'center'
-                            }}
-                            color={props.app.colors.whiteText}
-                        />
-                    </TouchableOpacity>
+                    {/*<TouchableOpacity>*/}
+                    {/*    <Image*/}
+                    {/*        style={{*/}
+                    {/*            height: 150,*/}
+                    {/*            width:150,*/}
+                    {/*            borderRadius: 100,*/}
+                    {/*            backgroundColor: props.app.colors.background,*/}
+                    {/*            alignSelf: "center"*/}
+                    {/*        }}*/}
+                    {/*        source={{*/}
+                    {/*        uri: 'path'*/}
+                    {/*    }}/>*/}
+                    {/*    <Ionicons*/}
+                    {/*        name={'camera'}*/}
+                    {/*        size={25}*/}
+                    {/*        style={{*/}
+                    {/*            top: -85,*/}
+                    {/*            alignSelf: 'center'*/}
+                    {/*        }}*/}
+                    {/*        color={props.app.colors.whiteText}*/}
+                    {/*    />*/}
+                    {/*</TouchableOpacity>*/}
                     <TextInput
                         placeholder={'Name'}
                         placeholderTextColor={props.app.colors.secondaryText}
