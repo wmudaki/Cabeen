@@ -466,42 +466,42 @@ function CabeenEditModalContent(props){
                                 props.cabeen.cabeenImages.length > 0 ?
                                     <CabeenImages {...props} />: null
                             }
-                            {
-                                props.cabeen.cabeenImages.length < 1 ?
-                                    <TouchableOpacity
-                                        onPress={props.onImageSelect}
-                                        style={{
-                                            borderRadius: 20,
-                                            height: 45,
-                                            margin: 20,
-                                            width: '50%',
-                                            justifyContent: "center",
-                                            alignItems:"center",
-                                            alignSelf: "center",
-                                            flexDirection: "row",
-                                            // elevation: 10,
-                                            borderWidth: 1,
-                                            // backgroundColor: props.app.colors.background,
-                                            borderColor: props.app.colors.background,
-                                        }}>
-                                        <Ionicons
-                                            name={'images-outline'}
-                                            size={23}
-                                            color={props.app.colors.statusBar}
-                                            style={{
-                                                marginRight: 10,
-                                            }}
-                                        />
-                                        <Text style={{
-                                            fontSize: 18,
-                                            color: props.app.colors.statusBar
+                            {/*{*/}
+                            {/*    props.cabeen.cabeenImages.length < 1 ?*/}
+                            {/*        <TouchableOpacity*/}
+                            {/*            onPress={props.onImageSelect}*/}
+                            {/*            style={{*/}
+                            {/*                borderRadius: 20,*/}
+                            {/*                height: 45,*/}
+                            {/*                margin: 20,*/}
+                            {/*                width: '50%',*/}
+                            {/*                justifyContent: "center",*/}
+                            {/*                alignItems:"center",*/}
+                            {/*                alignSelf: "center",*/}
+                            {/*                flexDirection: "row",*/}
+                            {/*                // elevation: 10,*/}
+                            {/*                borderWidth: 1,*/}
+                            {/*                // backgroundColor: props.app.colors.background,*/}
+                            {/*                borderColor: props.app.colors.background,*/}
+                            {/*            }}>*/}
+                            {/*            <Ionicons*/}
+                            {/*                name={'images-outline'}*/}
+                            {/*                size={23}*/}
+                            {/*                color={props.app.colors.statusBar}*/}
+                            {/*                style={{*/}
+                            {/*                    marginRight: 10,*/}
+                            {/*                }}*/}
+                            {/*            />*/}
+                            {/*            <Text style={{*/}
+                            {/*                fontSize: 18,*/}
+                            {/*                color: props.app.colors.statusBar*/}
 
-                                        }}>
-                                            Add Images
-                                        </Text>
-                                    </TouchableOpacity> : null
+                            {/*            }}>*/}
+                            {/*                Add Images*/}
+                            {/*            </Text>*/}
+                            {/*        </TouchableOpacity> : null*/}
 
-                            }
+                            {/*}*/}
 
                         </View>
                     )}

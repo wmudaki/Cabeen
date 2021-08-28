@@ -41,6 +41,10 @@ const INITIAL_STATE = {
     editProfile: {
 
     },
+    urls: {
+        cabeenImages: 'http://192.168.0.18:4000/cabeens/',
+        avatars: 'http://192.168.0.18:4000/avatars/'
+    }
 }
 
 export const appReducer = (state=INITIAL_STATE, action) => {
