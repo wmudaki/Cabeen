@@ -70,7 +70,7 @@ export default function App (){
 // const store = createStore(rootReducer);
 
     const httpLink = createUploadLink({
-        uri: "http://192.168.0.18:4000/graphql"
+        uri: "http://192.168.0.25:4000/graphql"
     })
 
     const client = new ApolloClient({

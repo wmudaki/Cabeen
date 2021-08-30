@@ -26,11 +26,11 @@ class HalfWidthButtonStateLess extends React.PureComponent{
                 <View style={{
                     height: 50,
                     width: '80%',
-                    backgroundColor: this.props.isSecondary ? null: this.props.app.colors.buttonColor,
+                    backgroundColor: this.props.disabled ? 'grey' :this.props.isSecondary ? null: this.props.app.colors.buttonColor,
                     justifyContent: 'center',
                     alignItems: 'center',
                     borderRadius: 50,
-                    elevation: this.props.isSecondary ? null: 20,
+                    elevation: this.props.disabled ? null: this.props.isSecondary ? null: 10,
                     borderWidth: this.props.isSecondary ? 3: null,
                     borderColor: this.props.isSecondary ? this.props.app.colors.statusBar: null
                 }}>

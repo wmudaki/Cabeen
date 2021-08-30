@@ -168,8 +168,9 @@ function AccountProfile(props){
 					</View>
 					<TouchableOpacity
 						onPress={() => {
-							props.setProfileEditInfo()
 							setIsEditingProfile(true)
+							props.setProfileEditInfo()
+							// setIsEditingProfile(true)
 						}}
 						style={{
 						borderWidth: 1,

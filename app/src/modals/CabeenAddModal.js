@@ -723,6 +723,32 @@ function CabeenAddModalContent(props){
     const [features, setFeatures] = React.useState([])
     // console.log('ccc', props.cabeen.cabeenImages)
 
+    function verifyFields(){
+        if (props.cabeen.cabeenInfo.name.length < 5){
+            return false
+        }
+        else if (props.cabeen.cabeenInfo.features < 1){
+            return false
+        }
+        else if (props.cabeen.cabeenInfo.type.length < 1){
+            return false
+        }
+        else if (props.cabeen.cabeenInfo.location < 5){
+            return false
+        }
+        else if (props.cabeen.cabeenInfo.currency < 1){
+            return false
+        }
+        else if (props.cabeen.cabeenInfo.description.length < 5){
+            return false
+        }
+        else if (props.cabeen.cabeenInfo.images.length < 1){
+            return false
+        }
+
+        return true
+    }
+
     return(
         <>
             <View style={{
@@ -981,9 +1007,9 @@ function CabeenAddModalContent(props){
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        onPress={props.onSubmit}
+                        onPress={verifyFields() ? props.onSubmit: null}
                         style={{
-                            backgroundColor: props.app.colors.buttonColor,
+                            backgroundColor: verifyFields() ? props.app.colors.buttonColor: 'grey',
                             borderRadius: 25,
                             elevation: 5,
                             height: 40,

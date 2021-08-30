@@ -77,6 +77,25 @@ function Signup(props) {
             })
     }
 
+    function verifyFields(){
+        if (props.app.signIn.fullName.length < 5){
+            return false
+        }
+        else if (props.app.signIn.phone.length < 5){
+            return false
+        }
+        else if (props.app.signIn.email.length < 5){
+            return false
+        }
+        else if (props.app.signIn.password.length < 5){
+            return false
+        }
+        else if (!props.app.termsAgree){
+            return false
+        }
+        return true
+    }
+
     return(
         <>
             <ScrollView style={{
@@ -197,13 +216,14 @@ function Signup(props) {
                 </View>
                 <View>
                     <TouchableOpacity
-                        onPress={() => signIn()}
+                        onPress={() => verifyFields() ? signIn(): null}
                         style={{
                         alignItems: 'center',
                         margin: 50
                     }}>
                         <HalfWidthButton
                             name={'Signup'}
+                            disabled={!verifyFields()}
                         />
                     </TouchableOpacity>
                 </View>

@@ -32,6 +32,7 @@ import Carousel from "react-native-snap-carousel";
 import CabeenCard from "../components/Cards";
 import {ReactNativeFile} from "apollo-upload-client";
 import {getCabeenDetails, selectImages, addCabeen, updateCabeens} from "../state/CabeenActions";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 
 
@@ -62,17 +63,11 @@ function NavigationBar(props){
 					Home
 				</Text>
 				<TouchableOpacity onPress={() => Actions.account()}>
-					<Image
-						source={{
-							uri: 'uri'
-						}}
-						style={{
-							height: 40,
-							width: 40,
-							borderRadius: 20,
-							backgroundColor: props.app.colors.background
-						}}
-						/>
+					<Ionicons
+						name={'person-circle-outline'}
+						size={36}
+						color={props.app.colors.statusBar}
+					/>
 				</TouchableOpacity>
 			</View>
 		</>
