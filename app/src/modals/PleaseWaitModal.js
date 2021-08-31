@@ -69,7 +69,7 @@ function ModalContent(props) {
                         margin: 10,
                         color: props.app.colors.errorText
                     }}>
-                        Oops! Invalid email or password Please try again ...
+                        Invalid email or password Please try again ...
 
                     </Text>
                     <View style={{
@@ -82,12 +82,12 @@ function ModalContent(props) {
                             onPress={props.onError}
                             style={{
                                 backgroundColor: props.app.colors.buttonColor,
-                                borderRadius: 5,
+                                borderRadius: 25,
                                 height: 40,
                                 width: '45%',
                                 justifyContent: "center",
                                 alignItems:"center",
-                                elevation: 10,
+                                elevation: 5,
                             }}>
                             <Text style={{
                                 fontSize: 18,
@@ -137,12 +137,12 @@ function ModalContent(props) {
                             onPress={props.onError}
                             style={{
                                 backgroundColor: props.app.colors.buttonColor,
-                                borderRadius: 5,
+                                borderRadius: 25,
                                 height: 40,
                                 width: '45%',
                                 justifyContent: "center",
                                 alignItems:"center",
-                                elevation: 10,
+                                elevation: 5,
                             }}>
                             <Text style={{
                                 fontSize: 18,
@@ -193,12 +193,12 @@ function ModalContent(props) {
                             onPress={props.onSuccessfully}
                             style={{
                                 backgroundColor: props.app.colors.successText,
-                                borderRadius: 5,
+                                borderRadius: 25,
                                 height: 40,
                                 width: '45%',
                                 justifyContent: "center",
                                 alignItems:"center",
-                                elevation: 10,
+                                elevation: 5,
                             }}>
                             <Text style={{
                                 fontSize: 18,

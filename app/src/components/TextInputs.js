@@ -21,10 +21,12 @@ class RegularTextInput extends React.PureComponent{
                     flexDirection: 'row',
                     alignItems: 'center',
                     // justifyContent:'center',
-                    borderBottomWidth: 3,
+                    borderWidth: 3,
+                    borderRadius: 25,
+                    padding: 5,
                     width: "80%",
                     alignSelf: 'center',
-                    borderBottomColor: this.props.borderColor,
+                    borderColor: this.props.borderColor,
 
                 }}>
                     <Ionicons
@@ -49,6 +51,7 @@ class RegularTextInput extends React.PureComponent{
                         onChangeText={this.props.onChangeText}
                         selectionColor={this.props.borderColor}
                         multiline={this.props.multiline}
+                        keyboardType={this.props.keyboardType}
                     />
                 </View>
             </>

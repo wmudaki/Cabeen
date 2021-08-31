@@ -103,7 +103,7 @@ function Signup(props) {
         <>
             <ScrollView style={{
                 flex: 1,
-                backgroundColor: props.app.colors.whiteText
+                backgroundColor: props.app.colors.background
             }}>
                 <Text style={{
                     fontWeight: 'bold',
@@ -120,7 +120,7 @@ function Signup(props) {
 
                     }}>
                         <RegularTextInput
-                            placeholder={'Name'}
+                            placeholder={'Full Name'}
                             placeholderTextColor={props.app.colors.secondaryText}
                             textColor={props.app.colors.primaryText}
                             borderColor={props.app.colors.statusBar}
@@ -145,6 +145,7 @@ function Signup(props) {
                             secureTextEntry={false}
                             iconName={'mail'}
                             iconColor={props.app.colors.statusBar}
+                            // keyboardType={'email-address'}
                         />
                     </View>
                     <View style={{
@@ -161,6 +162,7 @@ function Signup(props) {
                             secureTextEntry={false}
                             iconName={'call'}
                             iconColor={props.app.colors.statusBar}
+                            keyboardType={'numeric'}
                         />
                     </View>
                     <View style={{

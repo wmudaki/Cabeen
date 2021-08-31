@@ -91,7 +91,7 @@ function Login(props){
 
                     }}>
                         <RegularTextInput
-                            placeholder={'Username'}
+                            placeholder={'Email'}
                             placeholderTextColor={props.app.colors.secondaryText}
                             textColor={props.app.colors.primaryText}
                             borderColor={props.app.colors.statusBar}
