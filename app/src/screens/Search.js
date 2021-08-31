@@ -173,7 +173,7 @@ function Search(props) {
                 setIsCabeenSearching(false)
             })
             .catch((error) => {
-                console.log('An error occurred while searching', error)
+                // console.log('An error occurred while searching', error)
                 setIsCabeenSearching(false)
             })
     }
@@ -194,7 +194,7 @@ function Search(props) {
                 .catch(err => {
                     setIsSearching(false)
                     setAutocompleting(false)
-                    console.log('err', err)
+                    // console.log('err', err)
                 })
         }
         else if (input.length > 0){
@@ -217,7 +217,8 @@ function Search(props) {
     return(
         <>
             <View style={{
-                flex: 1
+                flex: 1,
+                backgroundColor: props.app.colors.background
             }}>
                 <FlatList
                     data={[1]}
@@ -231,11 +232,12 @@ function Search(props) {
                                 flexDirection: "row",
                                 alignItems: "center",
                                 justifyContent: "space-between",
-                                borderRadius: 5,
+                                borderRadius: 10,
                                 paddingLeft:10,
                                 paddingRight: 10,
                                 elevation: 10,
                                 padding: 5,
+                                height: 55,
                                 backgroundColor: props.app.colors.whiteText
                             }}>
                                 <View style={{
