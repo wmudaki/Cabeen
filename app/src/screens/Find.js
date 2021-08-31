@@ -15,7 +15,8 @@ function Find(props){
             <View style={{
                 alignItems: 'center',
                 justifyContent: 'center',
-                flex: 1
+                flex: 1,
+                backgroundColor: props.app.colors.background
             }}>
                 <View style={{
 

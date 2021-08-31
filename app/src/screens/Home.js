@@ -50,12 +50,12 @@ function Home (props){
 		setIsFetchingData(true)
 		getRecommendations()
 			.then((res) => {
-				console.log(res)
+				// console.log(res)
 				setHomeData(res.data.getRecommendations)
 				setIsFetchingData(false)
 			})
 			.catch((err) => {
-				console.log(err)
+				// console.log(err)
 				setIsFetchingData(false)
 			})
 	}
@@ -68,7 +68,7 @@ function Home (props){
 		<>
 			<View style={{
 				flex: 1,
-				backgroundColor: props.app.colors.whiteText
+				backgroundColor: props.app.colors.background
 			}}>
 				<View>
 					<CustomSectionList

@@ -28,7 +28,7 @@ class CustomTabBarStateless extends React.PureComponent{
 			if (state.routes[activeTabIndex].key === 'home'){
 				return {'name':'home',
 					'size' : 25,
-					'color': this.props.app.colors.buttonColor,
+					'color': this.props.app.colors.background,
 					'label': 'home',
 					'active': true
 				}
@@ -47,7 +47,7 @@ class CustomTabBarStateless extends React.PureComponent{
 			if (state.routes[activeTabIndex].key === 'find'){
 				return {'name':'search',
 					'size' : 28,
-					'color': this.props.app.colors.buttonColor,
+					'color': this.props.app.colors.background,
 					'label': 'search',
 					'active': true
 				}
@@ -65,7 +65,7 @@ class CustomTabBarStateless extends React.PureComponent{
 			if (state.routes[activeTabIndex].key === 'discover'){
 				return {'name':'compass',
 					'size' : 32,
-					'color': this.props.app.colors.buttonColor,
+					'color': this.props.app.colors.background,
 					'label': 'discover',
 					'active': true
 				}
@@ -111,12 +111,12 @@ class CustomTabBarStateless extends React.PureComponent{
 									flexDirection: 'row',
 									borderRadius: 50,
 									margin: 6,
-									borderWidth:this.getIcon(elements.key).active ? 2 : 0,
-									borderColor: this.props.app.colors.buttonColor,
+									borderWidth:this.getIcon(elements.key).active ? 0 : 0,
+									borderColor: null,
 									elevation: this.getIcon(elements.key).active ?
-										0: null,
+										5: null,
 									backgroundColor:this.getIcon(elements.key).active ?
-										null : null
+										this.props.app.colors.statusBar : null
 								}}
 								key={elements.key}
 								onPress={() => Actions[elements.key]()}

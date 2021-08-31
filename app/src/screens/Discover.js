@@ -149,9 +149,9 @@ function CarouselList(props){
 							margin: 30
 						}}>
 							<Text style={{
-								fontSize: 25,
-								color: props.app.colors.secondaryText,
-								fontWeight: "bold",
+								fontSize: 20,
+								color: props.app.colors.primaryText,
+								// fontWeight: "bold",
 								alignSelf: 'center'
 							}}>
 								The cabeens you add will appear here ...
@@ -304,7 +304,7 @@ function Discover(props){
 				// setIsCreatingCabeen(false)
 			})
 			.catch(error => {
-				console.log('An error occurred while uploading', JSON.stringify(error, null, 2))
+				// console.log('An error occurred while uploading', JSON.stringify(error, null, 2))
 				setIsType('error')
 			})
 	}
@@ -320,7 +320,7 @@ function Discover(props){
 				setFetchResults(res.data.fetchCabeens)
 			})
 			.catch((err) => {
-				console.log("Error occurred",err)
+				// console.log("Error occurred",err)
 				setIsFetchingCabeens(false)
 			})
 	}
@@ -357,7 +357,7 @@ function Discover(props){
 		<>
 			<View style={{
 				flex: 1,
-				backgroundColor: props.app.colors.whiteText
+				backgroundColor: props.app.colors.background
 			}}>
 
 				<View style={{
