@@ -131,7 +131,7 @@ function ProfileEditModalContent(props){
     return(
         <>
             <View style={{
-                height: '70%',
+                height: '55%',
                 width: '90%',
                 justifyContent: "center",
                 borderRadius: 10,
@@ -241,7 +241,7 @@ function ProfileEditModalContent(props){
                             width: '45%',
                             justifyContent: "center",
                             alignItems:"center",
-                            borderWidth: 1,
+                            borderWidth: 2,
                             borderColor: props.app.colors.secondaryText,
                         }}>
                         <Text style={{
@@ -258,6 +258,7 @@ function ProfileEditModalContent(props){
                             backgroundColor: props.app.colors.buttonColor,
                             borderRadius: 25,
                             height: 40,
+                            elevation: 5,
                             width: '45%',
                             justifyContent: "center",
                             alignItems:"center"

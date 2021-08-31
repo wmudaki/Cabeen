@@ -18,6 +18,7 @@ import { CustomSectionList } from "../components/Lists";
 import { Actions } from "react-native-router-flux";
 import {gql, useMutation} from "@apollo/client";
 import {getCabeenDetails, updateCabeens} from "../state/CabeenActions";
+import {authenticate} from "../state/AppActions";
 
 function Home (props){
 
@@ -61,6 +62,7 @@ function Home (props){
 	}
 
 	React.useEffect(() => {
+		// props.authenticate('logout','logout')
 		getCabeens()
 	}, [props.cabeen.updateCabeens])
 
@@ -129,7 +131,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => (
 	bindActionCreators({
 		getCabeenDetails,
-		updateCabeens
+		updateCabeens,
+		authenticate
 
 	}, dispatch)
 )

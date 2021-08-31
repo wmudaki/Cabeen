@@ -150,9 +150,9 @@ export const appReducer = (state=INITIAL_STATE, action) => {
             else return state
 
         case "SET_PROFILE_EDIT_INFO":
-            console.log('Settin ingo')
+            // console.log('Settin ingo')
             state.editProfile = state.currentUser.user
-            console.log('Setted')
+            // console.log('Setted')
             // state.editProfile.avatar = state.currentUser.user.avatar
             return {...state}
 

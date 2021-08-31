@@ -72,29 +72,35 @@ function AccountProfile(props){
 				// avatar: props.app.editProfile.avatar
 			}})
 			.then((res) => {
-				console.log(res)
+				// console.log(res)
 				setIsType('success')
 				props.authenticate('user', res.data.updateUser)
 			})
 			.catch(err => {
 				setIsType('error')
-				console.log('Error', err)
+				// console.log('Error', err)
 			})
+	}
+
+	function profy(){
+		props.setProfileEditInfo()
+		setIsEditingProfile(true)
+
 	}
 
 	return(
 		<>
 			<View>
 				<View
-					onPress={() => Actions.profileEdit()}
+					// onPress={() => Actions.profileEdit()}
 					style={{
 						// alignItems: 'center',
 						// justifyContent: 'center',
 						margin: 20,
-						marginTop:30
+						marginTop:0
 					}}>
 					<View style={{
-						borderBottomWidth: 2,
+						borderBottomWidth: 5,
 						marginTop: 20,
 						borderBottomColor: props.app.colors.background,
 					}}>
@@ -168,13 +174,9 @@ function AccountProfile(props){
 						</Text>
 					</View>
 					<TouchableOpacity
-						onPress={() => {
-							setIsEditingProfile(true)
-							props.setProfileEditInfo()
-							// setIsEditingProfile(true)
-						}}
+						onPress={() => profy()}
 						style={{
-						borderWidth: 1,
+						borderWidth: 2,
 						padding: 10,
 						marginTop: 20,
 						borderRadius: 25,
@@ -183,18 +185,18 @@ function AccountProfile(props){
 						alignSelf: 'center',
 						flexDirection: "row",
 						alignItems: 'center',
-						borderColor: props.app.colors.primaryText
+						borderColor: props.app.colors.statusBar
 					}}>
 						<SimpleLineIcons
 							name={'pencil'}
 							size={18}
-							color={props.app.colors.primaryText}
+							color={props.app.colors.statusBar}
 						/>
 
 						<Text style={{
 							fontSize: 18,
 							marginLeft: 10,
-							color: props.app.colors.primaryText
+							color: props.app.colors.statusBar
 						}}>
 							Edit profile
 						</Text>
@@ -291,9 +293,9 @@ function Privacy(props){
 				margin: 20
 			}}>
 				<View style={{
-					borderBottomWidth: 2,
+					borderBottomWidth: 5,
 					borderBottomColor: props.app.colors.background,
-					marginTop: 0
+					marginTop: 0,
 				}}>
 					<Text style={{
 						color: 'black',
@@ -307,7 +309,7 @@ function Privacy(props){
 				<TouchableOpacity
 					onPress={()  => setIsPrivacyModal(true)}
 					style={{
-					margin: 10
+					margin: 15
 				}}>
 					<Text style={{
 						fontSize: 20
@@ -318,7 +320,7 @@ function Privacy(props){
 				<TouchableOpacity
 					onPress={() => setIsPrivacyModal(true)}
 					style={{
-					margin: 10
+					margin: 15
 				}}>
 					<Text style={{
 						fontSize: 20
@@ -356,18 +358,24 @@ function Logout(props){
 				style={{
 				backgroundColor: props.app.colors.buttonColor,
 				margin: 10,
-				borderRadius: 25,
+					marginBottom: 30,
+				borderRadius: 55,
 				marginTop: 30,
-				elevation: 5
+				elevation: 5,
+				width: '70%',
+				height: 55,
+				alignSelf: 'center',
+					alignItems: "center"
 			}}>
 				<Text style={{
-					fontSize: 20,
+					fontSize: 26,
 					margin: 10,
 					alignSelf: "center",
-					fontWeight: "bold"
+					fontWeight: "bold",
+					color: props.app.colors.whiteText
 
 				}}>
-					Logout
+					SIGN OUT
 				</Text>
 			</TouchableOpacity>
 		</>
