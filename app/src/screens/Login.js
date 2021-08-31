@@ -20,6 +20,7 @@ import { Actions } from "react-native-router-flux";
 import {useQuery, gql, useMutation} from "@apollo/client";
 import SignUpModal from "../modals/PleaseWaitModal";
 import {updateLogin, authenticate} from "../state/AppActions";
+import PrivacyModal from "../modals/PrivacyModal";
 
 function Login(props){
     const LOGIN = gql`
@@ -45,6 +46,7 @@ function Login(props){
     const [login] = useMutation(LOGIN)
     const [isLoginIn, setIsLoginIn] = React.useState(false)
     const [modalContentType, setModalContentType] = React.useState('loading')
+    const [isPrivacyModal, setIsPrivacyModal] = React.useState(false)
 
     const userLogin = () => {
         setIsLoginIn(true)
@@ -71,7 +73,7 @@ function Login(props){
         <>
             <ScrollView style={{
                 flex:1,
-                backgroundColor: props.app.colors.whiteText
+                backgroundColor: props.app.colors.background
             }}>
                 <Text style={{
                     color: props.app.colors.primaryText,
@@ -137,7 +139,7 @@ function Login(props){
                             Forgot password ?
                         </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => setIsPrivacyModal(true)}>
                         <Text style={{
                             alignSelf: 'center',
                             fontSize: 18,
@@ -172,6 +174,15 @@ function Login(props){
                 }}
                 onError={() => {
                     setIsLoginIn(false)
+                }}
+            />
+            <PrivacyModal
+                modalVisible={isPrivacyModal}
+                onRequestClose={() => {
+                    setIsPrivacyModal(false)
+                }}
+                onOK={() => {
+                    setIsPrivacyModal(false)
                 }}
             />
         </>

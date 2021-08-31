@@ -25,6 +25,7 @@ import {useMutation, gql} from "@apollo/client";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 // import {editProfile} from "../state/AppActions";
 import {authenticate, setProfileEditInfo} from "../state/AppActions";
+import PrivacyModal from "../modals/PrivacyModal";
 
 
 
@@ -281,6 +282,9 @@ function CabeenInfo (props){
 }
 
 function Privacy(props){
+
+	const [isPrivacyModal, setIsPrivacyModal] = React.useState(false)
+
 	return(
 		<>
 			<View style={{
@@ -301,7 +305,7 @@ function Privacy(props){
 					</Text>
 				</View>
 				<TouchableOpacity
-					onPress={()  => Actions.privacy()}
+					onPress={()  => setIsPrivacyModal(true)}
 					style={{
 					margin: 10
 				}}>
@@ -311,7 +315,9 @@ function Privacy(props){
 						Privacy policy
 					</Text>
 				</TouchableOpacity>
-				<TouchableOpacity style={{
+				<TouchableOpacity
+					onPress={() => setIsPrivacyModal(true)}
+					style={{
 					margin: 10
 				}}>
 					<Text style={{
@@ -322,6 +328,15 @@ function Privacy(props){
 				</TouchableOpacity>
 
 			</View>
+			<PrivacyModal
+				modalVisible={isPrivacyModal}
+				onRequestClose={() => {
+					setIsPrivacyModal(false)
+				}}
+				onOK={() => {
+					setIsPrivacyModal(false)
+				}}
+			/>
 		</>
 	)
 }

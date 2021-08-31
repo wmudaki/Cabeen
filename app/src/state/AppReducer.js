@@ -42,8 +42,8 @@ const INITIAL_STATE = {
 
     },
     urls: {
-        cabeenImages: 'http://192.168.0.25:4000/cabeens',
-        avatars: 'http://192.168.0.25:4000/avatars'
+        cabeenImages: 'http://192.168.0.25:4000/cabeens/',
+        avatars: 'http://192.168.0.25:4000/avatars/'
     }
 }
 
@@ -142,10 +142,10 @@ export const appReducer = (state=INITIAL_STATE, action) => {
                 return {...state}
             }
             else if (action.field === 'logout'){
-                state.currentUser.token = ''
-                state.currentUser.isActive = false
-                state.currentUser.user = {}
-                return {...state}
+                // state.currentUser.token = ''
+                // state.currentUser.isActive = false
+                // state.currentUser.user = {}
+                return INITIAL_STATE
             }
             else return state
 

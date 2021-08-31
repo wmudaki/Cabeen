@@ -727,22 +727,22 @@ function CabeenAddModalContent(props){
         if (props.cabeen.cabeenInfo.name.length < 5){
             return false
         }
-        else if (props.cabeen.cabeenInfo.features < 1){
+        else if (props.cabeen.cabeenInfo.features.length < 5){
             return false
         }
-        else if (props.cabeen.cabeenInfo.type.length < 1){
+        else if (props.cabeen.cabeenInfo.type.length < 5){
             return false
         }
-        else if (props.cabeen.cabeenInfo.location < 5){
+        else if (props.cabeen.cabeenInfo.location.length < 5){
             return false
         }
-        else if (props.cabeen.cabeenInfo.currency < 1){
+        else if (props.cabeen.cabeenInfo.price.length < 1){
             return false
         }
         else if (props.cabeen.cabeenInfo.description.length < 5){
             return false
         }
-        else if (props.cabeen.cabeenInfo.images.length < 1){
+        else if (props.cabeen.cabeenImages.length < 1){
             return false
         }
 

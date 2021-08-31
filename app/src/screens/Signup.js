@@ -20,6 +20,7 @@ import { agreeToTerms, updateSignIn } from "../state/AppActions";
 import {useQuery, useMutation, gql} from "@apollo/client";
 import SignUpModal from "../modals/PleaseWaitModal";
 import {authenticate} from "../state/AppActions";
+import PrivacyModal from "../modals/PrivacyModal";
 
 
 function Signup(props) {
@@ -55,6 +56,8 @@ function Signup(props) {
     const [createUser] = useMutation(CREATE_USER)
     const [isSigningIn, setIsSigningIn] = React.useState(false)
     const [type, setType] = React.useState('loading')
+    const [isPrivacyModal, setIsPrivacyModal] = React.useState(false)
+
     const signIn = () => {
         setIsSigningIn(true)
         setType('loading')
@@ -229,7 +232,7 @@ function Signup(props) {
                 </View>
                 <View>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => setIsPrivacyModal(true)}>
                         <Text style={{
                             alignSelf: 'center',
                             fontSize: 18,
@@ -271,6 +274,15 @@ function Signup(props) {
                 onSuccessfully={() => {
                     Actions.discover({initial: true})
                     setIsSigningIn(false)
+                }}
+            />
+            <PrivacyModal
+                modalVisible={isPrivacyModal}
+                onRequestClose={() => {
+                    setIsPrivacyModal(false)
+                }}
+                onOK={() => {
+                    setIsPrivacyModal(false)
                 }}
             />
         </>
