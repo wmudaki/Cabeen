@@ -69,7 +69,7 @@ function TenantDeleteModalSuccess(props){
                     margin: 10,
                     color: props.app.colors.primaryText
                 }}>
-                    Tenant removed successfully
+                    Tourist removed successfully
 
                 </Text>
                 <View style={{
@@ -179,7 +179,7 @@ function TenantDeleteModalContent(props) {
                         alignSelf: 'center',
                         color: props.app.colors.errorText,
                     }}>
-                    Are you sure you want to remove this tenant from the cabeen ?
+                    Are you sure you want to remove this tourist from the cabeen ?
                 </Text>
                 <View style={{
                     flexDirection: 'row',

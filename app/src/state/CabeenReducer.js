@@ -92,6 +92,12 @@ export const cabeenReducer = (state = INITIAL_STATE, action) => {
                 state.tenantInfo.cabeenId = action.payload
                 return {...state}
             }
+            else if (action.field === 'clear'){
+                state.tenantInfo.userId = ''
+                state.tenantInfo.houseLabel = ''
+                state.tenantInfo.cabeenId = ''
+                return {...state}
+            }
             else return state
 
         case "CABEEN_DETAILS":

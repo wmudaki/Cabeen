@@ -20,6 +20,7 @@ import {useMutation, gql} from "@apollo/client";
 import TenantAddModal from "../modals/TenantAddModal";
 import {Actions} from "react-native-router-flux";
 import TenantDeleteModal from "../modals/TenantDeleteModal";
+import {addTenant} from "../state/CabeenActions";
 
 
 function CabeenManagement(props){
@@ -96,7 +97,7 @@ function CabeenManagement(props){
 				cabeenId: props.cabeen.cabeenDetails._id
 			}})
 			.then((res) => {
-				console.log(res)
+				// console.log(res)
 				setIsType('success')
 				setIsSuccessfully(true)
 				// setIsAddingTenant(false)
@@ -105,7 +106,7 @@ function CabeenManagement(props){
 			.catch(err => {
 				setIsType('error')
 				setIsError(true)
-				console.log('Error', err)
+				// console.log('Error', err)
 			})
 	}
 
@@ -115,12 +116,12 @@ function CabeenManagement(props){
 			cabeenId: props.cabeen.cabeenDetails._id
 			}})
 			.then((res) => {
-				console.log(res)
+				// console.log(res)
 				setTenants(res.data.fetchTenants)
 				setIsFetchingTenants(false)
 			} )
 			.catch(err => {
-				console.log(err)
+				// console.log(err)
 				setIsFetchingTenants(false)
 			})
 	}
@@ -136,11 +137,11 @@ function CabeenManagement(props){
 			_id: removeId
 			}})
 			.then((res) => {
-				console.log(res)
+				// console.log(res)
 				setDeleteType('success')
 			})
 			.catch((err) => {
-				console.log(err)
+				// console.log(err)
 				setDeleteType('error')
 			})
 	}
@@ -191,7 +192,7 @@ function CabeenManagement(props){
 									marginTop: 100,
 									color: props.app.colors.secondaryText
 								}}>
-									When you add tenants, they will appear here
+									When you add tourists, they will appear here
 								</Text>
 							</View>
 						)}
@@ -204,7 +205,7 @@ function CabeenManagement(props){
 									fontWeight: 'bold',
 									margin: 25
 								}}>
-									Tenants
+									Tourists
 								</Text>
 							</View>
 						)}
@@ -250,15 +251,18 @@ function CabeenManagement(props){
 					// console.log('submitted')
 				}}
 				onCancel={() => {
+					props.addTenant('clear', 'clear')
 					setIsAddingTenant(false)
 				}}
 
 				onError={() => {
 					setIsType('normal')
+					props.addTenant('clear', 'clear')
 					setIsAddingTenant(true)
 				}}
 				onSuccessfully={() => {
 					setIsType('normal')
+					props.addTenant('clear', 'clear')
 					// setIsSuccessfully(false)
 					setIsAddingTenant(false)
 				}}
@@ -392,6 +396,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => (
 	bindActionCreators({
+		addTenant
 
 	}, dispatch)
 )

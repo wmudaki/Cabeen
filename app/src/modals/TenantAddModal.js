@@ -73,7 +73,7 @@ function TenantAddModalSuccess(props){
                     margin: 10,
                     color: props.app.colors.primaryText
                 }}>
-                    Tenant added successfully
+                    Tourist added successfully
 
                 </Text>
                 <View style={{
@@ -166,6 +166,17 @@ function TenantAddModalError(props){
 }
 
 function TenantAddModalContent(props){
+
+    function verifyFields(){
+        if (props.cabeen.tenantInfo.houseLabel.length < 1){
+            return false
+        }
+        else if (props.cabeen.tenantInfo.userId.length < 5){
+            return false
+        }
+        return true
+    }
+
     return(
         <>
             <View style={{
@@ -181,20 +192,20 @@ function TenantAddModalContent(props){
                     fontSize: 20,
                     margin: 10
                 }}>
-                    Add Tenant
+                    Add Tourist
                 </Text>
                 <TextInput
-                    placeholder={'Tenants name'}
+                    placeholder={"Tourist's name"}
                     placeholderTextColor={props.app.colors.secondaryText}
                     onChangeText={(value) => props.addTenant('userId', value)}
                     style={{
-                        // borderRadius: 10,
-                        borderBottomColor: props.app.colors.background,
-                        borderBottomWidth: 3,
+                        borderRadius: 10,
+                        borderColor: props.app.colors.background,
+                        borderWidth: 3,
                         // backgroundColor: props.app.colors.background,
                         fontSize: 20,
                         padding:10,
-                        margin: 10,
+                        margin: 15,
                         color: props.app.colors.primaryText
                     }}
                 />
@@ -203,13 +214,13 @@ function TenantAddModalContent(props){
                     placeholderTextColor={props.app.colors.secondaryText}
                     onChangeText={(value) => props.addTenant('houseLabel', value)}
                     style={{
-                        // borderRadius: 10,
-                        borderBottomColor: props.app.colors.background,
-                        borderBottomWidth: 3,
+                        borderRadius: 10,
+                        borderColor: props.app.colors.background,
+                        borderWidth: 3,
                         // backgroundColor: props.app.colors.background,
                         fontSize: 20,
                         padding:10,
-                        margin: 10,
+                        margin: 15,
                         color: props.app.colors.primaryText
                     }}
                 />
@@ -240,12 +251,13 @@ function TenantAddModalContent(props){
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        onPress={props.onSubmit}
+                        onPress={verifyFields() ? props.onSubmit: null}
                         style={{
-                        backgroundColor: props.app.colors.buttonColor,
+                        backgroundColor: verifyFields() ? props.app.colors.buttonColor: 'grey',
                         borderRadius: 25,
                         height: 40,
                         width: '45%',
+                            elevation: verifyFields() ? 5: null,
                         justifyContent: "center",
                         alignItems:"center"
                     }}>
