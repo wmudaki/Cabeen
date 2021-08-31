@@ -112,8 +112,8 @@ function Content(props){
             <>
                 <View style={{
                     // alignItems: 'center',
-                    height: '55%',
-                    width: '90%',
+                    height: '59%',
+                    width: '93%',
                     justifyContent: "center",
                     borderRadius: 10,
                     padding: 10,
@@ -126,7 +126,7 @@ function Content(props){
                                 margin: 10,
                                 marginTop: 35,
                                 color: props.app.colors.statusBar,
-                                // alignSelf: 'center',
+                                alignSelf: 'center',
                                 fontWeight: 'bold'
                             }}>
                             Contact person

@@ -859,7 +859,7 @@ function CabeenAddModalContent(props){
                                 Price
                             </Text>
                             <TextInput
-                                placeholder={'cabeen price'}
+                                placeholder={'cabeen price (KES)'}
                                 placeholderTextColor={props.app.colors.secondaryText}
                                 keyboardType={"numeric"}
                                 defaultValue={props.cabeen.cabeenInfo.price}

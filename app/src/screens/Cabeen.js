@@ -116,11 +116,11 @@ function CabeenButtons(props) {
 				location: props.cabeen.cabeenEditInfo.location,
 			}})
 			.then((res) => {
-				console.log("Edited success", res)
+				// console.log("Edited success", res)
 				setIsType('successful')
 			})
 			.catch((err) => {
-				console.log("Error editing", err)
+				// console.log("Error editing", err)
 				setIsType('error')
 			})
 
@@ -133,12 +133,12 @@ function CabeenButtons(props) {
 			_id: props.cabeen.cabeenDetails.admin
 			}})
 			.then((res) => {
-				console.log('successful', res.data)
+				// console.log('successful', res.data)
 				props.findContactPerson(res.data.fetchUser[0])
 				setContactType('normal')
 			})
 			.catch(error => {
-				console.log('An error occurred', error)
+				// console.log('An error occurred', error)
 				setContactType('error')
 			})
 	}
@@ -167,10 +167,10 @@ function CabeenButtons(props) {
 			}})
 			.then((res) => {
 				props.updateCabeens()
-				console.log('Successful', res.data)
+				// console.log('Successful', res.data)
 			})
 			.catch(error => {
-				console.log('An error occurred',error)
+				// console.log('An error occurred',error)
 			})
 	}
 
@@ -225,7 +225,7 @@ function CabeenButtons(props) {
 						width: '47%',
 						height: 50,
 						borderRadius: 30,
-						elevation: 5,
+						elevation: 2,
 						justifyContent:'center'
 					}}>
 					<Text style={{
@@ -306,12 +306,12 @@ function Navigation(props) {
 			_id: props.cabeen.cabeenDetails._id
 			}})
 			.then((res) => {
-				console.log(res)
+				// console.log(res)
 				setIsType('success')
 			})
 			.catch((err) => {
 				setIsType('error')
-				console.log(err)
+				// console.log(err)
 			})
 	}
 
