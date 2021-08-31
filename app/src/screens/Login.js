@@ -21,6 +21,7 @@ import {useQuery, gql, useMutation} from "@apollo/client";
 import SignUpModal from "../modals/PleaseWaitModal";
 import {updateLogin, authenticate} from "../state/AppActions";
 import PrivacyModal from "../modals/PrivacyModal";
+import PasswordResetModal from "../modals/PasswordResetModal";
 
 function Login(props){
     const LOGIN = gql`
@@ -47,6 +48,7 @@ function Login(props){
     const [isLoginIn, setIsLoginIn] = React.useState(false)
     const [modalContentType, setModalContentType] = React.useState('loading')
     const [isPrivacyModal, setIsPrivacyModal] = React.useState(false)
+    const [isPasswordReset, setIsPasswordReset] = React.useState(false)
 
     const userLogin = () => {
         setIsLoginIn(true)
@@ -129,7 +131,7 @@ function Login(props){
                     </TouchableOpacity>
                 </View>
                 <View>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => setIsPasswordReset(true)}>
                         <Text style={{
                             color: props.app.colors.primaryText,
                             fontSize: 18,
@@ -183,6 +185,15 @@ function Login(props){
                 }}
                 onOK={() => {
                     setIsPrivacyModal(false)
+                }}
+            />
+            <PasswordResetModal
+                modalVisible={isPasswordReset}
+                onRequestClose={() => {
+                    setIsPasswordReset(false)
+                }}
+                onOK={() => {
+                    setIsPasswordReset(false)
                 }}
             />
         </>
