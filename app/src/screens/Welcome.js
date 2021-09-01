@@ -12,7 +12,7 @@ import {
     Text,
     StatusBar,
     TouchableOpacity,
-    ActivityIndicator, Alert, BackHandler
+    ActivityIndicator, Alert, BackHandler, Image
 } from 'react-native'
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
@@ -43,10 +43,17 @@ function Welcome(props){
                 justifyContent: "center"
 
             }}>
+                <Image
+                    source={require('../../assets/image/cabeen.png')}
+                    style={{
+                        height: 170,
+                        width: 170
+                    }}
+                />
                 <Text style={{
                     fontWeight: 'bold',
                     color: props.app.colors.primaryText,
-                    fontSize: 70,
+                    fontSize: 35,
                     // marginTop: 70,
                     // margin: 20,
                     alignSelf: 'center'
