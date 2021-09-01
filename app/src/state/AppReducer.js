@@ -42,8 +42,8 @@ const INITIAL_STATE = {
 
     },
     urls: {
-        cabeenImages: 'http://192.168.0.25:4000/cabeens/',
-        avatars: 'http://192.168.0.25:4000/avatars/'
+        cabeenImages: 'http://206.189.121.79/cabeens/',
+        avatars: 'http://206.189.121.79/avatars/'
     }
 }
 

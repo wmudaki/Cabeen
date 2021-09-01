@@ -365,10 +365,11 @@ function Logout(props){
 				width: '70%',
 				height: 55,
 				alignSelf: 'center',
-					alignItems: "center"
+					alignItems: "center",
+					justifyContent: 'center'
 			}}>
 				<Text style={{
-					fontSize: 26,
+					fontSize: 20,
 					margin: 10,
 					alignSelf: "center",
 					fontWeight: "bold",
