@@ -334,7 +334,7 @@ function Navigation(props) {
 				}}
 				onSubmit={() => {
 					removeCabeen()
-					console.log('submitted')
+					// console.log('submitted')
 				}}
 				onCancel={() => {
 					setIsDeletingCabeen(false)

@@ -7,7 +7,7 @@ import {
     View,
     TouchableOpacity,
     Text,
-    ScrollView
+    ScrollView, Image
 } from 'react-native'
 
 import {
@@ -77,12 +77,22 @@ function Login(props){
                 flex:1,
                 backgroundColor: props.app.colors.background
             }}>
+                <Image
+                    source={require('../../assets/image/cabeen.png')}
+                    style={{
+                        height: 120,
+                        width: 120,
+                        alignSelf: 'center',
+                        marginTop: 50
+                    }}
+                />
                 <Text style={{
-                    color: props.app.colors.primaryText,
-                    fontSize: 70,
+                    color: props.app.colors.statusBar,
+                    fontSize: 40,
                     fontWeight: 'bold',
                     alignSelf: 'center',
-                    margin: 70
+                    margin: 20,
+                    marginBottom: 40
                 }}>
                     Login
                 </Text>
@@ -147,7 +157,7 @@ function Login(props){
                             fontSize: 18,
                             margin: 20,
                             color: props.app.colors.secondaryText,
-                            textDecorationLine: 'underline'
+                            // textDecorationLine: 'underline'
                         }}>
                             Privacy policy
                         </Text>
@@ -159,7 +169,7 @@ function Login(props){
                             fontSize: 23,
                             fontWeight: 'bold',
                             alignSelf: 'center',
-                            margin: 20,
+                            marginBottom: 40,
                             color: props.app.colors.statusBar
                         }}>
                             Sign up here

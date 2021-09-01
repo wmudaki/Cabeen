@@ -12,7 +12,7 @@ import {
     Text,
     StatusBar,
     TouchableOpacity,
-    ActivityIndicator
+    ActivityIndicator, Image
 } from 'react-native'
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
@@ -30,6 +30,13 @@ function Splash(props){
                 alignItems: "center"
 
             }}>
+                <Image
+                    source={require('../../assets/image/cabeen.png')}
+                    style={{
+                        height: 150,
+                        width: 150
+                    }}
+                />
 
             </View>
         </>

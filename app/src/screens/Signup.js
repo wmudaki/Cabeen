@@ -8,7 +8,7 @@ import {
     View,
     Text,
     TouchableOpacity,
-    ScrollView
+    ScrollView, Image
 } from "react-native";
 import {RegularTextInput} from "../components/TextInputs";
 import { bindActionCreators } from "redux";
@@ -105,12 +105,22 @@ function Signup(props) {
                 flex: 1,
                 backgroundColor: props.app.colors.background
             }}>
+                <Image
+                    source={require('../../assets/image/cabeen.png')}
+                    style={{
+                        height: 120,
+                        width: 120,
+                        alignSelf: 'center',
+                        marginTop: 50
+                    }}
+                />
                 <Text style={{
                     fontWeight: 'bold',
-                    fontSize: 50,
-                    margin: 50,
+                    fontSize: 40,
+                    margin: 20,
+                    marginBottom: 40,
                     alignSelf:'center',
-                    color: props.app.colors.primaryText
+                    color: props.app.colors.statusBar
                 }}>
                     Signup
                 </Text>
@@ -240,7 +250,7 @@ function Signup(props) {
                             fontSize: 18,
                             margin: 10,
                             color: props.app.colors.secondaryText,
-                            textDecorationLine: 'underline'
+                            // textDecorationLine: 'underline'
                         }}>
                             Privacy policy
                         </Text>
@@ -252,7 +262,7 @@ function Signup(props) {
                             fontSize: 20,
                             fontWeight: 'bold',
                             alignSelf: 'center',
-                            margin: 10,
+                            marginBottom: 40,
                             color: props.app.colors.statusBar
                         }}>
                             Have an account ? Login here
