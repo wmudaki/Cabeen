@@ -46,6 +46,7 @@ import {
     InMemoryCache
 } from "@apollo/client";
 import {createUploadLink} from "apollo-upload-client";
+import codePush from 'react-native-code-push'
 
 LogBox.ignoreLogs(['Deprecation in \'createStackNavigator\':\n' +
 '\'transitionConfig\' is removed in favor of the new animation APIs', 'Deprecation in \'navigationOptions\':\n' +
@@ -53,7 +54,7 @@ LogBox.ignoreLogs(['Deprecation in \'createStackNavigator\':\n' +
 'If you want to use Reanimated 2 then go through our installation steps ' +
 'https://docs.swmansion.com/react-native-reanimated/docs/installation'])
 
-export default function App (){
+function App (){
 
     const persistConfig = {
         key: 'root',
@@ -166,3 +167,9 @@ export default function App (){
         </ApolloProvider>
     )
 }
+
+let codePushOptions = { checkFrequency: codePush.CheckFrequency.ON_APP_RESUME };
+
+App = codePush(codePushOptions)(App)
+
+export default App
