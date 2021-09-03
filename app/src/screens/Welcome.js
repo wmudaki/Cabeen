@@ -21,6 +21,7 @@ import {
 } from "../components/Buttons";
 import { Actions } from "react-native-router-flux";
 import CabeenAddModal from "../modals/CabeenAddModal";
+import {updateUrls} from "../state/AppActions";
 
 
 function Welcome(props){
@@ -28,8 +29,12 @@ function Welcome(props){
 
     React.useEffect(() => {
         if (!props.app.currentUser.isActive){
+            props.updateUrls('cabeens', 'https://app.cabeen.culturol.com/cabeens/')
+            props.updateUrls('avatars', 'https://app.cabeen.culturol.com/avatars/')
             Actions.replace('login')
         } else {
+            props.updateUrls('cabeens', 'https://app.cabeen.culturol.com/cabeens/')
+            props.updateUrls('avatars', 'https://app.cabeen.culturol.com/avatars/')
             Actions.discover()
         }
     })
@@ -73,7 +78,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => (
     bindActionCreators({
-
+        updateUrls
     }, dispatch)
 )
 
