@@ -29,12 +29,12 @@ function Welcome(props){
 
     React.useEffect(() => {
         if (!props.app.currentUser.isActive){
-            props.updateUrls('cabeens', 'https://app.cabeen.culturol.com/cabeens/')
-            props.updateUrls('avatars', 'https://app.cabeen.culturol.com/avatars/')
+            // props.updateUrls('cabeens', 'https://app.cabeen.culturol.com/cabeens/')
+            // props.updateUrls('avatars', 'https://app.cabeen.culturol.com/avatars/')
             Actions.replace('login')
         } else {
-            props.updateUrls('cabeens', 'https://app.cabeen.culturol.com/cabeens/')
-            props.updateUrls('avatars', 'https://app.cabeen.culturol.com/avatars/')
+            // props.updateUrls('cabeens', 'https://app.cabeen.culturol.com/cabeens/')
+            // props.updateUrls('avatars', 'https://app.cabeen.culturol.com/avatars/')
             Actions.discover()
         }
     })
