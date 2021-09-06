@@ -42,8 +42,8 @@ const INITIAL_STATE = {
 
     },
     urls: {
-        cabeenImages: 'http://206.189.121.79/cabeens/',
-        avatars: 'http://206.189.121.79/avatars/'
+        cabeenImages: 'https://app.cabeen.culturol.com/cabeens/',
+        avatars: 'https://app.cabeen.culturol,com/avatars/'
     }
 }
 
@@ -155,6 +155,17 @@ export const appReducer = (state=INITIAL_STATE, action) => {
             // console.log('Setted')
             // state.editProfile.avatar = state.currentUser.user.avatar
             return {...state}
+
+        case "UPDATE_URLS":
+            if (action.field === 'cabeens'){
+                state.urls.cabeenImages = action.payload
+                return {...state}
+            }
+            else if (action.field === 'avatars'){
+                state.urls.avatars = action.payload
+                return {...state}
+            }
+            else return state
 
         default:
             return state

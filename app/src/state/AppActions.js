@@ -55,3 +55,11 @@ export const setProfileEditInfo = () => (
         type: "SET_PROFILE_EDIT_INFO"
     }
 )
+
+export const updateUrls = (field, payload) => (
+    {
+        type: "UPDATE_URLS",
+        field: field,
+        payload: payload
+    }
+)

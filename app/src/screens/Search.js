@@ -79,7 +79,7 @@ function CabeenSearch(props){
                 }}>
                     <Image
                         source={{
-                            uri: `http://192.168.43.173:4000/cabeens/${item.item.images[0]}`
+                            uri: `${props.app.urls.cabeenImages}${item.item.images[0]}`
                         }}
                         style={{
                             height: 50,
