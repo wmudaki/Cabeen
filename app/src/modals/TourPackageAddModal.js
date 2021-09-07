@@ -1,35 +1,26 @@
 import {bindActionCreators} from "redux";
-import {addCabeen, addTenant, selectImages} from "../state/CabeenActions";
 import {connect} from "react-redux";
 import {FlatList, Modal, Text, TextInput, TouchableOpacity, View} from "react-native";
 import * as React from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import {addTour} from "../state/TourActions";
 
 function TourPackageAddModalContent(props){
 
-    const [features, setFeatures] = React.useState([])
-    // console.log('ccc', props.cabeen.cabeenImages)
-
     function verifyFields(){
-        if (props.cabeen.cabeenInfo.name.length < 5){
+        if (props.tour.tourAdd.name.length < 5){
             return false
         }
-        else if (props.cabeen.cabeenInfo.features.length < 5){
+        else if (props.tour.tourAdd.location.length < 5){
             return false
         }
-        else if (props.cabeen.cabeenInfo.type.length < 5){
+        else if (props.tour.tourAdd.price.length < 1){
             return false
         }
-        else if (props.cabeen.cabeenInfo.location.length < 5){
+        else if (props.tour.tourAdd.description.length < 5){
             return false
         }
-        else if (props.cabeen.cabeenInfo.price.length < 1){
-            return false
-        }
-        else if (props.cabeen.cabeenInfo.description.length < 5){
-            return false
-        }
-        else if (props.cabeen.cabeenImages.length < 1){
+        else if (props.tour.tourAdd.images.length < 1){
             return false
         }
 
@@ -174,12 +165,12 @@ function TourPackageAddModalContent(props){
                                     color: props.app.colors.primaryText
                                 }}
                             />
-                            {/*{*/}
-                            {/*    props.cabeen.cabeenImages.length > 0 ?*/}
-                            {/*        <CabeenImages {...props} />: null*/}
-                            {/*}*/}
                             {
-                                props.cabeen.cabeenImages.length < 1 ?
+                                props.tour.tourAdd.images.length > 0 ?
+                                    <CabeenImages {...props} />: null
+                            }
+                            {
+                                props.tour.tourAdd.images.length < 1 ?
                                     <TouchableOpacity
                                         onPress={props.onImageSelect}
                                         style={{
@@ -313,15 +304,13 @@ function TourPackageAddModal(props){
 
 
 const mapStateToProps = state => {
-    const {app, cabeen} = state;
-    return {app, cabeen}
+    const {app, cabeen, tour} = state;
+    return {app, cabeen, tour}
 }
 
 const mapDispatchToProps = dispatch => (
     bindActionCreators({
-        addTenant,
-        addCabeen,
-        selectImages
+        addTour
 
     }, dispatch)
 )
