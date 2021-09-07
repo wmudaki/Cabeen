@@ -755,14 +755,15 @@ function CabeenAddModalContent(props){
                 height: '80%',
                 width: '95%',
                 justifyContent: "center",
-                borderRadius: 10,
+                borderRadius: 20,
                 padding: 10,
                 backgroundColor: props.app.colors.whiteText
             }}>
                 <Text style={{
                     fontWeight: "bold",
                     fontSize: 25,
-                    margin: 10
+                    margin: 10,
+                    color: props.app.colors.statusBar
                 }}>
                     Add Cabeen
                 </Text>

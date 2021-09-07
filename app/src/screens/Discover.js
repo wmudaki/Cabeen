@@ -35,6 +35,7 @@ import {getCabeenDetails, selectImages, addCabeen, updateCabeens} from "../state
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {red} from "react-native-reanimated/src/reanimated2/Colors";
 import AddOptionsModal from "../modals/AddOptionsModal";
+import TourPackageAddModal from "../modals/TourPackageAddModal";
 
 
 
@@ -357,6 +358,8 @@ function Discover(props){
 	const [createCabeen] = useMutation(ADD_CABEEN)
 	const [showActionButtons, setShowActionButtons] = React.useState(false)
 
+	const [isAddingTour, setIsAddingTour] = React.useState(false)
+
 	const addCabeen = () => {
 		setIsType('loading')
 		// console.log(props.cabeen.cabeenInfo)
@@ -510,6 +513,20 @@ function Discover(props){
 				onAddCabeen={() => {
 					setShowActionButtons(false)
 					setIsAddingCabeen(true)
+				}}
+				onAddTourPackage={() => {
+					setShowActionButtons(false)
+					setIsAddingTour(true)
+				}}
+			/>
+			<TourPackageAddModal
+				modalVisible={isAddingTour}
+				onRequestClose={() => {
+					setIsAddingTour(false)
+				}}
+				onCancel={() => {
+					setIsAddingTour(false)
+					// props.addCabeen('clear', 'clear')
 				}}
 			/>
 			<CabeenAddModal
