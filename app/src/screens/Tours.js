@@ -1,0 +1,293 @@
+import * as React from 'react'
+import {Dimensions, FlatList, Image, Text, TouchableOpacity, View} from "react-native";
+import {bindActionCreators} from "redux";
+import {searchPlace, showAutocomplete, showOverlay} from "../state/MapActions";
+import {connect} from "react-redux";
+import {BackButtonTopNavBar} from "../components/NavBars";
+import Carousel from "react-native-snap-carousel";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import Ionicons from "react-native-vector-icons/Ionicons";
+
+const {height,width} = Dimensions.get('window')
+
+function Buttons(props){
+    return(
+        <>
+            <View style={{
+                flexDirection: 'row',
+                justifyContent: "space-between",
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                padding: 10,
+                backgroundColor: 'white'
+
+            }}>
+                <TouchableOpacity style={{
+                    height: 45,
+                    width: '45%',
+                    justifyContent: "center",
+                    alignItems: 'center',
+                    borderRadius: 25,
+                    borderWidth: 2
+
+                }}>
+                    <Text style={{
+                        fontWeight: "bold",
+                        fontSize: 20
+                    }}>
+                        Love
+                    </Text>
+
+                </TouchableOpacity>
+                <TouchableOpacity style={{
+                    backgroundColor: props.app.colors.buttonColor,
+                    height: 45,
+                    width: '45%',
+                    justifyContent: "center",
+                    alignItems: 'center',
+                    borderRadius: 25,
+                    elevation: 5
+                }}>
+                    <Text style={{
+                        fontSize: 20,
+                        fontWeight: 'bold'
+                    }}>
+                        Reserve
+                    </Text>
+                </TouchableOpacity>
+
+            </View>
+        </>
+    )
+}
+
+function PackageCard(props){
+    function _renderImages(){
+        return(
+            <>
+                <View style={{
+                    elevation: 5,
+                    width: '100%',
+                    borderRadius: 10,
+                    marginTop: 10,
+                    marginBottom: 10,
+                    backgroundColor: 'white'
+                }}>
+                    <Image
+                        style={{
+                            width: '100%',
+                            height: 320,
+                            backgroundColor: props.app.colors.background,
+                            borderRadius: 10,
+                            borderBottomLeftRadius: 10,
+                            borderBottomRightRadius:10
+                        }}
+                        source={{
+                            uri: `uri`
+                        }}/>
+                    <View style={{
+                        position: "absolute",
+                        bottom: 10,
+                        right: 10,
+                        // elevation: 10,
+                        backgroundColor: 'rgba(1,1,1,.5)',
+                        padding: 5,
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                        borderRadius: 20
+                    }}>
+                        <Text style={{
+                            color: 'white',
+                        }}>
+                            1/1
+                        </Text>
+                    </View>
+
+                </View>
+            </>
+        )
+    }
+
+    function _imageCarousel() {
+        return(
+            <>
+                <View>
+                    <Carousel
+                        data={[1,2,3,4,5]}
+                        renderItem={_renderImages}
+                        sliderWidth={props.app.portrait ?width: height}
+                        itemWidth={props.app.portrait ?0.98* width: 0.98*height}
+                    />
+                </View>
+            </>
+        )
+    }
+
+    function _packageDetails(){
+        return(
+            <>
+                <View>
+                    <Text style={{
+                        fontSize: 30,
+                        fontWeight: 'bold',
+                        margin: 10
+                    }}>
+                        Kilimanjaro hike
+                    </Text>
+                    <Text style={{
+                        fontSize: 25,
+                        fontWeight: 'bold',
+                        color: props.app.colors.statusBar,
+                        margin: 10
+                    }}>
+                        Location
+                    </Text>
+                    <View style={{
+                        flexDirection: 'row',
+                        margin: 20,
+                        alignItems: "center"
+                    }}>
+                        <Ionicons
+                            name={'location'}
+                            size={25}
+                            color={props.app.colors.statusBar}
+                        />
+                        <Text style={{
+                            fontSize: 19,
+                            marginLeft: 10
+                        }}>
+                            Mt Kilimanjaro
+                        </Text>
+
+                    </View>
+                    <Text style={{
+                        fontSize: 25,
+                        fontWeight: 'bold',
+                        color: props.app.colors.statusBar,
+                        margin: 10
+                    }}>
+                        Date
+                    </Text>
+                    <View style={{
+                        flexDirection: 'row',
+                        margin: 20,
+                        alignItems: "center"
+                    }}>
+                        <Ionicons
+                            name={'calendar'}
+                            size={25}
+                            color={props.app.colors.statusBar}
+                        />
+                        <Text style={{
+                            fontSize: 19,
+                            marginLeft: 10
+                        }}>
+                            17 - 09 -2021
+                        </Text>
+                    </View>
+                    <Text style={{
+                        fontSize: 25,
+                        fontWeight: 'bold',
+                        color: props.app.colors.statusBar,
+                        margin: 10
+                    }}>
+                        Price
+                    </Text>
+                    <View style={{
+                        flexDirection: 'row',
+                        margin: 20,
+                        alignItems: "center"
+                    }}>
+                        <MaterialCommunityIcons
+                            name={'cash-multiple'}
+                            size={30}
+                            color={props.app.colors.statusBar}
+                        />
+                        <Text style={{
+                            fontSize: 19,
+                            marginLeft: 10
+                        }}>
+                            2000 KES
+                        </Text>
+                    </View>
+                    <Text style={{
+                        fontSize: 25,
+                        fontWeight: 'bold',
+                        color: props.app.colors.statusBar,
+                        margin: 10
+                    }}>
+                        Description
+                    </Text>
+                    <Text style={{
+                        fontSize: 20,
+                        marginLeft: 20,
+                        margin: 10,
+                        marginBottom: 50
+                    }}>
+                        This is the tour description
+                    </Text>
+
+                </View>
+
+            </>
+        )
+    }
+
+    return(
+        <>
+            <FlatList
+                data={[1]}
+                renderItem={() => (
+                    <View>
+                        {_imageCarousel()}
+                        {_packageDetails()}
+                    </View>
+                )}
+                ListFooterComponent={() => (
+                    <>
+                        <View style={{margin: 30}}/>
+                    </>
+                )}
+                keyExtractor={(key, item) => key + item}
+            />
+        </>
+    )
+}
+
+
+function Tours(props){
+    return(
+        <>
+            <View style={{
+                flex: 1
+            }}>
+                <BackButtonTopNavBar
+                    title={'Tour Package'}
+                />
+                <PackageCard {...props}/>
+                <Buttons {...props}/>
+
+            </View>
+        </>
+    )
+}
+
+
+const mapStateToProps = state => {
+    const {app,map} = state;
+    // console.log('state',map)
+    return {app, map}
+}
+
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({
+        searchPlace,
+        showAutocomplete,
+        showOverlay
+
+    }, dispatch)
+)
+
+export default connect(mapStateToProps, mapDispatchToProps)(Tours)

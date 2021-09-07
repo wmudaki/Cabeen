@@ -38,6 +38,8 @@ import Search from "./screens/Search";
 import Splash from "./screens/Splash";
 import Find from "./screens/Find";
 import Privacy from "./screens/Privacy";
+import Tours from "./screens/Tours";
+
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2'
 import {
     ApolloProvider,
@@ -157,6 +159,11 @@ function App (){
                                 <Scene
                                     component={Privacy}
                                     key={'privacy'}
+                                    hideNavBar
+                                />
+                                <Scene
+                                    component={Tours}
+                                    key={'tours'}
                                     hideNavBar
                                 />
                             </Scene>
