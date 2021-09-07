@@ -33,6 +33,8 @@ import CabeenCard from "../components/Cards";
 import {ReactNativeFile} from "apollo-upload-client";
 import {getCabeenDetails, selectImages, addCabeen, updateCabeens} from "../state/CabeenActions";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import {red} from "react-native-reanimated/src/reanimated2/Colors";
+import AddOptionsModal from "../modals/AddOptionsModal";
 
 
 
@@ -185,6 +187,85 @@ function Content(props){
 	)
 }
 
+function ActionButtons(props){
+	return(
+		<>
+			<View style={{
+				backgroundColor: 'white',
+				height: '100%',
+				width: '100%',
+				padding: 20,
+				paddingTop: 50,
+				borderRadius: 20,
+				elevation: 20
+			}}>
+				<TouchableOpacity
+					style={{
+						// backgroundColor: 'red',
+						padding: 10,
+						position: "absolute",
+
+					}}
+					onPress={props.onClose}>
+					<Ionicons
+						name={'close-circle'}
+						size={40}
+						color={'red'}
+
+					/>
+
+				</TouchableOpacity>
+				<TouchableOpacity style={{
+					backgroundColor: props.app.colors.statusBar,
+					elevation: 5,
+					borderRadius: 30,
+					padding: 10,
+					margin: 10,
+					height: 50,
+					width: '60%',
+					alignSelf: 'center',
+					alignItems: "center",
+					justifyContent: "center",
+					marginTop: 20
+				}}>
+					<Text style={{
+						fontSize: 17,
+						color: 'white',
+						fontWeight: "bold"
+
+					}}>
+						Add Cabeen
+					</Text>
+
+				</TouchableOpacity>
+				<TouchableOpacity style={{
+					borderRadius: 25,
+					backgroundColor: props.app.colors.buttonColor,
+					margin: 10,
+					padding: 10,
+					paddingLeft: 15,
+					paddingRight: 15,
+					elevation: 5,
+					height: 50,
+					width: '60%',
+					alignSelf: 'center',
+					alignItems: "center",
+					justifyContent: "center",
+
+				}}>
+					<Text style={{
+						fontSize: 17,
+						fontWeight: "bold",
+						color: 'white'
+					}}>
+						Add Tour Package
+					</Text>
+				</TouchableOpacity>
+			</View>
+		</>
+	)
+}
+
 function Discover(props){
 
 	const ADD_CABEEN = gql`
@@ -274,6 +355,7 @@ function Discover(props){
 	const [isAddingCabeen, setIsAddingCabeen] = React.useState(false)
 	const [isType, setIsType] = React.useState('normal')
 	const [createCabeen] = useMutation(ADD_CABEEN)
+	const [showActionButtons, setShowActionButtons] = React.useState(false)
 
 	const addCabeen = () => {
 		setIsType('loading')
@@ -398,19 +480,38 @@ function Discover(props){
 
 						</View>: null
 				}
-				<View style={{
-					position: "absolute",
-					bottom: 100,
-					right: 5
 
-				}}>
-					<FloatingActionButton
-						onPress={() => {
-							setIsAddingCabeen(true)
-						}}
-					/>
-				</View>
+				{
+					!showActionButtons ?
+						<View style={{
+							position: "absolute",
+							bottom: 100,
+							right: 5
+
+						}}>
+							<FloatingActionButton
+								onPress={() => {
+									// setIsAddingCabeen(true)
+									setShowActionButtons(true)
+								}}
+							/>
+						</View>: null
+				}
+
 			</View>
+			<AddOptionsModal
+				modalVisible={showActionButtons}
+				onRequestClose={() => {
+					setShowActionButtons(false)
+				}}
+				onClose={() =>  {
+					setShowActionButtons(false)
+				}}
+				onAddCabeen={() => {
+					setShowActionButtons(false)
+					setIsAddingCabeen(true)
+				}}
+			/>
 			<CabeenAddModal
 				modalVisible={isAddingCabeen}
 				isType={isType}

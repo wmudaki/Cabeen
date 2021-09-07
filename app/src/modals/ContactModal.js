@@ -112,7 +112,7 @@ function Content(props){
             <>
                 <View style={{
                     // alignItems: 'center',
-                    height: '59%',
+                    height: '40%',
                     width: '93%',
                     justifyContent: "center",
                     borderRadius: 10,
