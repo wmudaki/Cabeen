@@ -30,10 +30,31 @@ export const tourReducer = (state=INITIAL_STATE, action) => {
                 return {...state}
             }
             else if (action.field === 'description'){
-                state.tourAdd.date = action.payload
+                state.tourAdd.description = action.payload
                 return {...state}
             }
             return state
+
+        case "SELECT_TOUR_IMAGES":
+            if (action.operation === 'select'){
+                state.tourAdd.images.push(action.payload)
+                return {...state}
+            }
+            else if (action.operation === 'unselect'){
+                let index = state.tourAdd.images.indexOf(action.payload)
+                if (index !== -1){
+                    state.tourAdd.images.splice(index,1)
+                    return {...state}
+                }
+                return state
+            }
+            else if (action.operation === 'clear'){
+                state.tourAdd.images = []
+                return {...state}
+            }
+
+            else return state
+
         default:
             return state
     }

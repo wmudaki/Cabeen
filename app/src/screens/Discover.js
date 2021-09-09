@@ -36,6 +36,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import {red} from "react-native-reanimated/src/reanimated2/Colors";
 import AddOptionsModal from "../modals/AddOptionsModal";
 import TourPackageAddModal from "../modals/TourPackageAddModal";
+import {selectTourImages} from "../state/TourActions";
 
 
 
@@ -359,6 +360,7 @@ function Discover(props){
 	const [showActionButtons, setShowActionButtons] = React.useState(false)
 
 	const [isAddingTour, setIsAddingTour] = React.useState(false)
+	const [tourType, setTourType] = React.useState('normal')
 
 	const addCabeen = () => {
 		setIsType('loading')
@@ -521,12 +523,33 @@ function Discover(props){
 			/>
 			<TourPackageAddModal
 				modalVisible={isAddingTour}
+				type={tourType}
 				onRequestClose={() => {
 					setIsAddingTour(false)
 				}}
 				onCancel={() => {
 					setIsAddingTour(false)
 					// props.addCabeen('clear', 'clear')
+				}}
+				onImageSelect={() => {
+					setTourType('imageSelect')
+				}}
+				onImageSelectCancel={() => {
+					setTourType('normal')
+					props.selectTourImages('clear', 'clear')
+				}}
+				onImageSelectOk={() => {
+					console.log("Selected Images")
+					setTourType('normal')
+				}}
+				onLocation={() => {
+					if (tourType === 'location'){
+						setTourType('normal')
+					}
+					else {
+						setTourType('location')
+					}
+
 				}}
 			/>
 			<CabeenAddModal
@@ -693,7 +716,8 @@ const mapDispatchToProps = dispatch => (
 		getCabeenDetails,
 		selectImages,
 		addCabeen,
-		updateCabeens
+		updateCabeens,
+		selectTourImages
 
 	}, dispatch)
 )

@@ -5,3 +5,11 @@ export const addTour =(field, payload) => (
         payload: payload
     }
 )
+
+export const selectTourImages = (operation, payload) => (
+    {
+        type: 'SELECT_TOUR_IMAGES',
+        operation: operation,
+        payload: payload
+    }
+)
