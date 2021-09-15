@@ -10,6 +10,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import {gql, useMutation} from "@apollo/client";
 import {ReactNativeFile} from "apollo-upload-client/public";
 import TourReservationModal from "../modals/TourReservationModal";
+import {reserveCabeen} from "../state/CabeenActions";
 
 const {height,width} = Dimensions.get('window')
 
@@ -17,6 +18,7 @@ function Buttons(props){
 
     const [isReserving, setIsReserving] = React.useState(false)
     const [reservationType, setReservationType] = React.useState('normal')
+    const [dateOperation, setDateOperation] = React.useState('')
 
     return(
         <>
@@ -71,12 +73,57 @@ function Buttons(props){
             <TourReservationModal
                 modalVisible={isReserving}
                 type={reservationType}
+                dateOperation={dateOperation}
                 onRequestClose={() => {
                     setIsReserving(false)
                 }}
                 onCancel={() => {
                     setIsReserving(false)
+                    props.reserveCabeen('clear', 'clear', 'clear')
                 }}
+                onCabeenDayIn={() => {
+                    setDateOperation('checkIn')
+                    setReservationType('cabeenDayIn')
+                }}
+                onCabeenDayInCancel={() => {
+                    setReservationType('normal')
+                }}
+                onCabeenDayInOK={() => {
+                    setReservationType('cabeenMonthIn')
+                }}
+                onCabeenMonthIn={() => {
+                    setDateOperation('checkIn')
+                    setReservationType('cabeenMonthIn')
+                }}
+                onCabeenMonthInCancel={() => {
+                    setReservationType('normal')
+                }}
+                onCabeenMonthInOK={() => {
+                    setReservationType('cabeenYearIn')
+                }}
+                onCabeenYearIn={() => {
+                    setDateOperation('checkIn')
+                    setReservationType('cabeenYearIn')
+                }}
+                onCabeenYearInCancel={() => {
+                    setReservationType('normal')
+                }}
+                onCabeenYearInOK={() => {
+                    setReservationType('normal')
+                }}
+                onCabeenDayOut={() => {
+                    setDateOperation('checkOut')
+                    setReservationType('cabeenDayIn')
+                }}
+                onCabeenMonthOut={() => {
+                    setDateOperation('checkOut')
+                    setReservationType('cabeenMonthIn')
+                }}
+                onCabeenYearOut={() => {
+                    setDateOperation('checkOut')
+                    setReservationType('cabeenYearIn')
+                }}
+
             />
         </>
     )
@@ -304,7 +351,8 @@ const mapDispatchToProps = dispatch => (
     bindActionCreators({
         searchPlace,
         showAutocomplete,
-        showOverlay
+        showOverlay,
+        reserveCabeen
 
     }, dispatch)
 )

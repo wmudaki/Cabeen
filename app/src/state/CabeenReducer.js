@@ -28,7 +28,19 @@ const INITIAL_STATE = {
     updateCabeens: true,
     cabeenImages : [],
     accessLevel: 'user',
-    contactPerson: {}
+    contactPerson: {},
+    cabeenReservation: {
+        checkIn: {
+            day: '01',
+            month: 'Jan',
+            year: '2021'
+        },
+        checkOut: {
+            day: '02',
+            month: 'Jan',
+            year: '2021'
+        },
+    }
 
 }
 
@@ -206,6 +218,44 @@ export const cabeenReducer = (state = INITIAL_STATE, action) => {
         case "FIND_CONTACT_PERSON":
             state.contactPerson = action.payload
             return {...state}
+
+        case "RESERVE_CABEEN":
+            if (action.operation === 'checkIn'){
+                if (action.field === 'day'){
+                    state.cabeenReservation.checkIn.day = action.payload
+                    return {...state}
+                }
+                else if (action.field === 'month'){
+                    state.cabeenReservation.checkIn.month = action.payload
+                    return {...state}
+                }
+                else if (action.field === 'year'){
+                    state.cabeenReservation.checkIn.year  = action.payload
+                    return {...state}
+                }
+                return state
+            }
+            else if(action.operation === 'checkOut'){
+                if (action.field === 'day'){
+                    state.cabeenReservation.checkOut.day = action.payload
+                    return {...state}
+                }
+                else if (action.field === 'month'){
+                    state.cabeenReservation.checkOut.month = action.payload
+                    return {...state}
+                }
+                else if (action.field === 'year'){
+                    state.cabeenReservation.checkOut.year  = action.payload
+                    return {...state}
+                }
+                return state
+            }
+            else if (action.operation === 'clear'){
+                state.cabeenReservation.checkOut = INITIAL_STATE.cabeenReservation.checkOut
+                state.cabeenReservation.checkIn = INITIAL_STATE.cabeenReservation.checkIn
+                return {...state}
+            }
+            return state
 
         default:
             return state
