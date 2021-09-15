@@ -436,6 +436,82 @@ function Discover(props){
 			.catch(error => console.log('An error occurred while uploading', JSON.stringify(error, null, 2)))
 	}
 
+	const ADD_TOUR = gql`
+		mutation ADD_TOUR(
+			$name: String,
+			$type: String,
+			$description: String,
+			$price: String,
+			$currency: String,
+			$location: String,
+			$features: String,
+			$admin: String,
+			$images: [String],
+			$files: [Upload!]!
+		){
+			createTour(
+				files: $files
+				input: {
+					name: $name,
+					type: $type,
+					description: $description,
+					price: $price,
+					features: $features,
+					currency: $currency,
+					location: $location,
+					admin: $admin,
+					images: $images
+
+				}
+			){
+				_id,
+				name,
+				price,
+				location,
+				type,
+				features,
+				description,
+				admin,
+				images,
+			}
+		}
+	`
+	const [createTour] = useMutation(ADD_TOUR)
+
+	const addTour = () => {
+		setIsType('loading')
+		// console.log(props.cabeen.cabeenInfo)
+		let fileList = []
+		props.tour.tourAdd.images.map((value, index) => {
+			let file = new ReactNativeFile({
+				name: value.image.filename,
+				type: value.type,
+				uri: value.image.uri,
+			})
+			fileList.push(file)
+		})
+
+		createTour({variables: {
+				name: props.cabeen.cabeenInfo.name,
+				type: props.cabeen.cabeenInfo.type,
+				features: props.cabeen.cabeenInfo.features,
+				description: props.cabeen.cabeenInfo.description,
+				price: props.cabeen.cabeenInfo.price,
+				currency: props.cabeen.cabeenInfo.currency,
+				location: props.cabeen.cabeenInfo.location,
+				admin: props.app.currentUser.user._id,
+				files: fileList
+			}})
+			.then((res) => {
+				setIsType('success')
+				// setIsCreatingCabeen(false)
+			})
+			.catch(error => {
+				// console.log('An error occurred while uploading', JSON.stringify(error, null, 2))
+				setIsType('error')
+			})
+	}
+
 	React.useEffect(() => {
 		getCabeens()
 	}, [isType, props.cabeen.updateCabeens])

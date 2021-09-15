@@ -7,10 +7,17 @@ import {BackButtonTopNavBar} from "../components/NavBars";
 import Carousel from "react-native-snap-carousel";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import {gql, useMutation} from "@apollo/client";
+import {ReactNativeFile} from "apollo-upload-client/public";
+import TourReservationModal from "../modals/TourReservationModal";
 
 const {height,width} = Dimensions.get('window')
 
 function Buttons(props){
+
+    const [isReserving, setIsReserving] = React.useState(false)
+    const [reservationType, setReservationType] = React.useState('normal')
+
     return(
         <>
             <View style={{
@@ -41,7 +48,9 @@ function Buttons(props){
                     </Text>
 
                 </TouchableOpacity>
-                <TouchableOpacity style={{
+                <TouchableOpacity
+                    onPress={() => setIsReserving(true)}
+                    style={{
                     backgroundColor: props.app.colors.buttonColor,
                     height: 45,
                     width: '45%',
@@ -52,13 +61,23 @@ function Buttons(props){
                 }}>
                     <Text style={{
                         fontSize: 20,
-                        fontWeight: 'bold'
+                        fontWeight: 'bold',
+                        color: props.app.colors.whiteText
                     }}>
                         Reserve
                     </Text>
                 </TouchableOpacity>
-
             </View>
+            <TourReservationModal
+                modalVisible={isReserving}
+                type={reservationType}
+                onRequestClose={() => {
+                    setIsReserving(false)
+                }}
+                onCancel={() => {
+                    setIsReserving(false)
+                }}
+            />
         </>
     )
 }
