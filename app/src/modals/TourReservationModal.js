@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import * as React from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import {reserveTour} from "../state/TourActions";
 
 
 function ReservationSuccess(props){
@@ -513,15 +514,15 @@ function CabeenReservationDetails(props){
         <>
             <View style={{
                 height: '65%',
-                width: "95%",
+                width: "90%",
                 borderRadius: 20,
                 elevation: 20,
-                margin: 20,
                 backgroundColor: props.app.colors.whiteText,
             }}>
                 <Text style={{
                     fontSize: 25,
-                    margin: 10,
+                    margin: 20,
+                    marginBottom: 0,
                     fontWeight: "bold",
                     alignSelf: "center"
                 }}>
@@ -540,7 +541,7 @@ function CabeenReservationDetails(props){
                             Cabeen
                         </Text>
                         <Text style={{
-                            fontSize: 20,
+                            fontSize: 21,
                             margin: 20
                         }}>
                             Casa Florentina
@@ -564,7 +565,7 @@ function CabeenReservationDetails(props){
                                 onPress={props.onCabeenDayIn}
                             >
                                 <Ionicons
-                                    size={25}
+                                    size={30}
                                     color={props.app.colors.statusBar}
                                     name={'calendar'}/>
                             </TouchableOpacity>
@@ -575,7 +576,7 @@ function CabeenReservationDetails(props){
                                 alignItems: "center"
                             }}>
                                 <Text style={{
-                                    fontSize: 18,
+                                    fontSize: 20,
                                     fontWeight: "bold"
                                 }}>
                                     Day
@@ -593,7 +594,7 @@ function CabeenReservationDetails(props){
                                 alignItems: "center",
                             }}>
                                 <Text style={{
-                                    fontSize: 18,
+                                    fontSize: 20,
                                     fontWeight: "bold"
                                 }}>
                                     Month
@@ -611,7 +612,7 @@ function CabeenReservationDetails(props){
                                 alignItems: "center"
                             }}>
                                 <Text style={{
-                                    fontSize: 18,
+                                    fontSize: 20,
                                     fontWeight: "bold"
                                 }}>
                                     Year
@@ -642,7 +643,7 @@ function CabeenReservationDetails(props){
                         }}>
                             <TouchableOpacity onPress={props.onCabeenDayOut}>
                                 <Ionicons
-                                    size={25}
+                                    size={30}
                                     color={props.app.colors.statusBar}
                                     name={'calendar'}/>
                             </TouchableOpacity>
@@ -653,7 +654,7 @@ function CabeenReservationDetails(props){
                                 alignItems: "center"
                             }}>
                                 <Text style={{
-                                    fontSize: 18,
+                                    fontSize: 20,
                                     fontWeight: "bold"
                                 }}>
                                     Day
@@ -671,7 +672,7 @@ function CabeenReservationDetails(props){
                                 alignItems: "center",
                             }}>
                                 <Text style={{
-                                    fontSize: 18,
+                                    fontSize: 20,
                                     fontWeight: "bold"
                                 }}>
                                     Month
@@ -689,7 +690,7 @@ function CabeenReservationDetails(props){
                                 alignItems: "center"
                             }}>
                                 <Text style={{
-                                    fontSize: 18,
+                                    fontSize: 20,
                                     fontWeight: "bold"
                                 }}>
                                     Year
@@ -718,13 +719,14 @@ function CabeenReservationDetails(props){
                             margin: 15
                         }}>
                             <MaterialCommunityIcons
-                                size={25}
+                                size={30}
                                 color={props.app.colors.statusBar}
                                 name={'cash-multiple'}/>
                             <Text style={{
-                                fontSize: 18,
+                                fontSize: 20,
                                 marginLeft: 10
                             }}>
+
                                 1200 KES / Night
                             </Text>
                         </View>
@@ -782,6 +784,7 @@ function CabeenReservationDetails(props){
 }
 
 function ReservationDetails(props){
+    // console.log(props.tour.tourReservation)
     return(
         <>
             <View style={{
@@ -802,18 +805,18 @@ function ReservationDetails(props){
                 </Text>
 
                 <ScrollView style={{
-                    margin: 10
+                    margin: 20
                 }}>
                     <View>
                         <Text style={{
                             fontWeight: "bold",
-                            fontSize: 20,
+                            fontSize: 25,
                             color: props.app.colors.statusBar
                         }}>
-                            Tour name
+                            Tour
                         </Text>
                         <Text style={{
-                            fontSize: 18,
+                            fontSize: 20,
                             margin: 20
                         }}>
                             Kilimanjaro hike
@@ -822,7 +825,7 @@ function ReservationDetails(props){
                     <View>
                         <Text style={{
                             fontWeight: "bold",
-                            fontSize: 20,
+                            fontSize: 25,
                             color: props.app.colors.statusBar
                         }}>
                             Number of spots
@@ -830,25 +833,31 @@ function ReservationDetails(props){
                         <View style={{
                             flexDirection: "row",
                             alignItems: "center",
-                            justifyContent: 'space-around',
-                            margin: 10
+                            justifyContent: 'space-between',
+                            margin: 20
                         }}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => {
+                                props.reserveTour('spots', 'subtract', 'payload')
+                            }}>
                                 <MaterialCommunityIcons
-                                    size={25}
-                                    name={'minus-circle-outline'}/>
+                                    size={30}
+                                    color={props.app.colors.statusBar}
+                                    name={'minus-circle'}/>
 
                             </TouchableOpacity>
                             <Text style={{
-                                fontSize: 18,
-                                margin: 10
+                                fontSize: 20,
+                                margin: 0
                             }}>
-                                1
+                                {props.tour.tourReservation.spots}
                             </Text>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => {
+                                props.reserveTour('spots', 'add', 'payload')
+                            }}>
                                 <MaterialCommunityIcons
-                                    size={25}
-                                    name={'plus-circle-outline'}/>
+                                    size={30}
+                                    color={props.app.colors.statusBar}
+                                    name={'plus-circle'}/>
 
                             </TouchableOpacity>
 
@@ -857,17 +866,29 @@ function ReservationDetails(props){
                     <View>
                         <Text style={{
                             fontWeight: "bold",
-                            fontSize: 20,
+                            fontSize: 25,
                             color: props.app.colors.statusBar
                         }}>
                             Price
                         </Text>
-                        <Text style={{
-                            fontSize: 18,
+                        <View style={{
+                            flexDirection: "row",
+                            alignItems: "center",
                             margin: 20
                         }}>
-                            1200 KES
-                        </Text>
+                            <MaterialCommunityIcons
+                                name={'cash-multiple'}
+                                size={30}
+                                color={props.app.colors.statusBar}
+                            />
+                            <Text style={{
+                                fontSize: 20,
+                                marginLeft: 10
+                            }}>
+                                {1200 * props.tour.tourReservation.spots} KES
+                            </Text>
+                        </View>
+
                     </View>
                 </ScrollView>
                 <View style={{
@@ -965,11 +986,12 @@ function Content(props){
         )
     }
 
-    return(
-        <>
-            <CabeenReservationDetails {...props}/>
-        </>
-    )
+    else {
+        if (props.mode === 'cabeen'){
+            return <CabeenReservationDetails {...props}/>
+        }
+        else return <ReservationDetails {...props}/>
+    }
 }
 
 function TourReservationModal(props){
@@ -1007,8 +1029,8 @@ function TourReservationModal(props){
 
 
 const mapStateToProps = state => {
-    const {app, cabeen} = state;
-    return {app, cabeen}
+    const {app, cabeen, tour} = state;
+    return {app, cabeen, tour}
 }
 
 const mapDispatchToProps = dispatch => (
@@ -1016,7 +1038,8 @@ const mapDispatchToProps = dispatch => (
         addTenant,
         addCabeen,
         selectImages,
-        reserveCabeen
+        reserveCabeen,
+        reserveTour
 
     }, dispatch)
 )

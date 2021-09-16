@@ -13,3 +13,12 @@ export const selectTourImages = (operation, payload) => (
         payload: payload
     }
 )
+
+export const reserveTour = (field, operation, payload) => (
+    {
+        type: "RESERVE_TOUR",
+        field: field,
+        operation: operation,
+        payload: payload
+    }
+)

@@ -31,12 +31,12 @@ const INITIAL_STATE = {
     contactPerson: {},
     cabeenReservation: {
         checkIn: {
-            day: '01',
+            day: 1,
             month: 'Jan',
             year: '2021'
         },
         checkOut: {
-            day: '02',
+            day: 1,
             month: 'Jan',
             year: '2021'
         },

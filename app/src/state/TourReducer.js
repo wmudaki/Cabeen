@@ -7,6 +7,9 @@ const INITIAL_STATE = {
         date: '',
         description: '',
         images: []
+    },
+    tourReservation: {
+        spots: 1
     }
 }
 
@@ -54,6 +57,27 @@ export const tourReducer = (state=INITIAL_STATE, action) => {
             }
 
             else return state
+
+        case 'RESERVE_TOUR':
+            if (action.field === 'spots'){
+                if (action.operation === 'add'){
+                    state.tourReservation.spots = state.tourReservation.spots + 1
+                    return {...state}
+                }
+                else if (action.operation === 'subtract'){
+                    if (state.tourReservation.spots > 1){
+                        state.tourReservation.spots = state.tourReservation.spots - 1
+                        return {...state}
+                    }
+                }
+
+            }
+            else if (action.field === 'clear'){
+                state.tourReservation.spots = 1
+                return {...state}
+            }
+
+            return state
 
         default:
             return state

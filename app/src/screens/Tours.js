@@ -11,6 +11,7 @@ import {gql, useMutation} from "@apollo/client";
 import {ReactNativeFile} from "apollo-upload-client/public";
 import TourReservationModal from "../modals/TourReservationModal";
 import {reserveCabeen} from "../state/CabeenActions";
+import {reserveTour} from "../state/TourActions";
 
 const {height,width} = Dimensions.get('window')
 
@@ -19,6 +20,7 @@ function Buttons(props){
     const [isReserving, setIsReserving] = React.useState(false)
     const [reservationType, setReservationType] = React.useState('normal')
     const [dateOperation, setDateOperation] = React.useState('')
+    const [reservationMode, setReservationMode] = React.useState("")
 
     return(
         <>
@@ -51,7 +53,10 @@ function Buttons(props){
 
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => setIsReserving(true)}
+                    onPress={() => {
+                        setReservationMode('cabeen')
+                        setIsReserving(true)
+                    }}
                     style={{
                     backgroundColor: props.app.colors.buttonColor,
                     height: 45,
@@ -73,6 +78,7 @@ function Buttons(props){
             <TourReservationModal
                 modalVisible={isReserving}
                 type={reservationType}
+                mode={reservationMode}
                 dateOperation={dateOperation}
                 onRequestClose={() => {
                     setIsReserving(false)
@@ -80,6 +86,7 @@ function Buttons(props){
                 onCancel={() => {
                     setIsReserving(false)
                     props.reserveCabeen('clear', 'clear', 'clear')
+                    props.reserveTour('clear', 'clear', 'clear')
                 }}
                 onCabeenDayIn={() => {
                     setDateOperation('checkIn')
@@ -352,7 +359,8 @@ const mapDispatchToProps = dispatch => (
         searchPlace,
         showAutocomplete,
         showOverlay,
-        reserveCabeen
+        reserveCabeen,
+        reserveTour
 
     }, dispatch)
 )
