@@ -98,11 +98,26 @@ class FloatingSearchBarStateless extends React.PureComponent{
 									size={29}
 									color={this.props.app.colors.statusBar}
 								/>:
-								<MaterialIcons
-									name={this.props.rightIcon}
-									size={29}
-									color={this.props.app.colors.statusBar}
-								/>
+								<View>
+									<Ionicons
+										name={this.props.rightIcon}
+										size={29}
+										color={this.props.app.colors.statusBar}
+									/>
+									<View style={{
+										backgroundColor: this.props.app.colors.buttonColor,
+										position: "absolute",
+										left:-5,
+										borderRadius: 30,
+										alignItems: "center",
+										width: 12,
+										height: 12,
+										top: -2,
+										flex: 1
+									}}>
+									</View>
+								</View>
+
 						}
 
 					</TouchableOpacity>

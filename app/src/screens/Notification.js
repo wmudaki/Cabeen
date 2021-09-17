@@ -14,7 +14,7 @@ import {
 import { bindActionCreators } from "redux";
 import { agreeToTerms } from "../state/AppActions";
 import { connect } from "react-redux";
-import { TopNavBar } from "../components/NavBars";
+import {BackButtonTopNavBar, TopNavBar} from "../components/NavBars";
 import { CustomFlatList } from "../components/Lists";
 import { Actions } from "react-native-router-flux";
 
@@ -27,18 +27,11 @@ class Notification extends React.PureComponent{
 					flex: 1,
 					backgroundColor: this.props.app.colors.whiteText
 				}}>
+					<BackButtonTopNavBar
+						title={'Notifications'}
+					/>
 					<View>
 						<CustomFlatList/>
-					</View>
-					<View style={{
-						position: "absolute",
-						top: 20,
-						left:0,
-						right: 0
-					}}>
-						<TopNavBar
-							iconPress={() => Actions.account()}
-						/>
 					</View>
 
 				</View>

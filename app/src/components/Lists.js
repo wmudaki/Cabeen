@@ -97,46 +97,71 @@ class CustomFlatListStateless extends React.PureComponent{
 	renderItem(item){
 		return(
 			<>
-				<TouchableOpacity style={{
-					margin: 0,
-					backgroundColor: 'rgba(0,0,0,.2)',
+				<View style={{
+					margin: 10,
+					backgroundColor: 'white',
 					padding: 10,
-					borderBottomWidth: 2,
+					elevation: 5,
+					borderRadius: 10,
+
+					// borderBottomWidth: 2,
 					borderColor:this.props.app.colors.secondaryText
 				}}>
 					<View style={{
-						flexDirection: 'row',
-						alignItems: 'center'
+						flexDirection: "row",
+						// alignItems: "center"
 					}}>
 						<Image
 							style={{
-								height: 50,
-								width: 50,
-								borderRadius: 50
+								height: 40,
+								width: 40,
+								// borderRadius: 30,
+								// backgroundColor: this.props.app.colors.statusBar
 							}}
-							source={{
-								uri: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.ZjgSmLyOXQjTlsNMnDTajwHaE8%26pid%3DApi&f=1'
-							}}/>
+							source={require('../../assets/image/cabeen.png')}
+							/>
 						<Text style={{
-							margin: 10,
-							fontWeight: 'bold',
-							fontSize: 19,
+							marginLeft: 10,
+							fontSize: 18,
+							flex: 1,
 							color: this.props.app.colors.primaryText
 						}}>
-							Cabeen
+							Lisa Vern Reserved 1 spot on Kilimanjaro hike
 						</Text>
 					</View>
-					<View>
+					<View style={{
+						alignItems: "center",
+						justifyContent: "space-between",
+						flexDirection: "row",
+						margin: 15
+					}}>
 						<Text style={{
-							margin: 10,
-							fontSize: 16,
-							color: this.props.app.colors.primaryText
+							color: this.props.app.colors.secondaryText
 						}}>
-							A very <bold>long</bold> welcoming text
+							9 hours ago
 						</Text>
+						<TouchableOpacity style={{
+							width: '35%',
+							height: 35,
+							backgroundColor: this.props.app.colors.buttonColor,
+							alignItems: "center",
+							justifyContent: "center",
+							borderRadius: 30,
+							margin: 0,
+							elevation: 5,
+							alignSelf: "flex-end"
+						}}>
+							<Text style={{
+								fontSize: 17,
+								fontWeight: "bold",
+								color: 'white'
+							}}>
+								Contact
+							</Text>
+						</TouchableOpacity>
 					</View>
 
-				</TouchableOpacity>
+				</View>
 			</>
 		)
 	}
@@ -147,7 +172,7 @@ class CustomFlatListStateless extends React.PureComponent{
 					<FlatList
 						data={[1,2,3,4,5,6,7,8,9,]}
 						renderItem={(item) => this.renderItem(item)}
-						ListHeaderComponent={() => <View style={{margin: 50}}/>}
+						ListHeaderComponent={() => <View style={{margin: 10}}/>}
 						ItemSeparatorComponent={() => <View style={{margin: 0}}/>}
 						ListFooterComponent={() => <View style={{margin: 50}}/>}
 						keyExtractor={(item,index) => item+index}

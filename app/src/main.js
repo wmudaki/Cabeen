@@ -166,6 +166,11 @@ function App (){
                                     key={'tours'}
                                     hideNavBar
                                 />
+                                <Scene
+                                    component={Notification}
+                                    key={'notification'}
+                                    hideNavBar
+                                />
                             </Scene>
                         </Lightbox>
                     </Router>
