@@ -172,7 +172,16 @@ class CustomFlatListStateless extends React.PureComponent{
 					<FlatList
 						data={[1,2,3,4,5,6,7,8,9,]}
 						renderItem={(item) => this.renderItem(item)}
-						ListHeaderComponent={() => <View style={{margin: 10}}/>}
+						ListHeaderComponent={() => (<View style={{margin: 10}}>
+							<Text style={{
+								fontWeight: "bold",
+								fontSize: 25,
+								margin: 10,
+								alignSelf: "center"
+							}}>
+								Reservations
+							</Text>
+							</View>)}
 						ItemSeparatorComponent={() => <View style={{margin: 0}}/>}
 						ListFooterComponent={() => <View style={{margin: 50}}/>}
 						keyExtractor={(item,index) => item+index}

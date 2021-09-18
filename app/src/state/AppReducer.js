@@ -42,8 +42,13 @@ const INITIAL_STATE = {
 
     },
     urls: {
-        cabeenImages: 'https://app.cabeen.culturol.com/cabeens/',
-        avatars: 'https://app.cabeen.culturol,com/avatars/'
+        // cabeenImages: 'https://app.cabeen.culturol.com/cabeens/',
+        // avatars: 'https://app.cabeen.culturol,com/avatars/',
+        // tours: 'https://app.cabeen.culturol,com/tours/',
+        cabeenImages: 'http://192.168.0.25:4000/cabeens/',
+        avatars: 'http://192.168.0.25:4000/avatars/',
+        tours: 'http://192.168.0.25:4000/tours/'
+
     }
 }
 

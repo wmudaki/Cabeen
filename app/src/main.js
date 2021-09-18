@@ -73,7 +73,8 @@ function App (){
 // const store = createStore(rootReducer);
 
     const httpLink = createUploadLink({
-        uri: "https://app.cabeen.culturol.com/graphql/"
+        // uri: "https://app.cabeen.culturol.com/graphql/"
+        uri: "http://192.168.0.25:4000/graphql"
     })
 
     const client = new ApolloClient({
