@@ -361,7 +361,7 @@ function CabeenFeatures(props){
 	function _renderItem(item){
 		return(
 			<>
-				<TouchableOpacity
+				<View
 					// onPress={() => {
 					//     // setSelected(item.item)
 					// }}
@@ -388,7 +388,7 @@ function CabeenFeatures(props){
 					}}>
 						{item.item}
 					</Text>
-				</TouchableOpacity>
+				</View>
 			</>
 		)
 	}
