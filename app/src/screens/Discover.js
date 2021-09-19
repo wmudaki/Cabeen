@@ -85,8 +85,8 @@ function CarouselList(props){
 			<>
 				<TouchableOpacity
 					onPress={() => {
-						props.getCabeenDetails(item.item)
-						Actions.cabeen()
+						props.listType === 'cabeen'? props.getCabeenDetails(item.item) : null
+						props.listType === 'cabeen'? Actions.cabeen() : null
 					}}
 					style={{
 					flex: 1,
@@ -97,7 +97,7 @@ function CarouselList(props){
 				}}>
 					<Image
 						source={{
-							uri: `${props.app.urls.cabeenImages}${item.item.images[0]}`
+							uri: props.listType === 'cabeen'? `${props.app.urls.cabeenImages}${item.item.images[0]}`:`${props.app.urls.tours}${item.item.images[0]}`
 						}}
 						style={{
 							height: 200,
@@ -140,13 +140,23 @@ function CarouselList(props){
 				width:'100%'
 			}}>
 				<FlatList
-					data={props.fetchResults}
+					data={props.listType === 'cabeen'? props.fetchResults: props.tourResults}
 					renderItem={_renderItem}
+					listKey={props.listType}
 					numColumns={2}
 					keyExtractor={(item, key) => item+key}
 					ItemSeparatorComponent={() => (<View style={{margin: 5}}/>)}
-					ListHeaderComponent={() => (<View style={{margin: 50}}/>)}
-					ListFooterComponent={() => (<View style={{margin: 50}}/>)}
+					ListHeaderComponent={() => (<View style={{margin: props.listType === 'cabeen' ? 50: props.hasFetchResults ? 20: 50,}}>
+						<Text style={{
+							fontSize: 25,
+							marginTop: props.listType === 'cabeen' ? 30: props.hasFetchResults ? 0: 30,
+							fontWeight: "bold",
+							alignSelf: "center"
+						}}>
+							{props.listType==='cabeen' ? "Cabeens": "Tours"}
+						</Text>
+					</View>)}
+					ListFooterComponent={() => (<View style={{margin: props.listType === 'cabeen' ? props.hasTourResults ? 10: 50: 50}}/>)}
 					ListEmptyComponent={() => (
 						<View style={{
 							marginTop: 100,
@@ -158,7 +168,7 @@ function CarouselList(props){
 								// fontWeight: "bold",
 								alignSelf: 'center'
 							}}>
-								The cabeens you add will appear here ...
+								The {props.listType === 'cabeen' ? 'cabeens': 'tour packages'} you add will appear here ...
 							</Text>
 						</View>
 					)}
@@ -172,18 +182,33 @@ function CarouselList(props){
 function Content(props){
 	return(
 		<>
-			<View style={{
-				marginTop: 0
-			}}>
-				{
-					props.hasFetchResults ?
-						<CarouselList
-							{...props}
-						/>:
-						null
-				}
+			<FlatList
+				data={[1]}
+				keyExtractor={(i,k ) => i + k}
+				listKey={'main'}
+				renderItem={() => (
+					<View style={{
+						marginTop: 0
+					}}>
+						{
+							props.hasFetchResults ?
+								<CarouselList
+									listType={'cabeen'}
+									{...props}
+								/>:
+								null
+						}
+						{
+							props.hasTourResults ?
+								<CarouselList
+									listType={'tour'}
+									{...props}
+								/> : null
+						}
 
-			</View>
+					</View>
+				)}
+				/>
 
 		</>
 	)
@@ -454,7 +479,6 @@ function Discover(props){
 					name: $name,
 					description: $description,
 					price: $price,
-					features: $features,
 					currency: $currency,
 					location: $location,
                     tourDate: $tourDate,
@@ -503,7 +527,7 @@ function Discover(props){
 				// setIsCreatingCabeen(false)
 			})
 			.catch(error => {
-				// console.log('An error occurred while uploading', JSON.stringify(error, null, 2))
+				console.log('An error occurred while uploading', JSON.stringify(error, null, 2))
 				setTourType('error')
 			})
 	}
@@ -529,6 +553,8 @@ function Discover(props){
 
 	const [getTours] = useMutation(GET_TOURS)
 	const [isFetchingTours, setIsFetchingTours] = React.useState(false)
+	const [tourResults, setTourResults] = React.useState([])
+	const [hasTourResults, setHasTourResults] = React.useState(false)
 
 	function fetchTours(){
 		setIsFetchingTours(true)
@@ -537,11 +563,13 @@ function Discover(props){
 			}})
 			.then((res) => {
 				setIsFetchingTours(false)
-				console.log('res', res)
+				setTourResults(res.data.fetchTours)
+				setHasTourResults(res.data.fetchTours.length > 0)
+				// console.log('res', res.data.fetchTours)
 			})
 			.catch(error => {
 				setIsFetchingTours(false)
-				console.log('err', error)
+				// console.log('err', error)
 			})
 	}
 
@@ -566,6 +594,8 @@ function Discover(props){
 					<Content
 						hasFetchResults={hasFetchResults}
 						fetchResults={fetchResults}
+						hasTourResults={hasTourResults}
+						tourResults={tourResults}
 						{...props}
 					/>
 				</View>
@@ -637,6 +667,7 @@ function Discover(props){
 			<TourPackageAddModal
 				modalVisible={isAddingTour}
 				type={tourType}
+				operation={'Tour'}
 				onRequestClose={() => {
 					setIsAddingTour(false)
 				}}
@@ -868,9 +899,9 @@ class Discovery extends React.PureComponent{
 
 
 const mapStateToProps = state => {
-	const {app,map, cabeen} = state;
+	const {app,map, cabeen, tour} = state;
 	// console.log('state',map)
-	return {app, map, cabeen}
+	return {app, map, cabeen, tour}
 }
 
 const mapDispatchToProps = dispatch => (

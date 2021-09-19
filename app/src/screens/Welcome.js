@@ -27,17 +27,35 @@ import {updateUrls} from "../state/AppActions";
 function Welcome(props){
     StatusBar.setBackgroundColor(props.app.colors.statusBar)
 
+    const [DEV_MODE, setDevMode] = React.useState('dev')
+
+    const DEV_URLS = {
+        cabeenImages: 'http://192.168.0.25:4000/cabeens/',
+        avatars: 'http://192.168.0.25:4000/avatars/',
+        tours: 'http://192.168.0.25:4000/tours/'
+    }
+    const PRODUCTION_URLS = {
+        cabeenImages: 'https://app.cabeen.culturol.com/cabeens/',
+        avatars: 'https://app.cabeen.culturol,com/avatars/',
+        tours: 'https://app.cabeen.culturol,com/tours/',
+    }
+
     React.useEffect(() => {
         if (!props.app.currentUser.isActive){
-            // props.updateUrls('cabeens', 'https://app.cabeen.culturol.com/cabeens/')
-            // props.updateUrls('avatars', 'https://app.cabeen.culturol.com/avatars/')
             Actions.replace('login')
         } else {
-            // props.updateUrls('cabeens', 'https://app.cabeen.culturol.com/cabeens/')
-            // props.updateUrls('avatars', 'https://app.cabeen.culturol.com/avatars/')
             Actions.discover()
         }
     })
+
+    React.useEffect(() => {
+        if (DEV_MODE === 'dev'){
+            props.updateUrls("urls", DEV_URLS)
+        }else {
+            props.updateUrls('urls', PRODUCTION_URLS)
+        }
+
+    },[DEV_MODE])
 
     return(
         <>
