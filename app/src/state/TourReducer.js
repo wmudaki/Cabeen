@@ -10,6 +10,11 @@ const INITIAL_STATE = {
     },
     tourReservation: {
         spots: 1
+    },
+    tourDate: {
+        day: 1,
+        month: 'Jan',
+        year: '2021'
     }
 }
 
@@ -74,6 +79,22 @@ export const tourReducer = (state=INITIAL_STATE, action) => {
             }
             else if (action.field === 'clear'){
                 state.tourReservation.spots = 1
+                return {...state}
+            }
+
+            return state
+
+        case "ADD_TOUR_DATE":
+            if (action.field === 'day'){
+                state.tourDate.day = action.payload
+                return {...state}
+            }
+            else if (action.field === 'month'){
+                state.tourDate.month = action.payload
+                return {...state}
+            }
+            else if (action.field === 'year'){
+                state.tourDate.year  = action.payload
                 return {...state}
             }
 

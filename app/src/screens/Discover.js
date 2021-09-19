@@ -627,6 +627,46 @@ function Discover(props){
 					}
 
 				}}
+				screen={'add'}
+				onCabeenDayIn={() => {
+					// setDateOperation('checkIn')
+					setTourType('day')
+					// setReservationType('cabeenDayIn')
+				}}
+				onCabeenDayInCancel={() => {
+					setTourType('normal')
+					// setReservationType('normal')
+				}}
+				onCabeenDayInOK={() => {
+					setTourType('month')
+					// setReservationType('cabeenMonthIn')
+				}}
+				onCabeenMonthIn={() => {
+					// setDateOperation('checkIn')
+					setTourType('month')
+					// setReservationType('cabeenMonthIn')
+				}}
+				onCabeenMonthInCancel={() => {
+					setTourType('normal')
+					// setReservationType('normal')
+				}}
+				onCabeenMonthInOK={() => {
+					setTourType('year')
+					// setReservationType('cabeenYearIn')
+				}}
+				onCabeenYearIn={() => {
+					// setDateOperation('checkIn')
+					setTourType('year')
+					// setReservationType('cabeenYearIn')
+				}}
+				onCabeenYearInCancel={() => {
+					setTourType('normal')
+					// setReservationType('normal')
+				}}
+				onCabeenYearInOK={() => {
+					setTourType('normal')
+					// setReservationType('normal')
+				}}
 			/>
 			<CabeenAddModal
 				modalVisible={isAddingCabeen}

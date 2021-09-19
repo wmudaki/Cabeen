@@ -22,3 +22,11 @@ export const reserveTour = (field, operation, payload) => (
         payload: payload
     }
 )
+
+export const addTourDate = (field, payload) => (
+    {
+        type: "ADD_TOUR_DATE",
+        field: field,
+        payload: payload
+    }
+)

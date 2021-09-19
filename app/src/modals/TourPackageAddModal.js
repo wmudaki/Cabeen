@@ -13,11 +13,12 @@ import {
 } from "react-native";
 import * as React from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import {addTour} from "../state/TourActions";
+import {addTour, addTourDate} from "../state/TourActions";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import CameraRoll from "@react-native-community/cameraroll";
 import {selectTourImages} from "../state/TourActions";
 import {AutoCompleteComponent} from "../screens/Search";
+import {DayModal, MonthModal, YearModal} from "./TourReservationModal";
 
 
 function TourAddLocation(props){
@@ -493,7 +494,7 @@ function TourPackageAddModalContent(props){
                     fontWeight: "bold",
                     fontSize: 25,
                     margin: 10,
-                    color: props.app.colors.statusBar
+                    color: props.app.colors.primaryText
                 }}>
                     Add Tour Package
                 </Text>
@@ -503,7 +504,7 @@ function TourPackageAddModalContent(props){
                     renderItem={() => (
                         <View>
                             <Text style={{
-                                fontSize: 18,
+                                fontSize: 20,
                                 margin: 10,
                                 marginBottom: 10,
                                 fontWeight: "bold",
@@ -531,8 +532,91 @@ function TourPackageAddModalContent(props){
                                 }}
                             />
 
+                            <View style={{
+                                margin: 10
+                            }}>
+                                <Text style={{
+                                    fontWeight: "bold",
+                                    fontSize: 20,
+                                    color: props.app.colors.statusBar
+                                }}>
+                                    Date
+                                </Text>
+                                <View style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    justifyContent: 'space-between',
+                                    margin: 15
+                                }}>
+                                    <TouchableOpacity
+                                        onPress={props.onCabeenDayIn}
+                                    >
+                                        <Ionicons
+                                            size={30}
+                                            color={props.app.colors.statusBar}
+                                            name={'calendar'}/>
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity
+                                        onPress={props.onCabeenDayIn}
+                                        style={{
+                                            alignItems: "center"
+                                        }}>
+                                        <Text style={{
+                                            fontSize: 20,
+                                            fontWeight: "bold"
+                                        }}>
+                                            Day
+                                        </Text>
+                                        <Text style={{
+                                            fontSize: 17
+                                        }}>
+                                            {props.tour.tourDate.day}
+                                        </Text>
+
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={props.onCabeenMonthIn}
+                                        style={{
+                                            alignItems: "center",
+                                        }}>
+                                        <Text style={{
+                                            fontSize: 20,
+                                            fontWeight: "bold"
+                                        }}>
+                                            Month
+                                        </Text>
+                                        <Text style={{
+                                            fontSize: 17
+                                        }}>
+                                            {props.tour.tourDate.month}
+                                        </Text>
+
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={props.onCabeenYearIn}
+                                        style={{
+                                            alignItems: "center"
+                                        }}>
+                                        <Text style={{
+                                            fontSize: 20,
+                                            fontWeight: "bold"
+                                        }}>
+                                            Year
+                                        </Text>
+                                        <Text style={{
+                                            fontSize: 17
+                                        }}>
+                                            {props.tour.tourDate.year}
+                                        </Text>
+
+                                    </TouchableOpacity>
+
+                                </View>
+                            </View>
+
                             <Text style={{
-                                fontSize: 18,
+                                fontSize: 20,
                                 margin: 10,
                                 marginBottom: 10,
                                 fontWeight: "bold",
@@ -540,6 +624,7 @@ function TourPackageAddModalContent(props){
                             }}>
                                 Price
                             </Text>
+
                             <TextInput
                                 placeholder={'Tour price (KES)'}
                                 placeholderTextColor={props.app.colors.secondaryText}
@@ -560,7 +645,7 @@ function TourPackageAddModalContent(props){
                                 }}
                             />
                             <Text style={{
-                                fontSize: 18,
+                                fontSize: 20,
                                 margin: 10,
                                 marginBottom: 10,
                                 fontWeight: "bold",
@@ -589,7 +674,7 @@ function TourPackageAddModalContent(props){
                                 }}
                             />
                             <Text style={{
-                                fontSize: 18,
+                                fontSize: 20,
                                 margin: 10,
                                 marginBottom: 10,
                                 fontWeight: "bold",
@@ -701,7 +786,8 @@ function TourPackageAddModalContent(props){
                         }}>
                         <Text style={{
                             fontSize: 18,
-                            fontWeight: "bold"
+                            fontWeight: "bold",
+                            color: 'white'
                         }}>
                             Submit
                         </Text>
@@ -724,6 +810,22 @@ function Content(props){
             <TourAddLocation {...props}/>
         )
     }
+    else if (props.type === 'day'){
+        return (
+            <DayModal {...props}/>
+        )
+    }
+    else if (props.type === 'month'){
+        return (
+            <MonthModal {...props}/>
+        )
+    }
+    else if (props.type === "year"){
+        return (
+            <YearModal {...props}/>
+        )
+    }
+
     else {
         return(
             <>
@@ -776,7 +878,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => (
     bindActionCreators({
         addTour,
-        selectTourImages
+        selectTourImages,
+        addTourDate
 
     }, dispatch)
 )

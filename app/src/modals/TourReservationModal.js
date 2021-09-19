@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import * as React from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import {reserveTour} from "../state/TourActions";
+import {reserveTour, addTourDate} from "../state/TourActions";
 
 
 function ReservationSuccess(props){
@@ -172,13 +172,13 @@ function YearModal(props){
         return(
             <>
                 <TouchableOpacity
-                    onPress={() => props.reserveCabeen(props.dateOperation, 'year', item.item)}
+                    onPress={() => props.screen === 'add' ? props.addTourDate('year', item.item): props.reserveCabeen(props.dateOperation, 'year', item.item)}
                     style={{
                         height: 50,
-                        backgroundColor: props.dateOperation === 'checkIn' ? props.cabeen.cabeenReservation.checkIn.year === item.item ? props.app.colors.buttonColor: props.app.colors.background:
+                        backgroundColor:props.screen === 'add' ? props.tour.tourDate.year === item.item ? props.app.colors.buttonColor: null: props.dateOperation === 'checkIn' ? props.cabeen.cabeenReservation.checkIn.year === item.item ? props.app.colors.buttonColor: props.app.colors.background:
                             props.cabeen.cabeenReservation.checkOut.year === item.item ? props.app.colors.buttonColor: props.app.colors.background ,
                         margin: 7,
-                        elevation: props.dateOperation === 'checkIn' ? props.cabeen.cabeenReservation.checkIn.year === item.item ? 10: null:
+                        elevation: props.screen === 'add' ? props.tour.tourDate.year === item.item ? 10: null: props.dateOperation === 'checkIn' ? props.cabeen.cabeenReservation.checkIn.year === item.item ? 10: null:
                             props.cabeen.cabeenReservation.checkOut.year === item.item ? 10: null,
                     width: 70,
                     borderRadius: 20,
@@ -283,13 +283,13 @@ function MonthModal(props){
         return(
             <>
                 <TouchableOpacity
-                    onPress={() => props.reserveCabeen(props.dateOperation, 'month', item.item)}
+                    onPress={() => props.screen === 'add' ? props.addTourDate('month', item.item) : props.reserveCabeen(props.dateOperation, 'month', item.item)}
                     style={{
                         height: 50,
-                        backgroundColor: props.dateOperation === 'checkIn' ? props.cabeen.cabeenReservation.checkIn.month === item.item ? props.app.colors.buttonColor: props.app.colors.background:
+                        backgroundColor: props.screen === 'add' ? props.tour.tourDate.month === item.item ? props.app.colors.buttonColor: null : props.dateOperation === 'checkIn' ? props.cabeen.cabeenReservation.checkIn.month === item.item ? props.app.colors.buttonColor: props.app.colors.background:
                             props.cabeen.cabeenReservation.checkOut.month === item.item ? props.app.colors.buttonColor: props.app.colors.background ,
                         margin: 7,
-                        elevation: props.dateOperation === 'checkIn' ? props.cabeen.cabeenReservation.checkIn.month === item.item ? 10: null:
+                        elevation: props.screen === 'add' ? props.tour.tourDate.month === item.item ? 10 : null : props.dateOperation === 'checkIn' ? props.cabeen.cabeenReservation.checkIn.month === item.item ? 10: null:
                             props.cabeen.cabeenReservation.checkOut.month === item.item ? 10: null,
                     width: 70,
                     borderRadius: 20,
@@ -386,14 +386,14 @@ function MonthModal(props){
 
 function DayModal(props){
     function checkInDateResolve(){
-        if (props.cabeen.cabeenReservation.checkIn.month === 'Sep' ||
-            props.cabeen.cabeenReservation.checkIn.month ==='Apr' ||
-            props.cabeen.cabeenReservation.checkIn.month ==='Jun' ||
-            props.cabeen.cabeenReservation.checkIn.month ==='Nov'){
+        if (props.tour.tourDate.month === 'Sep' ||
+            props.tour.tourDate.month ==='Apr' ||
+            props.tour.tourDate.month ==='Jun' ||
+            props.tour.tourDate.month ==='Nov'){
             return [...Array(30).keys()].map(i => i + 1)
         }
-        else if (props.cabeen.cabeenReservation.checkIn.month === 'Feb'){
-            if (parseInt(props.cabeen.cabeenReservation.checkIn.year) % 4 === 0){
+        else if (props.tour.tourDate.month === 'Feb'){
+            if (parseInt(props.tour.tourDate.year) % 4 === 0){
                 return [...Array(29).keys()].map(i => i + 1)
             }
             return [...Array(28).keys()].map(i => i + 1)
@@ -406,13 +406,13 @@ function DayModal(props){
         return(
             <>
                 <TouchableOpacity
-                    onPress={() => props.reserveCabeen(props.dateOperation, 'day', item.item)}
+                    onPress={() => props.screen === 'add' ? props.addTourDate('day', item.item) :  props.reserveCabeen(props.dateOperation, 'day', item.item)}
                     style={{
                     height: 40,
-                    backgroundColor: props.dateOperation === 'checkIn' ? props.cabeen.cabeenReservation.checkIn.day === item.item ? props.app.colors.buttonColor: props.app.colors.background:
+                    backgroundColor: props.screen === 'add' ? props.tour.tourDate.day === item.item ? props.app.colors.buttonColor: null : props.dateOperation === 'checkIn' ? props.cabeen.cabeenReservation.checkIn.day === item.item ? props.app.colors.buttonColor: props.app.colors.background:
                         props.cabeen.cabeenReservation.checkOut.day === item.item ? props.app.colors.buttonColor: props.app.colors.background ,
                     margin: 7,
-                    elevation: props.dateOperation === 'checkIn' ? props.cabeen.cabeenReservation.checkIn.day === item.item ? 10: null:
+                    elevation: props.screen === 'add' ? props.tour.tourDate.day === item.item ? 10: null: props.dateOperation === 'checkIn' ? props.cabeen.cabeenReservation.checkIn.day === item.item ? 10: null:
                         props.cabeen.cabeenReservation.checkOut.day === item.item ? 10: null,
                     // padding: 10,
                     width: 40,
@@ -1039,9 +1039,12 @@ const mapDispatchToProps = dispatch => (
         addCabeen,
         selectImages,
         reserveCabeen,
-        reserveTour
+        reserveTour,
+        addTourDate,
 
     }, dispatch)
 )
 
 export default connect(mapStateToProps, mapDispatchToProps)(TourReservationModal)
+
+export {DayModal, MonthModal, YearModal}

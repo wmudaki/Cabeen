@@ -36,7 +36,7 @@ const INITIAL_STATE = {
             year: '2021'
         },
         checkOut: {
-            day: 1,
+            day: 2,
             month: 'Jan',
             year: '2021'
         },
