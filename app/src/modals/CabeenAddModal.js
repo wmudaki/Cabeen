@@ -627,7 +627,7 @@ function CabeenAddModalSuccess(props){
                     margin: 10,
                     color: props.app.colors.primaryText
                 }}>
-                    Cabeen added successfully
+                    {props.operation === 'Cabeen'? "Cabeen" : "Tour package "} added successfully
 
                 </Text>
                 <View style={{
@@ -1122,3 +1122,5 @@ const mapDispatchToProps = dispatch => (
 )
 
 export default connect(mapStateToProps, mapDispatchToProps)(CabeenAddModal)
+
+export {CabeenAddModalLoading, CabeenAddModalSuccess, CabeenAddModalError}

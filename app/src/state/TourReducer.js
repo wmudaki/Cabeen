@@ -41,6 +41,12 @@ export const tourReducer = (state=INITIAL_STATE, action) => {
                 state.tourAdd.description = action.payload
                 return {...state}
             }
+            else if (action.field === 'clear'){
+                state.tourAdd = INITIAL_STATE.tourAdd
+                state.tourDate = INITIAL_STATE.tourAdd
+                return {...state}
+            }
+
             return state
 
         case "SELECT_TOUR_IMAGES":

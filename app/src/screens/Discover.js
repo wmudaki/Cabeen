@@ -36,7 +36,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import {red} from "react-native-reanimated/src/reanimated2/Colors";
 import AddOptionsModal from "../modals/AddOptionsModal";
 import TourPackageAddModal from "../modals/TourPackageAddModal";
-import {selectTourImages} from "../state/TourActions";
+import {selectTourImages, addTour} from "../state/TourActions";
 
 
 
@@ -439,13 +439,12 @@ function Discover(props){
 	const ADD_TOUR = gql`
 		mutation ADD_TOUR(
 			$name: String,
-			$type: String,
 			$description: String,
 			$price: String,
 			$currency: String,
 			$location: String,
-			$features: String,
 			$admin: String,
+            $tourDate: String,
 			$images: [String],
 			$files: [Upload!]!
 		){
@@ -453,12 +452,12 @@ function Discover(props){
 				files: $files
 				input: {
 					name: $name,
-					type: $type,
 					description: $description,
 					price: $price,
 					features: $features,
 					currency: $currency,
 					location: $location,
+                    tourDate: $tourDate,
 					admin: $admin,
 					images: $images
 
@@ -468,8 +467,7 @@ function Discover(props){
 				name,
 				price,
 				location,
-				type,
-				features,
+                tourDate,
 				description,
 				admin,
 				images,
@@ -479,7 +477,7 @@ function Discover(props){
 	const [createTour] = useMutation(ADD_TOUR)
 
 	const addTour = () => {
-		setIsType('loading')
+		setTourType('loading')
 		// console.log(props.cabeen.cabeenInfo)
 		let fileList = []
 		props.tour.tourAdd.images.map((value, index) => {
@@ -492,29 +490,43 @@ function Discover(props){
 		})
 
 		createTour({variables: {
-				name: props.cabeen.cabeenInfo.name,
-				type: props.cabeen.cabeenInfo.type,
-				features: props.cabeen.cabeenInfo.features,
-				description: props.cabeen.cabeenInfo.description,
-				price: props.cabeen.cabeenInfo.price,
-				currency: props.cabeen.cabeenInfo.currency,
-				location: props.cabeen.cabeenInfo.location,
+				name: props.tour.tourAdd.name,
+				description: props.tour.tourAdd.description,
+				price: props.tour.tourAdd.price,
+				location: props.tour.tourAdd.location,
+                tourDate: `${props.tour.tourDate.day} ${props.tour.tourDate.month} ${props.tour.tourDate.year}`,
 				admin: props.app.currentUser.user._id,
 				files: fileList
 			}})
 			.then((res) => {
-				setIsType('success')
+				setTourType('success')
 				// setIsCreatingCabeen(false)
 			})
 			.catch(error => {
 				// console.log('An error occurred while uploading', JSON.stringify(error, null, 2))
-				setIsType('error')
+				setTourType('error')
 			})
 	}
+
+	const GET_TOURS = gql`
+		mutation GET_TOURS(
+			$admin: String
+		){
+			fetchTours(
+				admin: $admin
+			){
+				
+			}
+		}
+	`
 
 	React.useEffect(() => {
 		getCabeens()
 	}, [isType, props.cabeen.updateCabeens])
+
+    React.useEffect(() => {
+        // addTour()
+    }, [tourType])
 
 	return(
 		<>
@@ -605,8 +617,20 @@ function Discover(props){
 				}}
 				onCancel={() => {
 					setIsAddingTour(false)
+					// props.addTour('clear', 'clear')
 					// props.addCabeen('clear', 'clear')
 				}}
+                onSubmit={() =>{
+                    addTour()
+                }}
+                onError={() => {
+                    setTourType('normal')
+                }}
+                onSuccessfully={() => {
+                    setTourType('normal')
+                    setIsAddingTour(false)
+					props.addTour('clear', 'clear')
+                }}
 				onImageSelect={() => {
 					setTourType('imageSelect')
 				}}
@@ -615,7 +639,7 @@ function Discover(props){
 					props.selectTourImages('clear', 'clear')
 				}}
 				onImageSelectOk={() => {
-					console.log("Selected Images")
+					// console.log("Selected Images")
 					setTourType('normal')
 				}}
 				onLocation={() => {
@@ -833,7 +857,8 @@ const mapDispatchToProps = dispatch => (
 		selectImages,
 		addCabeen,
 		updateCabeens,
-		selectTourImages
+		selectTourImages,
+		addTour
 
 	}, dispatch)
 )

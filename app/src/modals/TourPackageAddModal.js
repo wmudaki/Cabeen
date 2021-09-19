@@ -19,7 +19,7 @@ import CameraRoll from "@react-native-community/cameraroll";
 import {selectTourImages} from "../state/TourActions";
 import {AutoCompleteComponent} from "../screens/Search";
 import {DayModal, MonthModal, YearModal} from "./TourReservationModal";
-
+import {CabeenAddModalError, CabeenAddModalLoading, CabeenAddModalSuccess} from "./CabeenAddModal";
 
 function TourAddLocation(props){
     const [isSearching, setIsSearching] = React.useState(false)
@@ -808,6 +808,21 @@ function Content(props){
     else if (props.type === 'location'){
         return (
             <TourAddLocation {...props}/>
+        )
+    }
+    else if (props.type === 'success'){
+        return (
+            <CabeenAddModalSuccess {...props}/>
+        )
+    }
+    else if (props.type === 'error'){
+        return (
+            <CabeenAddModalError {...props}/>
+        )
+    }
+    else if (props.type === 'loading'){
+        return (
+            <CabeenAddModalLoading {...props}/>
         )
     }
     else if (props.type === 'day'){
