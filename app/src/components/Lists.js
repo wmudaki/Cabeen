@@ -109,6 +109,8 @@ class CustomFlatListStateless extends React.PureComponent{
 				}}>
 					<View style={{
 						flexDirection: "row",
+						margin: 10,
+						marginTop: 15
 						// alignItems: "center"
 					}}>
 						<Image
