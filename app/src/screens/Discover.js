@@ -515,17 +515,42 @@ function Discover(props){
 			fetchTours(
 				admin: $admin
 			){
-				
+				_id,
+				name,
+				tourDate,
+				description,
+				price,
+				location,
+				images,
+				admin
 			}
 		}
 	`
+
+	const [getTours] = useMutation(GET_TOURS)
+	const [isFetchingTours, setIsFetchingTours] = React.useState(false)
+
+	function fetchTours(){
+		setIsFetchingTours(true)
+		getTours({variables: {
+			admin: props.app.currentUser.user._id
+			}})
+			.then((res) => {
+				setIsFetchingTours(false)
+				console.log('res', res)
+			})
+			.catch(error => {
+				setIsFetchingTours(false)
+				console.log('err', error)
+			})
+	}
 
 	React.useEffect(() => {
 		getCabeens()
 	}, [isType, props.cabeen.updateCabeens])
 
     React.useEffect(() => {
-        // addTour()
+		fetchTours()
     }, [tourType])
 
 	return(
