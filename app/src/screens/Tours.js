@@ -137,7 +137,7 @@ function Buttons(props){
 }
 
 function PackageCard(props){
-    function _renderImages(){
+    function _renderImages(item){
         return(
             <>
                 <View style={{
@@ -158,7 +158,7 @@ function PackageCard(props){
                             borderBottomRightRadius:10
                         }}
                         source={{
-                            uri: `uri`
+                            uri: `${props.app.urls.tours}${item.item}`
                         }}/>
                     <View style={{
                         position: "absolute",
@@ -174,7 +174,7 @@ function PackageCard(props){
                         <Text style={{
                             color: 'white',
                         }}>
-                            1/1
+                            {item.index + 1} / {props.tour.tourDetails.images.length}
                         </Text>
                     </View>
 
@@ -188,7 +188,7 @@ function PackageCard(props){
             <>
                 <View>
                     <Carousel
-                        data={[1,2,3,4,5]}
+                        data={props.tour.tourDetails.images}
                         renderItem={_renderImages}
                         sliderWidth={props.app.portrait ?width: height}
                         itemWidth={props.app.portrait ?0.98* width: 0.98*height}
@@ -207,7 +207,7 @@ function PackageCard(props){
                         fontWeight: 'bold',
                         margin: 10
                     }}>
-                        Kilimanjaro hike
+                        {props.tour.tourDetails.name}
                     </Text>
                     <Text style={{
                         fontSize: 25,
@@ -231,7 +231,7 @@ function PackageCard(props){
                             fontSize: 19,
                             marginLeft: 10
                         }}>
-                            Mt Kilimanjaro
+                            {props.tour.tourDetails.location}
                         </Text>
 
                     </View>
@@ -257,7 +257,7 @@ function PackageCard(props){
                             fontSize: 19,
                             marginLeft: 10
                         }}>
-                            17 - 09 -2021
+                            {props.tour.tourDetails.tourDate}
                         </Text>
                     </View>
                     <Text style={{
@@ -282,7 +282,7 @@ function PackageCard(props){
                             fontSize: 19,
                             marginLeft: 10
                         }}>
-                            2000 KES
+                            {props.tour.tourDetails.price} KES
                         </Text>
                     </View>
                     <Text style={{
@@ -299,7 +299,7 @@ function PackageCard(props){
                         margin: 10,
                         marginBottom: 50
                     }}>
-                        This is the tour description
+                        {props.tour.tourDetails.description}
                     </Text>
 
                 </View>
@@ -337,7 +337,7 @@ function Tours(props){
                 flex: 1
             }}>
                 <BackButtonTopNavBar
-                    title={'Tour Package'}
+                    title={'Tour'}
                 />
                 <PackageCard {...props}/>
                 <Buttons {...props}/>
@@ -349,9 +349,9 @@ function Tours(props){
 
 
 const mapStateToProps = state => {
-    const {app,map} = state;
+    const {app,map,tour} = state;
     // console.log('state',map)
-    return {app, map}
+    return {app, map, tour}
 }
 
 const mapDispatchToProps = dispatch => (

@@ -36,7 +36,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import {red} from "react-native-reanimated/src/reanimated2/Colors";
 import AddOptionsModal from "../modals/AddOptionsModal";
 import TourPackageAddModal from "../modals/TourPackageAddModal";
-import {selectTourImages, addTour} from "../state/TourActions";
+import {selectTourImages, addTour, getTourDetails} from "../state/TourActions";
 
 
 
@@ -85,8 +85,8 @@ function CarouselList(props){
 			<>
 				<TouchableOpacity
 					onPress={() => {
-						props.listType === 'cabeen'? props.getCabeenDetails(item.item) : null
-						props.listType === 'cabeen'? Actions.cabeen() : null
+						props.listType === 'cabeen'? props.getCabeenDetails(item.item) : props.getTourDetails(item.item)
+						props.listType === 'cabeen'? Actions.cabeen() : Actions.tours()
 					}}
 					style={{
 					flex: 1,
@@ -914,7 +914,8 @@ const mapDispatchToProps = dispatch => (
 		addCabeen,
 		updateCabeens,
 		selectTourImages,
-		addTour
+		addTour,
+		getTourDetails
 
 	}, dispatch)
 )

@@ -30,3 +30,10 @@ export const addTourDate = (field, payload) => (
         payload: payload
     }
 )
+
+export const getTourDetails = (payload) => (
+    {
+        type: "GET_TOUR_DETAILS",
+        payload: payload
+    }
+)
