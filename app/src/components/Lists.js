@@ -48,12 +48,17 @@ class CustomSectionListStateless extends React.PureComponent{
 	renderCarousel(data){
 		return(
 			<>
-				<Carousel
+				<FlatList
 					ref={(c) => { this._carousel = c; }}
 					data={data}
+					horizontal={true}
+					style={{ margin: 0}}
+					keyExtractor={(item, key) => item + key}
 					renderItem={(item) => this.renderItem(item)}
-					sliderWidth={width}
-					itemWidth={0.85*width}
+					// sliderWidth={width}
+					// itemWidth={0.85*width}
+					ListHeaderComponent={() => <View style={{margin: 10}}/>}
+					ListFooterComponent={() => <View style={{ margin: 10}}/>}
 					// activeSlideOffset={0.5*width}
 					// layoutCardOffset={0.5*width}
 				/>
@@ -73,7 +78,7 @@ class CustomSectionListStateless extends React.PureComponent{
 						renderItem={({section:{recommendation}}) =>
 							this.renderCarousel(recommendation)}
 						keyExtractor={(item,index) => item+index}
-						SectionSeparatorComponent={() => <View style={{margin:15}}/>}
+						SectionSeparatorComponent={() => <View style={{margin:10}}/>}
 						ListHeaderComponent={() => <View style={{margin:50}}/>}
 						ListFooterComponent={() => <View style={{margin:30}}/>}
 						// horizontal={true}
