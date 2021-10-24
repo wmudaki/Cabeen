@@ -9,6 +9,8 @@ import {connect} from "react-redux";
 import {FloatingSearchBar} from "../components/SearchBars";
 import {Actions} from "react-native-router-flux";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import {gql, useMutation} from "@apollo/client";
+import {getTourDetails} from "../state/TourActions";
 
 function TourPackages(props){
 
@@ -16,7 +18,10 @@ function TourPackages(props){
         return(
             <>
                 <TouchableOpacity
-                    onPress={() => Actions.tours()}
+                    onPress={() => {
+                        props.getTourDetails(item.item)
+                        Actions.tours()
+                    }}
                     style={{
                     margin: 5,
                     flex: 1,
@@ -27,7 +32,7 @@ function TourPackages(props){
                 }}>
                     <Image
                         source={{
-                            uri: 'uri'
+                            uri: `${props.app.urls.tours}${item.item.images[0]}`
                         }}
                         style={{
                             height: 150,
@@ -42,7 +47,7 @@ function TourPackages(props){
                         margin: 10,
                         fontSize: 18
                     }}>
-                        Kilimanjaro hike
+                        {item.item.name}
                     </Text>
                     <View style={{
                         flexDirection: "row",
@@ -51,17 +56,17 @@ function TourPackages(props){
                     }}>
                         <MaterialCommunityIcons
                             name={'cash-multiple'}
-                            size={22}
+                            size={20}
                             color={props.app.colors.statusBar}
                         />
                         <Text
                             numberOfLines={1}
                             style={{
-                                fontSize: 16,
+                                fontSize: 15,
                                 marginLeft: 10,
                                 color: props.app.colors.primaryText
                             }}>
-                            {100000} KES
+                            {item.item.price} KES
                         </Text>
                     </View>
                 </TouchableOpacity>
@@ -72,7 +77,7 @@ function TourPackages(props){
         <>
             <View>
                 <FlatList
-                    data={[1,2,3,4,5,6]}
+                    data={props.tourResults}
                     renderItem={_renderItem}
                     numColumns={2}
                     ListHeaderComponent={() => (
@@ -111,15 +116,61 @@ function Tours(props){
 }
 
 function Find(props){
+    const GET_TOURS = gql`
+        mutation GET_TOURS(
+            $admin: String
+        ){
+            fetchTours(
+                admin: $admin
+            ){
+                _id,
+                name,
+                tourDate,
+                description,
+                price,
+                location,
+                images,
+                admin
+            }
+        }
+    `
+
+    const [getTours] = useMutation(GET_TOURS)
+    const [isFetchingTours, setIsFetchingTours] = React.useState(false)
+    const [tourResults, setTourResults] = React.useState([])
+    const [hasTourResults, setHasTourResults] = React.useState(false)
+
+    function fetchTours(){
+        setIsFetchingTours(true)
+        getTours({variables: {
+                admin: props.app.currentUser.user._id
+            }})
+            .then((res) => {
+                setIsFetchingTours(false)
+                setTourResults(res.data.fetchTours)
+                setHasTourResults(res.data.fetchTours.length > 0)
+                // console.log('res', res.data.fetchTours)
+            })
+            .catch(error => {
+                setIsFetchingTours(false)
+                // console.log('err', error)
+            })
+    }
+
+    React.useEffect(() => {
+        fetchTours()
+    }, [])
+
     return(
         <>
             <View style={{
                 // alignItems: 'center',
-                justifyContent: 'center',
+                // justifyContent: 'center',
                 flex: 1,
                 backgroundColor: props.app.colors.background
             }}>
                 <Tours
+                    tourResults={tourResults}
                     {...props}
                 />
                 <View style={{
@@ -154,7 +205,8 @@ const mapDispatchToProps = dispatch => (
     bindActionCreators({
         searchPlace,
         showAutocomplete,
-        showOverlay
+        showOverlay,
+        getTourDetails
 
     }, dispatch)
 )

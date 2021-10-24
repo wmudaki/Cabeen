@@ -510,6 +510,7 @@ function DayModal(props){
 
 function CabeenReservationDetails(props){
 
+    // console.log('Reservation', props.cabeen)
     return(
         <>
             <View style={{
@@ -535,13 +536,14 @@ function CabeenReservationDetails(props){
                     <View>
                         <Text style={{
                             fontWeight: "bold",
-                            fontSize: 25,
+                            fontSize: 22,
+                            marginTop: 10,
                             color: props.app.colors.statusBar
                         }}>
                             Cabeen
                         </Text>
                         <Text style={{
-                            fontSize: 21,
+                            fontSize: 18,
                             margin: 20
                         }}>
                             Casa Florentina
@@ -550,7 +552,8 @@ function CabeenReservationDetails(props){
                     <View>
                         <Text style={{
                             fontWeight: "bold",
-                            fontSize: 25,
+                            fontSize: 22,
+                            marginTop: 10,
                             color: props.app.colors.statusBar
                         }}>
                             Check in
@@ -565,7 +568,7 @@ function CabeenReservationDetails(props){
                                 onPress={props.onCabeenDayIn}
                             >
                                 <Ionicons
-                                    size={30}
+                                    size={25}
                                     color={props.app.colors.statusBar}
                                     name={'calendar'}/>
                             </TouchableOpacity>
@@ -576,8 +579,8 @@ function CabeenReservationDetails(props){
                                 alignItems: "center"
                             }}>
                                 <Text style={{
-                                    fontSize: 20,
-                                    fontWeight: "bold"
+                                    fontSize: 18,
+                                    // fontWeight: "bold"
                                 }}>
                                     Day
                                 </Text>
@@ -594,8 +597,8 @@ function CabeenReservationDetails(props){
                                 alignItems: "center",
                             }}>
                                 <Text style={{
-                                    fontSize: 20,
-                                    fontWeight: "bold"
+                                    fontSize: 18,
+                                    // fontWeight: "bold"
                                 }}>
                                     Month
                                 </Text>
@@ -612,8 +615,8 @@ function CabeenReservationDetails(props){
                                 alignItems: "center"
                             }}>
                                 <Text style={{
-                                    fontSize: 20,
-                                    fontWeight: "bold"
+                                    fontSize: 18,
+                                    // fontWeight: "bold"
                                 }}>
                                     Year
                                 </Text>
@@ -630,7 +633,8 @@ function CabeenReservationDetails(props){
                     <View>
                         <Text style={{
                             fontWeight: "bold",
-                            fontSize: 25,
+                            fontSize: 22,
+                            marginTop: 10,
                             color: props.app.colors.statusBar
                         }}>
                             Check out
@@ -643,7 +647,7 @@ function CabeenReservationDetails(props){
                         }}>
                             <TouchableOpacity onPress={props.onCabeenDayOut}>
                                 <Ionicons
-                                    size={30}
+                                    size={25}
                                     color={props.app.colors.statusBar}
                                     name={'calendar'}/>
                             </TouchableOpacity>
@@ -654,8 +658,8 @@ function CabeenReservationDetails(props){
                                 alignItems: "center"
                             }}>
                                 <Text style={{
-                                    fontSize: 20,
-                                    fontWeight: "bold"
+                                    fontSize: 18,
+                                    // fontWeight: "bold"
                                 }}>
                                     Day
                                 </Text>
@@ -672,8 +676,8 @@ function CabeenReservationDetails(props){
                                 alignItems: "center",
                             }}>
                                 <Text style={{
-                                    fontSize: 20,
-                                    fontWeight: "bold"
+                                    fontSize: 18,
+                                    // fontWeight: "bold"
                                 }}>
                                     Month
                                 </Text>
@@ -690,8 +694,8 @@ function CabeenReservationDetails(props){
                                 alignItems: "center"
                             }}>
                                 <Text style={{
-                                    fontSize: 20,
-                                    fontWeight: "bold"
+                                    fontSize: 18,
+                                    // fontWeight: "bold"
                                 }}>
                                     Year
                                 </Text>
@@ -708,7 +712,8 @@ function CabeenReservationDetails(props){
                     <View>
                         <Text style={{
                             fontWeight: "bold",
-                            fontSize: 25,
+                            fontSize: 22,
+                            marginTop: 10,
                             color: props.app.colors.statusBar
                         }}>
                             Price
@@ -719,11 +724,11 @@ function CabeenReservationDetails(props){
                             margin: 15
                         }}>
                             <MaterialCommunityIcons
-                                size={30}
+                                size={25}
                                 color={props.app.colors.statusBar}
                                 name={'cash-multiple'}/>
                             <Text style={{
-                                fontSize: 20,
+                                fontSize: 18,
                                 marginLeft: 10
                             }}>
 
