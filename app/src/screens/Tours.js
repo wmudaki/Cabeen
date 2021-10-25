@@ -229,7 +229,8 @@ function PackageCard(props){
                         />
                         <Text style={{
                             fontSize: 19,
-                            marginLeft: 10
+                            marginLeft: 10,
+                            flex: 1
                         }}>
                             {props.tour.tourDetails.location}
                         </Text>
@@ -289,7 +290,7 @@ function PackageCard(props){
                         fontSize: 25,
                         fontWeight: 'bold',
                         color: props.app.colors.statusBar,
-                        margin: 10
+                        margin: 10,
                     }}>
                         Description
                     </Text>
@@ -297,7 +298,8 @@ function PackageCard(props){
                         fontSize: 20,
                         marginLeft: 20,
                         margin: 10,
-                        marginBottom: 50
+                        marginBottom: 50,
+                        flex: 1
                     }}>
                         {props.tour.tourDetails.description}
                     </Text>
