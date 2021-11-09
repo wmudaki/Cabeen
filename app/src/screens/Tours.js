@@ -26,6 +26,7 @@ function Buttons(props){
         mutation CREATE_TOUR_RESERVATION(
             $tourId:  String,
             $touristId: String,
+            $tourName: String,
             $tourProviderId: String,
             $touristName: String,
             $spots: String,
@@ -35,6 +36,7 @@ function Buttons(props){
               
                     tourId: $tourId,
                     touristId: $touristId,
+                    tourName: $tourName,
                     touristName: $touristName,
                     spots: $spots
                     tourProviderId: $tourProviderId
