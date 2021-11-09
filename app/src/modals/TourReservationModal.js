@@ -14,7 +14,7 @@ function ReservationSuccess(props){
             <View style={{
                 height: '35%',
                 width: "90%",
-                borderRadius: 10,
+                borderRadius: 20,
                 elevation: 20,
                 margin: 20,
                 // alignSelf: "center",
@@ -23,13 +23,13 @@ function ReservationSuccess(props){
                 justifyContent: "center"
             }}>
                 <Text style={{
-                    fontWeight: "bold",
-                    fontSize: 25,
+                    // fontWeight: "bold",
+                    fontSize: 20,
                     alignSelf: 'center',
                     margin: 10,
                     color: props.app.colors.primaryText
                 }}>
-                    Successfully reserved the tour, a representative will get in touch soon
+                    Successfully reserved the {props.mode === 'cabeen' ? 'cabeen' : "tour"}, a representative will get in touch soon
 
                 </Text>
                 <View style={{
@@ -42,7 +42,7 @@ function ReservationSuccess(props){
                         onPress={props.onSuccessfully}
                         style={{
                             backgroundColor: props.app.colors.successText,
-                            borderRadius: 5,
+                            borderRadius: 25,
                             height: 40,
                             width: '45%',
                             justifyContent: "center",
@@ -70,7 +70,7 @@ function ReservationError(props){
             <View style={{
                 height: '36%',
                 width: "90%",
-                borderRadius: 10,
+                borderRadius: 20,
                 elevation: 20,
                 margin: 20,
                 // alignSelf: "center",
@@ -79,8 +79,8 @@ function ReservationError(props){
                 justifyContent: "center"
             }}>
                 <Text style={{
-                    fontWeight: "bold",
-                    fontSize: 25,
+                    // fontWeight: "bold",
+                    fontSize: 20,
                     alignSelf: 'center',
                     margin: 10,
                     color: props.app.colors.errorText
@@ -98,7 +98,7 @@ function ReservationError(props){
                         onPress={props.onError}
                         style={{
                             backgroundColor: props.app.colors.buttonColor,
-                            borderRadius: 5,
+                            borderRadius: 25,
                             height: 40,
                             width: '45%',
                             justifyContent: "center",
@@ -126,7 +126,7 @@ function ReservationLoading(props) {
             <View style={{
                 height: '35%',
                 width: "90%",
-                borderRadius: 10,
+                borderRadius: 20,
                 elevation: 20,
                 margin: 20,
                 // alignSelf: "center",
@@ -764,7 +764,7 @@ function CabeenReservationDetails(props){
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        onPress={null}
+                        onPress={props.onConfirmReservation}
                         style={{
                             backgroundColor: props.app.colors.buttonColor,
                             borderRadius: 25,
@@ -922,7 +922,7 @@ function ReservationDetails(props){
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        onPress={null}
+                        onPress={props.onConfirmReservation}
                         style={{
                             backgroundColor: props.app.colors.buttonColor,
                             borderRadius: 25,

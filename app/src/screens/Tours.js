@@ -22,6 +22,88 @@ function Buttons(props){
     const [dateOperation, setDateOperation] = React.useState('')
     const [reservationMode, setReservationMode] = React.useState("")
 
+    const CREATE_TOUR_RESERVATION = gql`
+        mutation CREATE_TOUR_RESERVATION(
+            $tourId:  String,
+            $touristId: String,
+            $tourProviderId: String,
+            $touristName: String,
+            $spots: String,
+        ){
+            createTourReservation(
+                input: {
+              
+                    tourId: $tourId,
+                    touristId: $touristId,
+                    touristName: $touristName,
+                    spots: $spots
+                    tourProviderId: $tourProviderId
+                    }
+            ){
+                _id,
+                tourId,
+                touristId, 
+                tourProviderId
+                touristName,
+                spots
+            }
+        }
+    `
+    const CREATE_CABEEN_RESERVATION = gql`
+        mutation CREATE_CABEEN_RESERVATION(
+            $cabeenId: String,
+            $cabeenName: String,
+            $cabeenProviderId: String,
+            $touristName: String,
+            $touristId: String,
+            $checkIn: String,
+            $checkOut: String,
+        ){
+            createCabeenReservation(
+                cabeenId: $cabeenId,
+                cabeenName: $cabeenName,
+                cabeenProviderId: $cabeenProviderId
+                touristId: $touristId,
+                touristName: $touristName,
+                checkIn: String,
+                checkOut: String,
+                ){
+                    _id,
+                    cabeenId,
+                    touristId,
+                    cabeenProviderId,
+                    touristName,
+                    checkIn,
+                    checkOut,
+                }
+        }
+    `
+
+    const [createTourReservation] = useMutation(CREATE_TOUR_RESERVATION)
+
+    function reserveTour() {
+        console.log('Reserving tour')
+        setReservationType('loading')
+        createTourReservation({variables:{
+            tourId: props.tour.tourDetails._id,
+                tourName: props.tour.tourDetails.name,
+                touristId: props.app.currentUser.user._id,
+                touristName: props.app.currentUser.user.fullName,
+                tourProviderId: props.tour.tourDetails.admin,
+                spots: `${props.tour.tourReservation.spots}`,
+            }})
+            .then((res) => {
+                //
+                // console.log("successful",res)
+                setReservationType('success')
+            })
+            .catch(err => {
+                //
+                // console.log('An error occurred while uploading', JSON.stringify(err, null, 2))
+                setReservationType('error')
+            })
+    }
+
     return(
         <>
             <View style={{
@@ -54,7 +136,7 @@ function Buttons(props){
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
-                        setReservationMode('cabeen')
+                        setReservationMode('tour')
                         setIsReserving(true)
                     }}
                     style={{
@@ -86,6 +168,12 @@ function Buttons(props){
                 onCancel={() => {
                     setIsReserving(false)
                     props.reserveCabeen('clear', 'clear', 'clear')
+                    props.reserveTour('clear', 'clear', 'clear')
+                }}
+                onSuccessfully={() => {
+                    setIsReserving(false)
+                    setReservationType('normal')
+                    props.reserveCabeen('clear', "clear", "clear")
                     props.reserveTour('clear', 'clear', 'clear')
                 }}
                 onCabeenDayIn={() => {
@@ -129,6 +217,12 @@ function Buttons(props){
                 onCabeenYearOut={() => {
                     setDateOperation('checkOut')
                     setReservationType('cabeenYearIn')
+                }}
+                onConfirmReservation={() => {
+                    if (reservationMode === 'tour'){
+                        reserveTour()
+                    }
+
                 }}
 
             />
