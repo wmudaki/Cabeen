@@ -106,8 +106,8 @@ class CustomFlatListStateless extends React.PureComponent{
 					margin: 10,
 					backgroundColor: 'white',
 					padding: 10,
-					elevation: 5,
-					borderRadius: 10,
+					elevation: 0,
+					borderRadius: 20,
 
 					// borderBottomWidth: 2,
 					borderColor:this.props.app.colors.secondaryText
@@ -120,20 +120,20 @@ class CustomFlatListStateless extends React.PureComponent{
 					}}>
 						<Image
 							style={{
-								height: 40,
-								width: 40,
-								// borderRadius: 30,
-								// backgroundColor: this.props.app.colors.statusBar
+								height: 50,
+								width: 50,
+								borderRadius: 30,
+								backgroundColor: this.props.app.colors.statusBar
 							}}
-							source={require('../../assets/image/cabeen.png')}
+							// source={require('../../assets/image/cabeen.png')}
 							/>
 						<Text style={{
 							marginLeft: 10,
-							fontSize: 18,
+							fontSize: 20,
 							flex: 1,
 							color: this.props.app.colors.primaryText
 						}}>
-							Lisa Vern Reserved 1 spot on Kilimanjaro hike
+							{<Text style={{ fontWeight: "bold", color: this.props.app.colors.statusBar}}>{item.item.touristName }</Text> } Reserved <Text style={{fontWeight: 'bold', color: this.props.app.colors.statusBar}}>{item.item.spots}</Text> {item.item.spots === '1' ? 'spot' : 'spots'} on <Text style={{fontWeight: "bold", color: this.props.app.colors.statusBar}}>{item.item.tourName}</Text>
 						</Text>
 					</View>
 					<View style={{
@@ -177,7 +177,7 @@ class CustomFlatListStateless extends React.PureComponent{
 			<>
 				<View>
 					<FlatList
-						data={[1,2,3,4,5,6,7,8,9,]}
+						data={this.props.tourReservationData}
 						renderItem={(item) => this.renderItem(item)}
 						ListHeaderComponent={() => (<View style={{margin: 10}}>
 							<Text style={{
@@ -186,7 +186,7 @@ class CustomFlatListStateless extends React.PureComponent{
 								margin: 10,
 								alignSelf: "center"
 							}}>
-								Reservations
+								Tour Reservations
 							</Text>
 							</View>)}
 						ItemSeparatorComponent={() => <View style={{margin: 0}}/>}

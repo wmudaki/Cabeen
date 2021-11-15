@@ -37,3 +37,10 @@ export const getTourDetails = (payload) => (
         payload: payload
     }
 )
+
+export const getTourReservations = (payload) => (
+    {
+        type: "GET_TOUR_RESERVATIONS",
+        payload: payload
+    }
+)

@@ -16,7 +16,8 @@ const INITIAL_STATE = {
         month: 'Jan',
         year: '2021'
     },
-    tourDetails: {}
+    tourDetails: {},
+    tourReservations: {}
 }
 
 export const tourReducer = (state=INITIAL_STATE, action) => {
@@ -111,6 +112,9 @@ export const tourReducer = (state=INITIAL_STATE, action) => {
             state.tourDetails = action.payload
             return {...state}
 
+        case "GET_TOUR_RESERVATIONS":
+            state.tourReservations = action.payload
+            return {...state}
         default:
             return state
     }

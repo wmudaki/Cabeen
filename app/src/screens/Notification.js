@@ -36,6 +36,7 @@ function Notification (props){
 			    _id,
 			    tourName,
 			    tourId,
+			    spots,
 			    touristName,
 			    touristId,
 			    reservationTime,	
@@ -43,16 +44,19 @@ function Notification (props){
 		}
 	`
     const [fetchTourReservations] = useMutation(FETCH_TOUR_RESERVATIONS)
+    const [tourReservationData, setTourReservationData] = React.useState([])
+    const [isFetchingReservationData, setIsFetchingReservationData] = React.useState(false)
 
     function getTourReservation() {
-        console.log(props.app.currentUser.user._id,)
+        setIsFetchingReservationData(true)
         fetchTourReservations({variables: {
             touristId: props.app.currentUser.user._id,
                 tourId: null,
                 touristProvider: null,
             }})
             .then((res) => {
-                console.log('hello world', res.data)
+                console.log('hello world', res.data.fetchTourReservation)
+                setTourReservationData(res.data.fetchTourReservation)
             })
             .catch(err => {
                 console.log('An error occurred while uploading', JSON.stringify(err, null, 2))
@@ -73,7 +77,9 @@ function Notification (props){
                     title={'Notifications'}
                 />
                 <View>
-                    <CustomFlatList/>
+                    <CustomFlatList
+                        tourReservationData={tourReservationData}
+                    />
                 </View>
 
             </View>
