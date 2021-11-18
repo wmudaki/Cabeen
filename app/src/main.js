@@ -61,7 +61,7 @@ function App (){
     const persistConfig = {
         key: 'root',
         storage: AsyncStorage,
-        stateReconciler: autoMergeLevel2,
+        // stateReconciler: autoMergeLevel2,
     }
 
     const persistedReducer = persistReducer(persistConfig, rootReducer)
@@ -74,7 +74,7 @@ function App (){
 
     const httpLink = createUploadLink({
         // uri: "https://app.cabeen.culturol.com/graphql/"
-        uri: "http://192.168.57.85:4000/graphql"
+        uri: "http://192.168.34.85:4000/graphql"
     })
 
     const client = new ApolloClient({

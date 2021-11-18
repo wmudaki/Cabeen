@@ -30,9 +30,9 @@ function Welcome(props){
     const [DEV_MODE, setDevMode] = React.useState('dev')
 
     const DEV_URLS = {
-        cabeenImages: 'http://192.168.57.85:4000/cabeens/',
-        avatars: 'http://192.168.57.85:4000/avatars/',
-        tours: 'http://192.168.57.85:4000/tours/'
+        cabeenImages: 'http://192.168.34.85:4000/cabeens/',
+        avatars: 'http://192.168.34.85:4000/avatars/',
+        tours: 'http://192.168.34.85:4000/tours/'
     }
     const PRODUCTION_URLS = {
         cabeenImages: 'https://app.cabeen.culturol.com/cabeens/',

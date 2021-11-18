@@ -147,7 +147,9 @@ class CustomFlatListStateless extends React.PureComponent{
 						}}>
 							9 hours ago
 						</Text>
-						<TouchableOpacity style={{
+						<TouchableOpacity
+							onPress={(item) = this.props.onContactPress(item.item.tourProviderId)}
+							style={{
 							width: '35%',
 							height: 35,
 							backgroundColor: this.props.app.colors.buttonColor,

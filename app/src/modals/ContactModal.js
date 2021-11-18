@@ -113,9 +113,9 @@ function Content(props){
                 <View style={{
                     // alignItems: 'center',
                     height: '40%',
-                    width: '93%',
+                    width: '90%',
                     justifyContent: "center",
-                    borderRadius: 10,
+                    borderRadius: 20,
                     padding: 10,
                     backgroundColor: props.app.colors.whiteText
                 }}>
@@ -132,25 +132,28 @@ function Content(props){
                             Contact person
                         </Text>
                         <Text style={{
-                            fontSize: 25,
+                            fontSize: 20,
                             margin: 10,
                             marginTop: 20,
+                            marginBottom: 0,
                             fontWeight: 'bold',
                             alignSelf: 'center'
                         }}>
                             {props.cabeen.contactPerson.fullName}
                         </Text>
                         <Text style={{
-                            fontSize: 20,
-                            margin: 10,
+                            fontSize: 18,
+                            margin: 0,
+                            marginTop: 0,
                             color: props.app.colors.blackText,
                             alignSelf: 'center'
                         }}>
                             {props.cabeen.contactPerson.email}
                         </Text>
                         <Text style={{
-                            fontSize: 20,
+                            fontSize: 17,
                             margin: 10,
+                            marginTop: 0,
                             color: props.app.colors.greyText,
                             alignSelf: 'center'
                         }}>
