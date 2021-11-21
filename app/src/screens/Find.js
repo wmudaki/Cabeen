@@ -159,7 +159,7 @@ function Find(props){
 
     React.useEffect(() => {
         fetchTours()
-    }, [])
+    }, [props.app.refresh])
 
     return(
         <>

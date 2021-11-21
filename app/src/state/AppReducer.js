@@ -46,7 +46,8 @@ const INITIAL_STATE = {
         avatars: '',
         tours: ''
 
-    }
+    },
+    refresh: true
 }
 
 export const appReducer = (state=INITIAL_STATE, action) => {
@@ -160,6 +161,10 @@ export const appReducer = (state=INITIAL_STATE, action) => {
 
         case "UPDATE_URLS":
             state.urls = action.payload
+            return {...state}
+
+        case "REFRESH_APP":
+            state.refresh = !state.refresh
             return {...state}
 
         default:

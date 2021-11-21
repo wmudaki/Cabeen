@@ -104,7 +104,7 @@ function ContentList (props){
                 <View style={{
                     margin: 10,
                     backgroundColor: 'white',
-                    padding: 10,
+                    padding: 0,
                     elevation: 0,
                     borderRadius: 20,
 

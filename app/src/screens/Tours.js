@@ -12,6 +12,9 @@ import {ReactNativeFile} from "apollo-upload-client/public";
 import TourReservationModal from "../modals/TourReservationModal";
 import {reserveCabeen} from "../state/CabeenActions";
 import {reserveTour} from "../state/TourActions";
+import CabeenDeleteModal from "../modals/CabeenDeleteModal";
+import {Actions} from "react-native-router-flux";
+import {refreshApp} from "../state/AppActions";
 
 const {height,width} = Dimensions.get('window')
 
@@ -427,6 +430,80 @@ function PackageCard(props){
     )
 }
 
+function Navigation(props) {
+
+    const DELETE_TOUR = gql`
+        mutation DELETE_TOUR(
+            $_id: ID,
+        ){
+            deleteTour(
+                _id: $_id
+            ){
+                name
+            }
+        }
+    `
+    const [deleteTour] = useMutation(DELETE_TOUR)
+    const [isDeletingTour, setIsDeletingTour] = React.useState(false)
+    const [isType, setIsType] = React.useState('normal')
+
+    const removeTour = () => {
+        // console.log(props.cabeen.cabeenDetails)
+        setIsType('loading')
+        deleteTour({variables: {
+                _id: props.tour.tourDetails._id
+            }})
+            .then((res) => {
+                // console.log(res)
+                setIsType('success')
+            })
+            .catch((err) => {
+                setIsType('error')
+                // console.log(err)
+            })
+    }
+
+    return(
+        <>
+            <BackButtonTopNavBar
+                title={props.tour.tourDetails.name}
+                icon={'trash-outline'}
+                isManager={props.tour.tourDetails.admin === props.app.currentUser.user._id}
+                onIconPress={() => {
+                    setIsDeletingTour(true)
+                }}
+            />
+            <CabeenDeleteModal
+                modalVisible={isDeletingTour}
+                isType={isType}
+                mode={'tour'}
+                // isError={isError}
+                onRequestClose={() => {
+                    setIsDeletingTour(false)
+                }}
+                onSubmit={() => {
+                    removeTour()
+                    // console.log('submitted')
+                }}
+                onCancel={() => {
+                    setIsDeletingTour(false)
+                }}
+
+                onError={() => {
+                    setIsType('normal')
+                    setIsDeletingTour(true)
+                }}
+                onSuccessfully={() => {
+                    setIsType('normal')
+                    setIsDeletingTour(false)
+                    props.refreshApp()
+                    Actions.pop()
+                }}
+            />
+
+        </>
+    )
+}
 
 function Tours(props){
     return(
@@ -434,9 +511,7 @@ function Tours(props){
             <View style={{
                 flex: 1
             }}>
-                <BackButtonTopNavBar
-                    title={'Tour'}
-                />
+                <Navigation {...props}/>
                 <PackageCard {...props}/>
                 <Buttons {...props}/>
 
@@ -458,7 +533,8 @@ const mapDispatchToProps = dispatch => (
         showAutocomplete,
         showOverlay,
         reserveCabeen,
-        reserveTour
+        reserveTour,
+        refreshApp
 
     }, dispatch)
 )

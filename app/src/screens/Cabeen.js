@@ -437,7 +437,7 @@ function Navigation(props) {
 	const [isType, setIsType] = React.useState('normal')
 
 	const removeCabeen = () => {
-		console.log(props.cabeen.cabeenDetails)
+		// console.log(props.cabeen.cabeenDetails)
 		setIsType('loading')
 		deleteCabeen({variables: {
 			_id: props.cabeen.cabeenDetails._id
