@@ -122,19 +122,20 @@ function Content(props){
                     <ScrollView>
                         <Text
                             style={{
-                                fontSize: 30,
+                                fontSize: 26,
                                 margin: 10,
                                 marginTop: 35,
                                 color: props.app.colors.statusBar,
                                 alignSelf: 'center',
-                                fontWeight: 'bold'
+                                fontWeight: 'bold',
+                                borderBottomWidth: 2
                             }}>
                             Contact person
                         </Text>
                         <Text style={{
                             fontSize: 20,
                             margin: 10,
-                            marginTop: 20,
+                            marginTop: 10,
                             marginBottom: 0,
                             fontWeight: 'bold',
                             alignSelf: 'center'

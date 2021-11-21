@@ -228,6 +228,7 @@ function CabeenButtons(props) {
 		createCabeenReservation({variables: {
 			cabeenId: props.cabeen.cabeenDetails._id,
 				cabeenProviderId: props.cabeen.cabeenDetails.admin,
+				cabeenName: props.cabeen.cabeenDetails.name,
 				touristId: props.app.currentUser.user._id,
 				touristName: props.app.currentUser.user.fullName,
 				checkIn: `${props.cabeen.cabeenReservation.checkIn.day} ${props.cabeen.cabeenReservation.checkIn.month} ${props.cabeen.cabeenReservation.checkIn.year}`,

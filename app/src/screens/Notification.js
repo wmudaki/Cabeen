@@ -9,7 +9,7 @@ import * as React from "react";
 import {
     Text,
     View,
-    TouchableOpacity, Image, FlatList
+    TouchableOpacity, Image, FlatList, ActivityIndicator, SectionList
 } from "react-native";
 import { bindActionCreators } from "redux";
 import { agreeToTerms } from "../state/AppActions";
@@ -45,7 +45,7 @@ function ContentList (props){
         setShowContact(true)
         setContactType('loading')
         fetchUser({variables: {
-                _id: item.item.tourProviderId === props.app.currentUser.user._id ? item.item.touristId: item.item.tourProviderId
+                _id: item.item.__typename === 'CabeenReservation' ? item.item.cabeenProviderId === props.app.currentUser.user._id ? item.item.touristId: item.item.cabeenProviderId:item.item.tourProviderId === props.app.currentUser.user._id ? item.item.touristId: item.item.tourProviderId
             }})
             .then((res) => {
                 // console.log('successful', res.data)
@@ -59,20 +59,39 @@ function ContentList (props){
     }
 
     function msgFormatter(item){
-        if (item.item.tourProviderId === props.app.currentUser.user._id){
-            return (
-                <>
-                    {<Text style={{ fontWeight: "bold", color: props.app.colors.statusBar}}>{item.item.touristName }</Text> } Reserved <Text style={{fontWeight: 'bold', color: props.app.colors.statusBar}}>{item.item.spots}</Text> {item.item.spots === '1' ? 'spot' : 'spots'} on <Text style={{fontWeight: "bold", color: props.app.colors.statusBar}}>{item.item.tourName}</Text>
-                </>
-            )
+        if (item.item.__typename === 'CabeenReservation'){
+            if (item.item.cabeenProviderId === props.app.currentUser.user._id){
+                return (
+                    <>
+                        <Text style={{ fontWeight: "bold", color: props.app.colors.statusBar}}>{item.item.touristName}</Text> reserved <Text style={{ fontWeight: "bold", color: props.app.colors.statusBar}}>{item.item.cabeenName}</Text> from <Text style={{ fontWeight: "bold", color: props.app.colors.statusBar}}>{item.item.checkIn}</Text> to <Text style={{ fontWeight: "bold", color: props.app.colors.statusBar}}>{item.item.checkOut}</Text>
+                    </>
+                )
+            }
+            else if (item.item.touristId === props.app.currentUser.user._id){
+                return (
+                    <>
+                        You reserved <Text style={{ fontWeight: "bold", color: props.app.colors.statusBar}}>{item.item.cabeenName}</Text> from <Text style={{ fontWeight: "bold", color: props.app.colors.statusBar}}>{item.item.checkIn}</Text> to <Text style={{ fontWeight: "bold", color: props.app.colors.statusBar}}>{item.item.checkOut}</Text>
+                    </>
+                )
+            }
         }
-        else if (item.item.touristId === props.app.currentUser.user._id){
-            return (
-                <>
-                    You reserved <Text style={{fontWeight: 'bold', color: props.app.colors.statusBar}}>{item.item.spots}</Text> {item.item.spots === '1' ? 'spot' : 'spots'} on <Text style={{fontWeight: "bold", color: props.app.colors.statusBar}}>{item.item.tourName}</Text>
-                </>
-            )
+        else {
+            if (item.item.tourProviderId === props.app.currentUser.user._id){
+                return (
+                    <>
+                        {<Text style={{ fontWeight: "bold", color: props.app.colors.statusBar}}>{item.item.touristName }</Text> } Reserved <Text style={{fontWeight: 'bold', color: props.app.colors.statusBar}}>{item.item.spots}</Text> {item.item.spots === '1' ? 'spot' : 'spots'} on <Text style={{fontWeight: "bold", color: props.app.colors.statusBar}}>{item.item.tourName}</Text>
+                    </>
+                )
+            }
+            else if (item.item.touristId === props.app.currentUser.user._id){
+                return (
+                    <>
+                        You reserved <Text style={{fontWeight: 'bold', color: props.app.colors.statusBar}}>{item.item.spots}</Text> {item.item.spots === '1' ? 'spot' : 'spots'} on <Text style={{fontWeight: "bold", color: props.app.colors.statusBar}}>{item.item.tourName}</Text>
+                    </>
+                )
+            }
         }
+
     }
 
     function dateFormatter(item){
@@ -159,19 +178,29 @@ function ContentList (props){
     return(
         <>
             <View>
-                <FlatList
-                    data={props.tourReservationData}
+                <SectionList
+                    sections={[{'title': 'Tour Reservations', 'data': props.tourReservationData},
+                        {'title': 'Cabeen Reservations', 'data': props.cabeenReservationData}
+                    ]}
+                    // data={props.tourReservationData}
                     renderItem={(item) => renderItem(item)}
-                    ListHeaderComponent={() => (<View style={{margin: 10}}>
+                    renderSectionHeader={({section: {title}}) => (<View style={{margin: 10}}>
                         <Text style={{
                             fontWeight: "bold",
                             fontSize: 25,
                             margin: 10,
                             alignSelf: "center"
                         }}>
-                            Tour Reservations
+                            {title}
                         </Text>
                     </View>)}
+                    ListEmptyComponent={() => (
+                        <View>
+                            <Text>
+                                Your Reservations will appear here
+                            </Text>
+                        </View>
+                    )}
                     ItemSeparatorComponent={() => <View style={{margin: 0}}/>}
                     ListFooterComponent={() => <View style={{margin: 50}}/>}
                     keyExtractor={(item,index) => item+index}
@@ -220,29 +249,75 @@ function Notification (props){
 			}
 		}
 	`
-
+    const FETCH_CABEEN_RESERVATIONS = gql `
+        mutation FETCH_TOUR_RESERVATIONS(
+            $cabeenId: String
+            $touristId: String
+            $cabeenProviderId: String
+        ){
+            fetchCabeenReservation(
+                cabeenId: $cabeenId
+                touristId: $touristId
+                cabeenProviderId: $cabeenProviderId
+            ){
+                _id,
+                cabeenName,
+                cabeenId,
+                cabeenProviderId,
+                touristName,
+                touristId,
+                reservationTime,
+                checkIn,
+                checkOut
+            }
+        }
+    `
+    const [fetchCabeenReservations] = useMutation(FETCH_CABEEN_RESERVATIONS)
     const [fetchTourReservations] = useMutation(FETCH_TOUR_RESERVATIONS)
     const [tourReservationData, setTourReservationData] = React.useState([])
     const [isFetchingReservationData, setIsFetchingReservationData] = React.useState(false)
+    const [cabeenReservationData, setCabeenReservationData] = React.useState([])
+    const [isFetchingCabeenData, setIsFetchingCabeenData] = React.useState(false)
 
     function getTourReservation() {
         setIsFetchingReservationData(true)
         fetchTourReservations({variables: {
             touristId: props.app.currentUser.user._id,
                 tourId: null,
-                touristProvider: null,
+                tourProviderId: props.app.currentUser.user._id,
             }})
             .then((res) => {
-                console.log('hello world', res.data.fetchTourReservation)
+                // console.log('hello world', res.data.fetchTourReservation)
+                setIsFetchingReservationData(false)
                 setTourReservationData(res.data.fetchTourReservation)
             })
             .catch(err => {
+                setIsFetchingReservationData(false)
                 console.log('An error occurred while uploading', JSON.stringify(err, null, 2))
             })
     }
 
+    function getCabeenReservation(){
+        setIsFetchingCabeenData(true)
+        fetchCabeenReservations({variables: {
+            touristId: props.app.currentUser.user._id,
+                cabeenId: null,
+                cabeenProviderId: props.app.currentUser.user._id,
+            }})
+            .then((res) => {
+                setIsFetchingCabeenData(false)
+                // console.log('cabeen', res.data.fetchCabeenReservation)
+                setCabeenReservationData(res.data.fetchCabeenReservation)
+            })
+            .catch(error => {
+                setIsFetchingCabeenData(false)
+                // console.log('An error occurred while uploading', JSON.stringify(error, null, 2))
+            })
+    }
+
     React.useEffect(() => {
-        getTourReservation()
+        getTourReservation();
+        getCabeenReservation()
     }, [])
 
     return(
@@ -255,10 +330,23 @@ function Notification (props){
                     title={'Notifications'}
                 />
                 <View>
-                    <ContentList
-                        {...props}
-                        tourReservationData={tourReservationData}
-                    />
+                    {
+                        !isFetchingReservationData ?
+                            <ContentList
+                                {...props}
+                                tourReservationData={tourReservationData}
+                                cabeenReservationData={cabeenReservationData}
+                            />: <ActivityIndicator size={'small'} color={props.app.colors.statusBar}/>
+                    }
+                    {/*{*/}
+                    {/*    !isFetchingCabeenData ?*/}
+                    {/*        <ContentList*/}
+                    {/*            {...props}*/}
+                    {/*            // tourReservationData={tourReservationData}*/}
+                    {/*            cabeenReservationData={cabeenReservationData}*/}
+                    {/*        />: null*/}
+                    {/*}*/}
+
                 </View>
 
             </View>
