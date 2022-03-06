@@ -63,3 +63,9 @@ export const updateUrls = (field, payload) => (
         payload: payload
     }
 )
+
+export const refreshApp = () => (
+    {
+        type: 'REFRESH_APP'
+    }
+)

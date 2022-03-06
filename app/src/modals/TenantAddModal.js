@@ -4,7 +4,7 @@ import {
     Modal,
     TextInput,
     TouchableOpacity,
-    Text, ActivityIndicator
+    Text, ActivityIndicator, ScrollView
 } from "react-native";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
@@ -180,7 +180,7 @@ function TenantAddModalContent(props){
     return(
         <>
             <View style={{
-                height: '45%',
+                height: '50%',
                 width: '90%',
                 justifyContent: "center",
                 borderRadius: 10,
@@ -194,42 +194,45 @@ function TenantAddModalContent(props){
                 }}>
                     Add Tourist
                 </Text>
-                <TextInput
-                    placeholder={"Tourist's name"}
-                    placeholderTextColor={props.app.colors.secondaryText}
-                    onChangeText={(value) => props.addTenant('userId', value)}
-                    style={{
-                        borderRadius: 10,
-                        borderColor: props.app.colors.background,
-                        borderWidth: 3,
-                        // backgroundColor: props.app.colors.background,
-                        fontSize: 20,
-                        padding:10,
-                        margin: 15,
-                        color: props.app.colors.primaryText
-                    }}
-                />
-                <TextInput
-                    placeholder={'House label'}
-                    placeholderTextColor={props.app.colors.secondaryText}
-                    onChangeText={(value) => props.addTenant('houseLabel', value)}
-                    style={{
-                        borderRadius: 10,
-                        borderColor: props.app.colors.background,
-                        borderWidth: 3,
-                        // backgroundColor: props.app.colors.background,
-                        fontSize: 20,
-                        padding:10,
-                        margin: 15,
-                        color: props.app.colors.primaryText
-                    }}
-                />
+                <ScrollView>
+                    <TextInput
+                        placeholder={"Tourist's name"}
+                        placeholderTextColor={props.app.colors.secondaryText}
+                        onChangeText={(value) => props.addTenant('userId', value)}
+                        style={{
+                            borderRadius: 10,
+                            borderColor: props.app.colors.background,
+                            borderWidth: 3,
+                            // backgroundColor: props.app.colors.background,
+                            fontSize: 20,
+                            padding:10,
+                            margin: 15,
+                            color: props.app.colors.primaryText
+                        }}
+                    />
+                    <TextInput
+                        placeholder={'House label'}
+                        placeholderTextColor={props.app.colors.secondaryText}
+                        onChangeText={(value) => props.addTenant('houseLabel', value)}
+                        style={{
+                            borderRadius: 10,
+                            borderColor: props.app.colors.background,
+                            borderWidth: 3,
+                            // backgroundColor: props.app.colors.background,
+                            fontSize: 20,
+                            padding:10,
+                            margin: 15,
+                            color: props.app.colors.primaryText
+                        }}
+                    />
+                </ScrollView>
+
                 <View style={{
                     flexDirection: 'row',
                     justifyContent: "space-between",
                     alignItems: "center",
                     margin: 20,
-                    marginTop: 30,
+                    marginTop: 20,
                 }}>
                     <TouchableOpacity
                         onPress={props.onCancel}
@@ -263,7 +266,8 @@ function TenantAddModalContent(props){
                     }}>
                         <Text style={{
                             fontSize: 18,
-                            fontWeight: "bold"
+                            fontWeight: "bold",
+                            color: 'white'
                         }}>
                             Submit
                         </Text>

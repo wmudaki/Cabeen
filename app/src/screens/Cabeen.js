@@ -38,6 +38,9 @@ import {
 	likeCallback} from "../state/CabeenActions";
 import ContactModal from "../modals/ContactModal";
 import AntDesign from "react-native-vector-icons/AntDesign";
+import TourReservationModal from "../modals/TourReservationModal";
+import {reserveTour} from "../state/TourActions";
+import {reserveCabeen} from "../state/CabeenActions";
 
 const {height,width} = Dimensions.get('window')
 
@@ -94,6 +97,41 @@ function CabeenButtons(props) {
 		}
 	`
 
+	const CREATE_CABEEN_RESERVATION = gql`
+		mutation CREATE_CABEEN_RESERVATION(
+			$cabeenId: String,
+			$cabeenName: String,
+			$cabeenProviderId: String,
+			$touristName: String,
+			$touristId: String,
+			$checkIn: String,
+			$checkOut: String,
+		){
+			createCabeenReservation(
+				input:{
+					cabeenId: $cabeenId,
+					cabeenName: $cabeenName,
+					cabeenProviderId: $cabeenProviderId
+					touristId: $touristId,
+					touristName: $touristName,
+					checkIn: $checkIn,
+					checkOut: $checkOut,
+				}
+			){
+				_id,
+				cabeenId,
+				touristId,
+				cabeenProviderId,
+				touristName,
+				cabeenName,
+				checkIn,
+				checkOut,
+			}
+		}
+	`
+
+	const [createCabeenReservation] = useMutation(CREATE_CABEEN_RESERVATION)
+
 	const [fetchUser] = useMutation(FETCH_USER)
 	const [editCabeen] = useMutation(EDIT_CABEEN)
 	const [isEditingCabeen, setIsEditingCabeen] = React.useState(false)
@@ -101,6 +139,11 @@ function CabeenButtons(props) {
 	const [accessLevel, setAccessLevel] = React.useState('manager')
 	const [showContact, setShowContact] = React.useState(false)
 	const [contactType, setContactType] = React.useState('normal')
+
+	const [isReserving, setIsReserving] = React.useState(false)
+	const [reservationType, setReservationType] = React.useState('normal')
+	const [dateOperation, setDateOperation] = React.useState('')
+	const [reservationMode, setReservationMode] = React.useState("")
 
 	const edit = () => {
 		console.log(props.cabeen.cabeenEditInfo)
@@ -174,7 +217,32 @@ function CabeenButtons(props) {
 			})
 	}
 
+	function reserve(){
+		setIsReserving(true)
+		setReservationMode('cabeen')
+	}
 
+	function reserveCabeen(){
+		setReservationType('loading')
+		// console.log(`${props.cabeen.cabeenReservation.checkOut.day} ${props.cabeen.cabeenReservation.checkOut.month} ${props.cabeen.cabeenReservation.checkOut.year}`,)
+		createCabeenReservation({variables: {
+			cabeenId: props.cabeen.cabeenDetails._id,
+				cabeenProviderId: props.cabeen.cabeenDetails.admin,
+				cabeenName: props.cabeen.cabeenDetails.name,
+				touristId: props.app.currentUser.user._id,
+				touristName: props.app.currentUser.user.fullName,
+				checkIn: `${props.cabeen.cabeenReservation.checkIn.day} ${props.cabeen.cabeenReservation.checkIn.month} ${props.cabeen.cabeenReservation.checkIn.year}`,
+				checkOut: `${props.cabeen.cabeenReservation.checkOut.day} ${props.cabeen.cabeenReservation.checkOut.month} ${props.cabeen.cabeenReservation.checkOut.year}`,
+			}})
+			.then((res) => {
+				setReservationType('success')
+				console.log('res', res)
+			})
+			.catch((err) => {
+				setReservationType('error')
+				// console.log('An error occurred while uploading', JSON.stringify(err, null, 2))
+			})
+	}
 
 	return(
 		<>
@@ -217,7 +285,7 @@ function CabeenButtons(props) {
 				</TouchableOpacity>
 				<TouchableOpacity
 					onPress={() => props.cabeen.cabeenDetails.admin === props.app.currentUser.user._id ?
-						Actions.cabeenManagement(): getUser()}
+						Actions.cabeenManagement(): reserve()}
 					style={{
 						// flex: 1,
 						alignItems: 'center',
@@ -233,7 +301,7 @@ function CabeenButtons(props) {
 						fontWeight: 'bold',
 						fontSize: 20
 					}}>
-						{props.cabeen.cabeenDetails.admin === props.app.currentUser.user._id ? 'Manage': 'Contact'}
+						{props.cabeen.cabeenDetails.admin === props.app.currentUser.user._id ? 'Manage': 'Reserve'}
 					</Text>
 				</TouchableOpacity>
 			</View>
@@ -278,6 +346,75 @@ function CabeenButtons(props) {
 				}}
 
 			/>
+			<TourReservationModal
+				modalVisible={isReserving}
+				type={reservationType}
+				mode={reservationMode}
+				dateOperation={dateOperation}
+				onRequestClose={() => {
+					setIsReserving(false)
+				}}
+				onCancel={() => {
+					setIsReserving(false)
+					props.reserveCabeen('clear', 'clear', 'clear')
+					props.reserveTour('clear', 'clear', 'clear')
+				}}
+				onSuccessfully={() => {
+					setIsReserving(false)
+					setReservationType('normal')
+					props.reserveCabeen('clear', "clear", "clear")
+					props.reserveTour('clear', 'clear', 'clear')
+				}}
+				onCabeenDayIn={() => {
+					setDateOperation('checkIn')
+					setReservationType('cabeenDayIn')
+				}}
+				onCabeenDayInCancel={() => {
+					setReservationType('normal')
+				}}
+				onCabeenDayInOK={() => {
+					setReservationType('cabeenMonthIn')
+				}}
+				onCabeenMonthIn={() => {
+					setDateOperation('checkIn')
+					setReservationType('cabeenMonthIn')
+				}}
+				onCabeenMonthInCancel={() => {
+					setReservationType('normal')
+				}}
+				onCabeenMonthInOK={() => {
+					setReservationType('cabeenYearIn')
+				}}
+				onCabeenYearIn={() => {
+					setDateOperation('checkIn')
+					setReservationType('cabeenYearIn')
+				}}
+				onCabeenYearInCancel={() => {
+					setReservationType('normal')
+				}}
+				onCabeenYearInOK={() => {
+					setReservationType('normal')
+				}}
+				onCabeenDayOut={() => {
+					setDateOperation('checkOut')
+					setReservationType('cabeenDayIn')
+				}}
+				onCabeenMonthOut={() => {
+					setDateOperation('checkOut')
+					setReservationType('cabeenMonthIn')
+				}}
+				onCabeenYearOut={() => {
+					setDateOperation('checkOut')
+					setReservationType('cabeenYearIn')
+				}}
+				onConfirmReservation={() => {
+					if (reservationMode === 'tour'){
+						// reserveTour()
+					}else reserveCabeen()
+
+				}}
+
+			/>
 		</>
 	)
 }
@@ -300,7 +437,7 @@ function Navigation(props) {
 	const [isType, setIsType] = React.useState('normal')
 
 	const removeCabeen = () => {
-		console.log(props.cabeen.cabeenDetails)
+		// console.log(props.cabeen.cabeenDetails)
 		setIsType('loading')
 		deleteCabeen({variables: {
 			_id: props.cabeen.cabeenDetails._id
@@ -361,7 +498,7 @@ function CabeenFeatures(props){
 	function _renderItem(item){
 		return(
 			<>
-				<TouchableOpacity
+				<View
 					// onPress={() => {
 					//     // setSelected(item.item)
 					// }}
@@ -388,7 +525,7 @@ function CabeenFeatures(props){
 					}}>
 						{item.item}
 					</Text>
-				</TouchableOpacity>
+				</View>
 			</>
 		)
 	}
@@ -771,7 +908,9 @@ const mapDispatchToProps = dispatch => (
 		setEditInfo,
 		setAccessLevel,
 		likeCallback,
-		findContactPerson
+		findContactPerson,
+		reserveTour,
+		reserveCabeen
 
 	}, dispatch)
 )

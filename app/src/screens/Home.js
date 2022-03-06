@@ -108,11 +108,11 @@ function Home (props){
 				}}>
 					<FloatingSearchBar
 						leftIcon={'person-circle-outline'}
-						rightIcon={'search'}
+						rightIcon={'notifications'}
 						placeholder={'search cabeen'}
-						feather={true}
+						// feather={true}
 						onFocus={() =>Actions.search()}
-						onRightIconPress={() => Actions.search()}
+						onRightIconPress={() => Actions.notification()}
 						leftIconPress={() => Actions.account()}
 					/>
 				</View>

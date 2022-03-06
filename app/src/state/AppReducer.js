@@ -42,9 +42,12 @@ const INITIAL_STATE = {
 
     },
     urls: {
-        cabeenImages: 'https://app.cabeen.culturol.com/cabeens/',
-        avatars: 'https://app.cabeen.culturol,com/avatars/'
-    }
+        cabeenImages: '',
+        avatars: '',
+        tours: ''
+
+    },
+    refresh: true
 }
 
 export const appReducer = (state=INITIAL_STATE, action) => {
@@ -157,15 +160,12 @@ export const appReducer = (state=INITIAL_STATE, action) => {
             return {...state}
 
         case "UPDATE_URLS":
-            if (action.field === 'cabeens'){
-                state.urls.cabeenImages = action.payload
-                return {...state}
-            }
-            else if (action.field === 'avatars'){
-                state.urls.avatars = action.payload
-                return {...state}
-            }
-            else return state
+            state.urls = action.payload
+            return {...state}
+
+        case "REFRESH_APP":
+            state.refresh = !state.refresh
+            return {...state}
 
         default:
             return state

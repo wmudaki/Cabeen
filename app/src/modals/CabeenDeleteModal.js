@@ -69,7 +69,7 @@ function CabeenDeleteModalSuccess(props){
                     margin: 10,
                     color: props.app.colors.primaryText
                 }}>
-                    Cabeen deleted successfully
+                    {props.mode === 'tour' ? 'Tour': 'Cabeen'} deleted successfully
 
                 </Text>
                 <View style={{
@@ -179,7 +179,7 @@ function CabeenDeleteModalContent(props) {
                     // alignSelf: 'center',
                     color: props.app.colors.errorText,
                 }}>
-                    Are you sure you want to delete this cabeen ?
+                    Are you sure you want to delete this {props.mode === 'tour' ? 'tour': 'cabeen'} ?
                 </Text>
                 <View style={{
                     flexDirection: 'row',

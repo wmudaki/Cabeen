@@ -48,12 +48,17 @@ class CustomSectionListStateless extends React.PureComponent{
 	renderCarousel(data){
 		return(
 			<>
-				<Carousel
+				<FlatList
 					ref={(c) => { this._carousel = c; }}
 					data={data}
+					horizontal={true}
+					style={{ margin: 0}}
+					keyExtractor={(item, key) => item + key}
 					renderItem={(item) => this.renderItem(item)}
-					sliderWidth={width}
-					itemWidth={0.85*width}
+					// sliderWidth={width}
+					// itemWidth={0.85*width}
+					ListHeaderComponent={() => <View style={{margin: 10}}/>}
+					ListFooterComponent={() => <View style={{ margin: 10}}/>}
 					// activeSlideOffset={0.5*width}
 					// layoutCardOffset={0.5*width}
 				/>
@@ -73,7 +78,7 @@ class CustomSectionListStateless extends React.PureComponent{
 						renderItem={({section:{recommendation}}) =>
 							this.renderCarousel(recommendation)}
 						keyExtractor={(item,index) => item+index}
-						SectionSeparatorComponent={() => <View style={{margin:15}}/>}
+						SectionSeparatorComponent={() => <View style={{margin:10}}/>}
 						ListHeaderComponent={() => <View style={{margin:50}}/>}
 						ListFooterComponent={() => <View style={{margin:30}}/>}
 						// horizontal={true}
@@ -97,46 +102,75 @@ class CustomFlatListStateless extends React.PureComponent{
 	renderItem(item){
 		return(
 			<>
-				<TouchableOpacity style={{
-					margin: 0,
-					backgroundColor: 'rgba(0,0,0,.2)',
+				<View style={{
+					margin: 10,
+					backgroundColor: 'white',
 					padding: 10,
-					borderBottomWidth: 2,
+					elevation: 0,
+					borderRadius: 20,
+
+					// borderBottomWidth: 2,
 					borderColor:this.props.app.colors.secondaryText
 				}}>
 					<View style={{
-						flexDirection: 'row',
-						alignItems: 'center'
+						flexDirection: "row",
+						margin: 10,
+						marginTop: 15
+						// alignItems: "center"
 					}}>
 						<Image
 							style={{
 								height: 50,
 								width: 50,
-								borderRadius: 50
+								borderRadius: 30,
+								backgroundColor: this.props.app.colors.statusBar
 							}}
-							source={{
-								uri: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.ZjgSmLyOXQjTlsNMnDTajwHaE8%26pid%3DApi&f=1'
-							}}/>
+							// source={require('../../assets/image/cabeen.png')}
+							/>
 						<Text style={{
-							margin: 10,
-							fontWeight: 'bold',
-							fontSize: 19,
+							marginLeft: 10,
+							fontSize: 20,
+							flex: 1,
 							color: this.props.app.colors.primaryText
 						}}>
-							Cabeen
+							{<Text style={{ fontWeight: "bold", color: this.props.app.colors.statusBar}}>{item.item.touristName }</Text> } Reserved <Text style={{fontWeight: 'bold', color: this.props.app.colors.statusBar}}>{item.item.spots}</Text> {item.item.spots === '1' ? 'spot' : 'spots'} on <Text style={{fontWeight: "bold", color: this.props.app.colors.statusBar}}>{item.item.tourName}</Text>
 						</Text>
 					</View>
-					<View>
+					<View style={{
+						alignItems: "center",
+						justifyContent: "space-between",
+						flexDirection: "row",
+						margin: 15
+					}}>
 						<Text style={{
-							margin: 10,
-							fontSize: 16,
-							color: this.props.app.colors.primaryText
+							color: this.props.app.colors.secondaryText
 						}}>
-							A very <bold>long</bold> welcoming text
+							9 hours ago
 						</Text>
+						<TouchableOpacity
+							onPress={(item) = this.props.onContactPress(item.item.tourProviderId)}
+							style={{
+							width: '35%',
+							height: 35,
+							backgroundColor: this.props.app.colors.buttonColor,
+							alignItems: "center",
+							justifyContent: "center",
+							borderRadius: 30,
+							margin: 0,
+							elevation: 5,
+							alignSelf: "flex-end"
+						}}>
+							<Text style={{
+								fontSize: 17,
+								fontWeight: "bold",
+								color: 'white'
+							}}>
+								Contact
+							</Text>
+						</TouchableOpacity>
 					</View>
 
-				</TouchableOpacity>
+				</View>
 			</>
 		)
 	}
@@ -145,9 +179,18 @@ class CustomFlatListStateless extends React.PureComponent{
 			<>
 				<View>
 					<FlatList
-						data={[1,2,3,4,5,6,7,8,9,]}
+						data={this.props.tourReservationData}
 						renderItem={(item) => this.renderItem(item)}
-						ListHeaderComponent={() => <View style={{margin: 50}}/>}
+						ListHeaderComponent={() => (<View style={{margin: 10}}>
+							<Text style={{
+								fontWeight: "bold",
+								fontSize: 25,
+								margin: 10,
+								alignSelf: "center"
+							}}>
+								Tour Reservations
+							</Text>
+							</View>)}
 						ItemSeparatorComponent={() => <View style={{margin: 0}}/>}
 						ListFooterComponent={() => <View style={{margin: 50}}/>}
 						keyExtractor={(item,index) => item+index}

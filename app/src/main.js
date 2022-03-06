@@ -38,6 +38,8 @@ import Search from "./screens/Search";
 import Splash from "./screens/Splash";
 import Find from "./screens/Find";
 import Privacy from "./screens/Privacy";
+import Tours from "./screens/Tours";
+
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2'
 import {
     ApolloProvider,
@@ -59,7 +61,7 @@ function App (){
     const persistConfig = {
         key: 'root',
         storage: AsyncStorage,
-        // stateReconciler: autoMergeLevel2,
+        stateReconciler: autoMergeLevel2,
     }
 
     const persistedReducer = persistReducer(persistConfig, rootReducer)
@@ -71,7 +73,8 @@ function App (){
 // const store = createStore(rootReducer);
 
     const httpLink = createUploadLink({
-        uri: "https://app.cabeen.culturol.com/graphql/"
+        // uri: "https://app.cabeen.culturol.com/graphql/"
+        uri: "http://192.168.136.85:4000/graphql"
     })
 
     const client = new ApolloClient({
@@ -157,6 +160,16 @@ function App (){
                                 <Scene
                                     component={Privacy}
                                     key={'privacy'}
+                                    hideNavBar
+                                />
+                                <Scene
+                                    component={Tours}
+                                    key={'tours'}
+                                    hideNavBar
+                                />
+                                <Scene
+                                    component={Notification}
+                                    key={'notification'}
                                     hideNavBar
                                 />
                             </Scene>

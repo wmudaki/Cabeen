@@ -72,3 +72,11 @@ export const findContactPerson = (payload) => (
     }
 )
 
+export const reserveCabeen = (operation, field, payload) => (
+    {
+        type: "RESERVE_CABEEN",
+        operation: operation,
+        field: field,
+        payload: payload
+    }
+)

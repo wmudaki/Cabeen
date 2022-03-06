@@ -612,7 +612,7 @@ function CabeenAddModalSuccess(props){
             <View style={{
                 height: '35%',
                 width: "90%",
-                borderRadius: 10,
+                borderRadius: 20,
                 elevation: 20,
                 margin: 20,
                 // alignSelf: "center",
@@ -627,7 +627,7 @@ function CabeenAddModalSuccess(props){
                     margin: 10,
                     color: props.app.colors.primaryText
                 }}>
-                    Cabeen added successfully
+                    {props.operation === 'Cabeen'? "Cabeen" : "Tour package"} added successfully
 
                 </Text>
                 <View style={{
@@ -640,7 +640,7 @@ function CabeenAddModalSuccess(props){
                         onPress={props.onSuccessfully}
                         style={{
                             backgroundColor: props.app.colors.successText,
-                            borderRadius: 5,
+                            borderRadius: 25,
                             height: 40,
                             width: '45%',
                             justifyContent: "center",
@@ -649,7 +649,8 @@ function CabeenAddModalSuccess(props){
                         }}>
                         <Text style={{
                             fontSize: 18,
-                            fontWeight: "bold"
+                            fontWeight: "bold",
+                            color: 'black'
                         }}>
                             OK
                         </Text>
@@ -668,7 +669,7 @@ function CabeenAddModalError(props){
             <View style={{
                 height: '36%',
                 width: "90%",
-                borderRadius: 10,
+                borderRadius: 20,
                 elevation: 20,
                 margin: 20,
                 // alignSelf: "center",
@@ -696,7 +697,7 @@ function CabeenAddModalError(props){
                         onPress={props.onError}
                         style={{
                             backgroundColor: props.app.colors.buttonColor,
-                            borderRadius: 5,
+                            borderRadius: 25,
                             height: 40,
                             width: '45%',
                             justifyContent: "center",
@@ -705,7 +706,8 @@ function CabeenAddModalError(props){
                         }}>
                         <Text style={{
                             fontSize: 18,
-                            fontWeight: "bold"
+                            fontWeight: "bold",
+                            color: 'white'
                         }}>
                             OK
                         </Text>
@@ -755,14 +757,15 @@ function CabeenAddModalContent(props){
                 height: '80%',
                 width: '95%',
                 justifyContent: "center",
-                borderRadius: 10,
+                borderRadius: 20,
                 padding: 10,
                 backgroundColor: props.app.colors.whiteText
             }}>
                 <Text style={{
                     fontWeight: "bold",
                     fontSize: 25,
-                    margin: 10
+                    margin: 10,
+                    color: props.app.colors.statusBar
                 }}>
                     Add Cabeen
                 </Text>
@@ -1121,3 +1124,5 @@ const mapDispatchToProps = dispatch => (
 )
 
 export default connect(mapStateToProps, mapDispatchToProps)(CabeenAddModal)
+
+export {CabeenAddModalLoading, CabeenAddModalSuccess, CabeenAddModalError}
